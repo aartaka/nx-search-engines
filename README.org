@@ -1,0 +1,28 @@
+#+TITLE:Search Engines for Nyxt
+
+Here you can find search engines for Nyxt browser. The aim of this
+extension is to get rid of balck box world of search bookmarklets and
+search cookies by moving the pretty land of lispy syntax and small
+helper functions generating search URIs.
+
+As an example, instead of fiddling with [[https://www.squarefree.com/bookmarklets/search.html][websites for search
+bookmarklets]], you can define the DuckDuckGo search engine with
+Terminal theme, instant answers turned off, and autocomplete
+suggestions turned off with just a simple call to:
+
+#+begin_src lisp
+  (nx-search-engines:duckduckgo :theme "terminal"
+                                :instant-answers nil :autocomplete nil)
+#+end_src
+
+This will return your new fancy DuckDuckGo engine that you can append
+to the =search-engines= in buffer configuration.
+
+#+begin_src lisp
+  (define-configuration buffer
+    ((search-engines (append %slot-default
+                             (list (nx-search-engines:duckduckgo
+                                    :theme "terminal"
+                                    :instant-answers nil
+                                    :autocomplete nil)))))
+#+end_src
