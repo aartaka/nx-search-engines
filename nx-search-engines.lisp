@@ -40,3 +40,18 @@ Example:"
                                                                        ,@(dolist (value values)
                                                                            `((equal ,name ,(first value))
                                                                              ,(second value)))))))))))))))
+
+(define-search-engine google
+    (:shortcut "google"
+     :fallback-url "google.com"
+     :base-search-url "google.com/search?q=~a"
+     :documentation "")
+  (safe-search "safe" ((t   "strict")
+                       (nil "images")))
+  (object "tbm" ((:all      "")
+                 (:image    "isch")
+                 (:video    "vid")
+                 (:news     "nws")
+                 (:shopping "shop")
+                 (:books    "bks")
+                 (:finance  "fin"))))
