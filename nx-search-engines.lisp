@@ -14,32 +14,44 @@ form (KEYWORD URI-PARAMETER VALUES), where VALUES is either
 - a function to process the value provided by the user.
 
 Example:"
-  (let ((keyword-names (mapcar #'first keywords)))
+  (flet ((supplied-p (symbol)
+           (intern (format nil "~s-SUPPLIED-P" symbol)
+                   (symbol-package symbol)))
+         (make-cond (values)
+           `(cond
+              ,@(loop :for value :in values
+                      :collect
+                      `((equal ,name ,(first value))
+                        ,(second value))
+                      :into clauses
+                      :finally (return (append clauses (list `(t ,name))))))))
     `(defun ,name (&key
                      (fallback-url ,fallback-url)
                      (shortcut ,shortcut)
-                     ,@keyword-names)
+                     ,@(mapcar #'(lambda (k)
+                                   (list (first k)                 ; name
+                                         (first (first (third k))) ; default value
+                                         (supplied-p (first k))))  ; supplied-p
+                               keywords))
        ,documentation
-       (make-instance 'nyxt:search-engine
-                      :shortcut shortcut
-                      :fallback-url fallback-url
-                      :search-url (format nil "~a~{~a~}"
-                                          ,base-search-url
-                                          (remove-if
-                                           #'null
-                                           (list
-                                            ,@(loop :for (name uri-parameter values)
-                                                      :in keywords
-                                                    :collect
-                                                    `(when ,name
-                                                       (format nil "&~a=~a"
-                                                               ,uri-parameter
-                                                               ,(if (eq (first values) :function)
-                                                                    `(funcall ,(second values) ,name)
-                                                                    `(cond
-                                                                       ,@(dolist (value values)
-                                                                           `((equal ,name ,(first value))
-                                                                             ,(second value)))))))))))))))
+       (make-instance
+        'nyxt:search-engine
+        :shortcut shortcut
+        :fallback-url fallback-url
+        :search-url (format nil "~a~{~a~}"
+                            ,base-search-url
+                            (delete
+                             nil
+                             (list
+                              ,@(loop :for (name uri-parameter values)
+                                        :in keywords
+                                      :collect
+                                      `(when ,(supplied-p name)
+                                         (format nil "&~a=~a"
+                                                 ,uri-parameter
+                                                 ,(if (eq (first values) :function)
+                                                      `(funcall ,(second values) ,name)
+                                                      (make-cond values))))))))))))
 
 (define-search-engine google
     (:shortcut "google"
