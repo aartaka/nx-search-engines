@@ -292,3 +292,42 @@ Example:"
                  (:shopping "shop")
                  (:books    "bks")
                  (:finance  "fin"))))
+
+(define-search-engine wordnet (:shortcut "wordnet"
+                               :fallback-url "http://wordnetweb.princeton.edu/perl/webwn"
+                               :base-search-url "http://wordnetweb.princeton.edu/perl/webwn?s=~a"
+                               :documentation "`nyxt:search-engine' for WordNet.
+
+To use it, disable force-https-mode for wordnetweb.princeton.edu or
+add auto-mode rule that will manage that for you!
+
+Arguments mean:
+SHORTCUT -- the shortcut you need to input to use this search engine. Set to \"wordnet\" by default.
+SHOW-EXAMPLES -- Show example sentences. T by default.
+SHOW-GLOSSES -- Show definitions. T by default.
+SHOW-WORD-FREQUENCIES -- Show word frequency counts. NIL by default.
+SHOW-DB-LOCATIONS -- Show WordNet database locations for this word. NIL by default.
+SHOW-LEXICAL-FILE-INFO -- Show lexical file word belongs to. NIL by default.
+SHOW-LEXICAL-FILE-NUMBERS -- Show number of the word in the lexical file. NIL by default.
+SHOW-SENSE-KEYS -- Show symbols for senses of the word. NIL by default.
+SHOW-SENSE-NUMBERS -- Show sense numbers. NIL by default.
+
+A sensible non-default example:
+\(wordnet :shortcut \"wn\"
+         :show-word-frequencies t
+         :show-sense-numbers t
+         :show-examples nil)
+
+This search engine, invokable with \"wn\", will show:
+- NO example sentences,
+- glosses,
+- frequency counts,
+- sense-numbers.")
+  (show-examples             "o0" ((t "1")  (nil "")))
+  (show-glosses              "o1" ((t "1")  (nil "")))
+  (show-word-frequencies     "o2" ((nil "") (t "1")))
+  (show-db-locations         "o3" ((nil "") (t "1")))
+  (show-lexical-file-info    "o4" ((nil "") (t "1")))
+  (show-lexical-file-numbers "o5" ((nil "") (t "1")))
+  (show-sense-keys           "o6" ((nil "") (t "1")))
+  (show-sense-numbers        "o7" ((nil "") (t "1"))))
