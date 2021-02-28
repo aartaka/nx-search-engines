@@ -301,7 +301,9 @@ Example:"
                                :documentation "`nyxt:search-engine' for WordNet.
 
 To use it, disable force-https-mode for wordnetweb.princeton.edu or
-add auto-mode rule that will manage that for you!
+add auto-mode rule that will manage that for you:
+
+((match-host \"wordnetweb.princeton.edu\") :excluded (nyxt/force-https-mode:force-https-mode))
 
 Arguments mean:
 SHORTCUT -- the shortcut you need to input to use this search engine. Set to \"wordnet\" by default.
