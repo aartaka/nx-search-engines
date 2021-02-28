@@ -335,3 +335,34 @@ This search engine, invokable with \"wn\", will show:
   (show-lexical-file-numbers "o5" ((nil "") (t "1")))
   (show-sense-keys           "o6" ((nil "") (t "1")))
   (show-sense-numbers        "o7" ((nil "") (t "1"))))
+
+;; TODO:
+;; - Google Images
+;; - YouTube
+;; - Yahoo
+;; - Bing
+;; - Amazon
+;; - Facebook
+;; - Gmaps
+;; - Twitter
+;; - Pinterest
+;; - Ask
+;; - Baidu
+;; - WolframAlpha
+;; - Boardreader
+;; - StartPage
+;; - Ecosia
+;; - Qwant
+;; - Search Encrypt
+;; - SearX
+;; - Yandex
+;; - Yandex.Images
+;; - Gibiru
+;; - Disconnect
+;; - Yippy
+;; - Swisscows
+;; - Lukol
+;; - Metager
+;; - Gigablast
+;; - Oskobo
+;; - Infinity Search
