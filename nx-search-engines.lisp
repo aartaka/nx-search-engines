@@ -318,9 +318,9 @@ SHOW-SENSE-NUMBERS -- Show sense numbers. NIL by default.
 
 A sensible non-default example:
 \(wordnet :shortcut \"wn\"
+         :show-examples nil
          :show-word-frequencies t
-         :show-sense-numbers t
-         :show-examples nil)
+         :show-sense-numbers t)
 
 This search engine, invokable with \"wn\", will show:
 - NO example sentences,
