@@ -17,20 +17,22 @@ Example:"
   (flet ((supplied-p (symbol)
            (intern (format nil "~s-SUPPLIED-P" symbol)
                    (symbol-package symbol)))
-         (make-cond (values)
+         (make-cond (arg-name values)
            `(cond
               ,@(loop :for value :in values
                       :collect
-                      `((equal ,name ,(first value))
+                      `((equal ,arg-name ,(first value))
                         ,(second value))
                       :into clauses
-                      :finally (return (append clauses (list `(t ,name))))))))
+                      :finally (return (append clauses (list `(t ,arg-name))))))))
     `(defun ,name (&key
                      (fallback-url ,fallback-url)
                      (shortcut ,shortcut)
                      ,@(mapcar #'(lambda (k)
                                    (list (first k)                 ; name
-                                         (first (first (third k))) ; default value
+                                         (if (eq (first (third k)) :function)
+                                             nil
+                                             (first (first (third k)))) ; default value
                                          (supplied-p (first k))))  ; supplied-p
                                keywords))
        ,documentation
@@ -43,15 +45,15 @@ Example:"
                             (delete
                              nil
                              (list
-                              ,@(loop :for (name uri-parameter values)
+                              ,@(loop :for (arg-name uri-parameter values)
                                         :in keywords
                                       :collect
-                                      `(when ,(supplied-p name)
+                                      `(when ,(supplied-p arg-name)
                                          (format nil "&~a=~a"
                                                  ,uri-parameter
                                                  ,(if (eq (first values) :function)
-                                                      `(funcall ,(second values) ,name)
-                                                      (make-cond values))))))))))))
+                                                      `(funcall ,(second values) ,arg-name)
+                                                      (make-cond arg-name values))))))))))))
 
 (define-search-engine duckduckgo
     (:shortcut "duckduckgo"
