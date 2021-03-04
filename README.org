@@ -62,3 +62,178 @@ in search-engines.lisp. This will give you four search engines:
 WordNet, Google (maps and basic search) and DuckDuckGo. The last
 engine in the list is the default one, so your next search will end up
 in a cozy terminal-themed DuckDuckGo :)
+* Engines
+Helpers have lots of key arguments, but you don't need to use all of
+these. Helpers rely on search engine default behavior, so you can omit
+settings equal to defaults.
+
+A syntax resembling CLHS/man pages is used in search engines description. Basically:
+- square brackets mean an optional element,
+- curly brackets mean a mandatory element,
+- vertical bars mean that any of the bar-separated elements is fine,
+- asterisks mean any number of the element it is set after,
+- if there is a type name instead of actual value, then any value of that type is acceptable,
+- additional pseudo-types are explained after the syntax definition,
+- semicolons start comments.
+** DuckDuckGo
+Syntax for the DuckDuckGo-generating function is:
+#+begin_src
+  (duckduckgo [:shortcut string]
+              ;; You'd rarely need to use this
+              [:fallback-url string]
+              [:theme {:default | :basic | :contrast | :dark | :gray | :terminal}]
+              [:get-requests boolean]
+              [:video-playback {:prompt-me | :always-ddg | :always-third-party}]
+              [:redirect boolean]
+              ;; Some of these are abbreviations added for convenience.
+              ;; You can suggest yours if it's widespread in your country!
+              [:region {:argentina | :australia | :austria | :belgium-fr | :belgium-nl |
+                        :brazil | :bulgaria | :canada-en | :canada-fr | :catalonia | :chile |
+                        :china | :colombia | :croatia | :czech-republic | :denmark | :estonia |
+                        :finland | :france | :germany | :greece | :hong-kong | :hungary |
+                        :india-en | :india | :indonesia-en | :indonesia | :ireland |
+                        :israel-en | :israel | :italy | :japan | :korea | :latvia |
+                        :lithuania | :malaysia-en | :malaysia | :mexico | :netherlands |
+                        :new-zealand | :norway | :pakistan-en | :peru | :philippines-en |
+                        :philippines | :poland | :portugal | :romania | :russia |
+                        :russian-federation | :saudi-arabia | :singapore | :slovakia |
+                        :slovenia | :south-africa | :spain-ca | :spain-es | :spain |
+                        :sweden | :switzerland-de | :switzerland-fr | :taiwan | :thailand-en |
+                        :thailand | :turkey | :us-english | :us-en | :us | :us-spanish |
+                        :us-es | :ukraine | :united-kingdom | :uk | :vietnam-en | :vietnam}]
+              ;; Not yet written properly, too much Unicode
+              [:language string]
+              [:safe-search {:moderate | :strict | :off}]
+              [:instant-answers boolean]
+              [:infinite-scroll-for-media boolean]
+              [:infinite-scroll boolean]
+              [:autocomplete-suggestions boolean]
+              [:open-in-new-tab boolean]
+              [:advertisements boolean]
+              [:keyboard-shortcuts boolean]
+              [:units-of-measure {:no-preference | :metric | :us-based}]
+              [:map-rendering {:not-set | :best-available | :image-tiles}]
+              [:page-break-numbers {:on | :off | :lines}]
+              [:install-duckduckgo boolean]
+              [:install-reminders boolean]
+              [:privacy-newsletter boolean]
+              [:newsletter-reminders boolean]
+              [:homepage-privacy-tips boolean]
+              [:help-improve-duckduckgo boolean]
+              [:font font-name]
+              [:font-size {:large | :small | :medium | :larger | :largest}]
+              [:page-width {:normal | :wide | :super-wide}]
+              [:center-alignment boolean]
+              [:background-color color-code-string]
+              [:header-behavior {:on-dynamic | :on-fixed | :off | :on-scrolling}]
+              [:header-color color-code-string]
+              [:result-title-font font-name]
+              [:result-title-color color-code-string]
+              [:result-visited-title-color color-code-string]
+              [:result-title-underline boolean]
+              [:result-description-color color-code-string]
+              [:result-url-color color-code-string]
+              [:result-module-color color-code-string]
+              [:result-full-urls boolean]
+              [:result-urls-above-snipper boolean]
+              [:result-visible-checkmark boolean]
+              [:site-icons boolean])
+
+color-code-string := string of six hex numbers, e.g., "FF00A4"
+;; Actually, you can use the font name, like "Proxima Nova".
+font-name := {:proxima-nova | :arial | :century-gothic | :georgia | :helvetica | :helvetica-neue |
+              :sans-serif | :segoe-ui | :serif | :times | :tahoma |trebuchet-ms | :verdana}
+#+end_src
+Quite a long definition, eh?
+
+Things left to do for DuckDuckGo:
+- Bind language settings.
+- Allow booleans where they fit (:header-behavior, :safe-search).
+
+** Google
+Syntax for Google helper is:
+#+begin_src
+(google [:shortcut string]
+        ;; You'd rarely need to use this
+        [:fallback-url string]
+        [:safe-search boolean]
+        [:object {:all | :image | :video | :news | :shopping | :books | :finance}])
+#+end_src
+
+Things left to do for Google:
+- Bind object-specific sorting settings.
+** Bing
+Bing is /special/ -- it hosts separate types of searches on separate
+paths, so we need to make several engines with different search-urls:
+*** Plain Bing
+Syntax is:
+#+begin_src
+(bing [:shortcut string]
+      ;; You'd rarely need to use this
+      [:fallback-url string]
+      [:my-language-only boolean]
+      [:my-country-only boolean]
+      [:date {:all | :past-24-hours | :past-week | :past-month | :past-year |
+              (bing-date local-time:timestamp local-time:timestamp)}])
+#+end_src
+Notice the use of =bind-date= helper -- it allows you to specify the
+date for the search. Lower bound is January 1st, 1970, upper bound
+is... uncertain.
+
+Things to do:
+- :past-day alias for :past-24-hours value of :date.
+*** Bing Images
+Syntax is:
+#+begin_src
+(bing-images [:shortcut string]
+             ;; You'd rarely need to use this
+             [:fallback-url string])
+#+end_src
+*** Bing Videos
+Syntax is:
+#+begin_src
+(bing-videos [:shortcut string]
+             ;; You'd rarely need to use this
+             [:fallback-url string])
+#+end_src
+*** Bing Maps
+Syntax is:
+#+begin_src
+(bing-maps [:shortcut string]
+           ;; You'd rarely need to use this
+           [:fallback-url string])
+#+end_src
+*** Bing News
+Syntax is:
+#+begin_src
+(bing-news [:shortcut string]
+           ;; You'd rarely need to use this
+           [:fallback-url string]
+           [:interval {:all | :past-5-minutes | :past-15-mimutes | :past-30-minutes |
+                       :past-hour | :past-4-hours | :past-6-hours | :past-24-hours |
+                       :past-day | :past-7-days | :past-week | :past-30-days | :past-month}])
+#+end_src
+*** Bing Shopping
+Syntax is:
+#+begin_src
+(bing-shopping [:shortcut string]
+               ;; You'd rarely need to use this
+               [:fallback-url string])
+#+end_src
+** WordNet
+While WordNet is not a general purpose search engine, it's a great
+dictionary and a linguistic tool (I mostly use it as a dictionary,
+though). Syntax is:
+#+begin_src
+(wordnet [:shortcut string]
+         ;; You'd rarely need to use this
+         [:fallback-url string]
+         [:show-examples boolean]
+         [:show-glosses boolean]
+         [:show-word-frequencies boolean]
+         [:show-db-loactions boolean]
+         [:show-lexical-file-info boolean]
+         [:show-lexical-file-numbers boolean]
+         [:show-sense-keys boolean]
+         [:show-sense-numbers boolean])
+#+end_src
