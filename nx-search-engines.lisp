@@ -297,6 +297,86 @@ Example:"
                  (:books    "bks")
                  (:finance  "fin"))))
 
+(serapeum:export-always 'bing-date)
+(declaim (ftype (function (local-time:timestamp local-time:timestamp) string) bing-date))
+(defun bing-date (start-date end-date)
+  (format nil "\"ez5_~d_~d\""
+          (local-time:day-of
+           (local-time:timestamp-
+            start-date (local-time:day-of (local-time:unix-to-timestamp 0)) :day))
+          (local-time:day-of
+           (local-time:timestamp-
+            end-date (local-time:day-of (local-time:unix-to-timestamp 0)) :day))))
+
+(define-search-engine bing
+    (:shortcut "bing"
+     :fallback-url "https://www.bing.com/"
+     :base-search-url "https://www.bing.com/search?q=~a"
+     :documentation "`nyxt:search-engine' for Bing.
+MY-LANGUAGE-ONLY and MY-COUNTRY-ONLY are pre-defined by Bing based on
+your location. Both are booleans.
+DATE is either :all, :past-24-hours, :past-week, :past-month,
+:past-year or an arbitrary bing-acceptable time string that you can
+generate with `bing-date'.")
+  (my-language-only "lf" ((nil "")
+                          (t "1")))
+  (my-countly-only "rf" ((nil "")
+                         (t "1")))
+  (date "filters" ((:all "")
+                   (:past-24-hours "\"ez1\"")
+                   (:past-week "\"ez2\"")
+                   (:past-month "\"ez3\"")
+                   (:past-year (bing-date (local-time:timestamp- (local-time:now) 1 :year)
+                                          (local-time:now))))))
+
+(define-search-engine bing-images
+    (:shortcut "bing-images"
+     :fallback-url "https://www.bing.com/"
+     :base-search-url "https://www.bing.com/images/search?q=~a"
+     :documentation "`nyxt:search-engine' for Bing Images."))
+
+(define-search-engine bing-videos
+    (:shortcut "bing-videos"
+     :fallback-url "https://www.bing.com/"
+     :base-search-url "https://www.bing.com/videos/search?q=~a"
+     :documentation "`nyxt:search-engine' for Bing Videos."))
+
+(define-search-engine bing-maps
+    (:shortcut "bing-maps"
+     :fallback-url "https://www.bing.com/"
+     :base-search-url "https://www.bing.com/maps/search?q=~a"
+     :documentation "`nyxt:search-engine' for Bing Maps."))
+
+(define-search-engine bing-news
+    (:shortcut "bing-news"
+     :fallback-url "https://www.bing.com/"
+     :base-search-url "https://www.bing.com/news/search?q=~a"
+     :documentation "`nyxt:search-engine' for Bing News.
+
+INTERVAL is the time since news publishing. It can be one of :all,
+:past-5-minutes, :past-15-minutes, :past-30-minutes, :past-hour,
+:past-4-hours, :past-6-hours, :past-24-hours, :past-day, :past-7-days,
+:past-week, :past-30-days, :past-month. Yes, some are duplicated.")
+  (interval "qft" ((:all "")
+                   (:past-5-minutes "interval=\"1\"")
+                   (:past-15-minutes "interval=\"2\"")
+                   (:past-30-minutes "interval=\"3\"")
+                   (:past-hour "interval=\"4\"")
+                   (:past-4-hours "interval=\"5\"")
+                   (:past-6-hours "interval=\"6\"")
+                   (:past-24-hours "interval=\"7\"")
+                   (:past-day "interval=\"7\"")
+                   (:past-7-days "interval=\"8\"")
+                   (:past-week "interval=\"8\"")
+                   (:past-30-days "interval=\"9\"")
+                   (:past-month "interval=\"9\""))))
+
+(define-search-engine bing-shopping
+    (:shortcut "bing-shopping"
+     :fallback-url "https://www.bing.com/"
+     :base-search-url "https://www.bing.com/shopping/search?q=~a"
+     :documentation "`nyxt:search-engine' for Bing Shopping."))
+
 (define-search-engine wordnet (:shortcut "wordnet"
                                :fallback-url "http://wordnetweb.princeton.edu/perl/webwn"
                                :base-search-url "http://wordnetweb.princeton.edu/perl/webwn?s=~a"
@@ -342,7 +422,6 @@ This search engine, invokable with \"wn\", will show:
 ;; - Google Images
 ;; - YouTube
 ;; - Yahoo
-;; - Bing
 ;; - Amazon
 ;; - Facebook
 ;; - Gmaps
