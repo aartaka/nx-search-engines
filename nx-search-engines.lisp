@@ -39,7 +39,7 @@ Example:"
                                  keywords))
          ,documentation
          (make-instance
-          'nyxt:search-engine
+          'search-engine
           :shortcut shortcut
           :fallback-url fallback-url
           :search-url (format nil "~a~{~a~}"
