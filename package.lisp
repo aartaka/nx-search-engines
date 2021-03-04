@@ -1,9 +1,20 @@
 ;;;; package.lisp
 
 (defpackage #:nx-search-engines
+  (:nicknames #:search-engines #:engines)
   (:use #:cl)
   (:import-from #:nyxt
                 #:define-class
                 #:define-command
                 #:search-engine)
+  (:export #:duckduckgo
+           #:google
+           #:bing-date
+           #:bing
+           #:bing-images
+           #:bing-videos
+           #:bing-maps
+           #:bing-news
+           #:bing-shopping
+           #:wordnet)
   (:documentation ""))
