@@ -25,35 +25,37 @@ Example:"
                         ,(second value))
                       :into clauses
                       :finally (return (append clauses (list `(t ,arg-name))))))))
-    `(defun ,name (&key
-                     (fallback-url ,fallback-url)
-                     (shortcut ,shortcut)
-                     ,@(mapcar #'(lambda (k)
-                                   (list (first k)                 ; name
-                                         (if (eq (first (third k)) :function)
-                                             nil
-                                             (first (first (third k)))) ; default value
-                                         (supplied-p (first k))))  ; supplied-p
-                               keywords))
-       ,documentation
-       (make-instance
-        'nyxt:search-engine
-        :shortcut shortcut
-        :fallback-url fallback-url
-        :search-url (format nil "~a~{~a~}"
-                            ,base-search-url
-                            (delete
-                             nil
-                             (list
-                              ,@(loop :for (arg-name uri-parameter values)
-                                        :in keywords
-                                      :collect
-                                      `(when ,(supplied-p arg-name)
-                                         (format nil "&~a=~a"
-                                                 ,uri-parameter
-                                                 ,(if (eq (first values) :function)
-                                                      `(funcall ,(second values) ,arg-name)
-                                                      (make-cond arg-name values))))))))))))
+    `(progn
+       (serapeum:export-always (quote ,name))
+       (defun ,name (&key
+                       (fallback-url ,fallback-url)
+                       (shortcut ,shortcut)
+                       ,@(mapcar #'(lambda (k)
+                                     (list (first k)                 ; name
+                                           (if (eq (first (third k)) :function)
+                                               nil
+                                               (first (first (third k)))) ; default value
+                                           (supplied-p (first k))))  ; supplied-p
+                                 keywords))
+         ,documentation
+         (make-instance
+          'nyxt:search-engine
+          :shortcut shortcut
+          :fallback-url fallback-url
+          :search-url (format nil "~a~{~a~}"
+                              ,base-search-url
+                              (delete
+                               nil
+                               (list
+                                ,@(loop :for (arg-name uri-parameter values)
+                                          :in keywords
+                                        :collect
+                                        `(when ,(supplied-p arg-name)
+                                           (format nil "&~a=~a"
+                                                   ,uri-parameter
+                                                   ,(if (eq (first values) :function)
+                                                        `(funcall ,(second values) ,arg-name)
+                                                        (make-cond arg-name values)))))))))))))
 
 (define-search-engine duckduckgo
     (:shortcut "duckduckgo"
