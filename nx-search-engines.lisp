@@ -368,3 +368,5 @@ This search engine, invokable with \"wn\", will show:
 ;; - Gigablast
 ;; - Oskobo
 ;; - Infinity Search
+;; - Mail.ru
+;; - Rambler.ru
