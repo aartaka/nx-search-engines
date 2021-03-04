@@ -1,9 +1,8 @@
 #+TITLE:Search Engines for Nyxt
 
-Here you can find search engines for Nyxt browser. The aim of this
-extension is to get rid of balck box world of search bookmarklets and
-search cookies by moving the pretty land of lispy syntax and small
-helper functions generating search URIs.
+The aim of nx-search-engines is to get rid of black box world of
+search bookmarklets and search cookies by moving to the pretty land of
+lispy syntax and small helper functions generating search URIs.
 
 As an example, instead of fiddling with [[https://www.squarefree.com/bookmarklets/search.html][websites for search
 bookmarklets]], you can define the DuckDuckGo search engine with
@@ -11,8 +10,9 @@ Terminal theme, instant answers turned off, and autocomplete
 suggestions turned off with just a simple call to:
 
 #+begin_src lisp
-  (nx-search-engines:duckduckgo :theme "terminal"
-                                :instant-answers nil :autocomplete nil)
+    (nx-search-engines:duckduckgo :theme :terminal
+                                  :instant-answers nil
+                                  :autocomplete nil)
 #+end_src
 
 This will return your new fancy DuckDuckGo engine that you can append
@@ -21,8 +21,44 @@ to the =search-engines= in buffer configuration.
 #+begin_src lisp
   (define-configuration buffer
     ((search-engines (append %slot-default
-                             (list (nx-search-engines:duckduckgo
-                                    :theme "terminal"
+                             (list (engines:duckduckgo
+                                    :theme :terminal
                                     :instant-answers nil
-                                    :autocomplete nil)))))
+                                    :autocomplete nil))))))
 #+end_src
+
+* Geting Started
+The smallest possible configuration involving nx-search-engines is:
+#+begin_src lisp
+  (in-package #:nyxt-user)
+
+  ;; Make ASDF know where to look for nx-search-engines.
+  (asdf:load-asd "/path/to/nx-search-engines.asd")
+  ;; Load search-engines.lisp after loading nx-search-engines.
+  (load-after-system :nx-search-engines (nyxt-init-file "search-engines.lisp"))
+#+end_src
+in your init file, and
+#+begin_src lisp
+  (in-package #:nyxt-user)
+
+  ;; Define buffer search-engines slot to be a list of several
+  ;; nx-search-engines-provided ones.
+  (define-configuration buffer
+    ((search-engines (list (engines:google :shortcut "gmaps"
+                                           :object :maps)
+                           (engines:wordnet :shortcut "wn"
+                                            :show-word-frequencies t)
+                           (engines:google :shortcut "g"
+                                           :safe-search nil)
+                           (engines:duckduckgo :theme :terminal
+                                               :help-improve-duckduckgo nil
+                                               :homepage-privacy-tips nil
+                                               :privacy-newsletter nil
+                                               :newsletter-reminders nil
+                                               :install-reminders nil
+                                               :install-duckduckgo nil)))))
+#+end_src
+in search-engines.lisp. This will give you four search engines:
+WordNet, Google (maps and basic search) and DuckDuckGo. The last
+engine in the list is the default one, so your next search will end up
+in a cozy terminal-themed DuckDuckGo :)
