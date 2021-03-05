@@ -10,9 +10,9 @@ Terminal theme, instant answers turned off, and autocomplete
 suggestions turned off with just a simple call to:
 
 #+begin_src lisp
-    (nx-search-engines:duckduckgo :theme :terminal
-                                  :instant-answers nil
-                                  :autocomplete nil)
+    (engines:duckduckgo :theme :terminal
+                        :instant-answers nil
+                        :autocomplete nil)
 #+end_src
 
 This will return your new fancy DuckDuckGo engine that you can append
@@ -242,7 +242,7 @@ though). Syntax is:
 Things to do:
 - Shorten the keyword names?
 * Future Plans
-- Add more engines (see comments in nx-search-engines.lisp).
+- Add more engines (see comments in search-engines.lisp).
 - Fill search-engines-mode.lisp with the mode and commands:
   - =search-engines-mode= to store task-specific engines (like image search engines).
   - =search-hint= and =search-image-hint= commands.

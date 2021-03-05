@@ -8,5 +8,5 @@
   :serial t
   :depends-on (#:nyxt)
   :components ((:file "package")
-               (:file "nx-search-engines")
+               (:file "search-engines")
                (:file "search-engines-mode")))

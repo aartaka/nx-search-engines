@@ -1,4 +1,4 @@
-;;;; nx-search-engines.lisp
+;;;; search-engines.lisp
 
 (in-package #:nx-search-engines)
 
