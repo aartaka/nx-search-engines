@@ -148,7 +148,7 @@ Quite a long definition, eh?
 
 Things left to do for DuckDuckGo:
 - Bind language settings.
-- Allow booleans where they fit (:header-behavior, :safe-search).
+- Allow booleans where they fit (=:header-behavior=, =:safe-search=).
 
 ** Google
 Syntax for Google helper is:
@@ -162,6 +162,7 @@ Syntax for Google helper is:
 
 Things left to do for Google:
 - Bind object-specific sorting settings.
+- Add keyword alias for =:safe-mode= (i.e., =:strict= as alias to =t=)
 ** Bing
 Bing is /special/ -- it hosts separate types of searches on separate
 paths, so we need to make several engines with different search-urls:
@@ -181,7 +182,7 @@ date for the search. Lower bound is January 1st, 1970, upper bound
 is... uncertain.
 
 Things to do:
-- :past-day alias for :past-24-hours value of :date.
+- =:past-day= alias for =:past-24-hours= value of =:date=.
 *** Bing Images
 Syntax is:
 #+begin_src
@@ -196,7 +197,7 @@ Syntax is:
              ;; You'd rarely need to use this
              [:fallback-url string])
 #+end_src
-*** Bing Maps
+*** Bing Mapsb
 Syntax is:
 #+begin_src
 (bing-maps [:shortcut string]
@@ -237,3 +238,11 @@ though). Syntax is:
          [:show-sense-keys boolean]
          [:show-sense-numbers boolean])
 #+end_src
+
+Things to do:
+- Shorten the keyword names?
+* Future Plans
+- Add more engines (see comments in nx-search-engines.lisp).
+- Fill search-engines-mode.lisp with the mode and commands:
+  - =search-engines-mode= to store task-specific engines (like image search engines).
+  - =search-hint= and =search-image-hint= commands.
