@@ -58,10 +58,11 @@ in your init file, and
                                                :install-reminders nil
                                                :install-duckduckgo nil)))))
 #+end_src
-in search-engines.lisp. This will give you four search engines:
-WordNet, Google (maps and basic search) and DuckDuckGo. The last
-engine in the list is the default one, so your next search will end up
-in a cozy terminal-themed DuckDuckGo :)
+in search-engines.lisp (you need to create this file in the same
+directory where your init.lisp is). This will give you four search
+engines: WordNet, Google (maps and basic search) and DuckDuckGo. The
+last engine in the list is the default one, so your next search will
+end up in a cozy terminal-themed DuckDuckGo :)
 * Engines
 Helpers have lots of key arguments, but you don't need to use all of
 these. Helpers rely on search engine default behavior, so you can omit
