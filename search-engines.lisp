@@ -60,7 +60,10 @@ Example:"
 (define-search-engine duckduckgo
     (:shortcut "duckduckgo"
      :fallback-url "https://duckduckgo.com/"
-     :base-search-url "https://duckduckgo.com/?q=~a")
+     :base-search-url "https://duckduckgo.com/?q=~a"
+     :documentation "DuckDuckGo `nyxt:search-engine' with the configuration as capable as the built-in settings pane.
+See DuckDuckGo settings for the names of the necessary setting and use
+the matching kebab-case keywords for this helper.")
   ;;; Theming
   (theme "kae" ((:default  "")
                 (:basic    "b")
@@ -286,7 +289,13 @@ Example:"
     (:shortcut "google"
      :fallback-url "google.com"
      :base-search-url "google.com/search?q=~a"
-     :documentation "")
+     :documentation "Google `nyxt:search-engine'.
+Does not support advanced results sorting as of now.
+Arguments:
+SAFE-SEARCH -- Whether results will be filtered. Boolean. t to enable,
+nil to disable.
+OBJECT -- One of :all :image, :video, :news, :shopping, :books,
+:finance.")
   (safe-search "safe" ((t   "strict")
                        (nil "images")))
   (object "tbm" ((:all      "")
@@ -300,6 +309,8 @@ Example:"
 (serapeum:export-always 'bing-date)
 (declaim (ftype (function (local-time:timestamp local-time:timestamp) string) bing-date))
 (defun bing-date (start-date end-date)
+  "Helper function generating Bing-acceptable dates in the form \"ez5_START-DATE_END-DATE\".
+Use it for the value of :date argument to `bing'"
   (format nil "\"ez5_~d_~d\""
           (local-time:day-of
            (local-time:timestamp-
@@ -389,6 +400,7 @@ add auto-mode rule that will manage that for you:
 
 Arguments mean:
 SHORTCUT -- the shortcut you need to input to use this search engine. Set to \"wordnet\" by default.
+FALLBACK-URL -- what URL to follow if there was a search error.
 SHOW-EXAMPLES -- Show example sentences. T by default.
 SHOW-GLOSSES -- Show definitions. T by default.
 SHOW-WORD-FREQUENCIES -- Show word frequency counts. NIL by default.
