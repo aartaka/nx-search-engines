@@ -143,7 +143,7 @@ Syntax for the DuckDuckGo-generating function is:
 color-code-string := string of six hex numbers, e.g., "FF00A4"
 ;; Actually, you can use the font name, like "Proxima Nova".
 font-name := {:proxima-nova | :arial | :century-gothic | :georgia | :helvetica | :helvetica-neue |
-              :sans-serif | :segoe-ui | :serif | :times | :tahoma |trebuchet-ms | :verdana}
+              :sans-serif | :segoe-ui | :serif | :times | :tahoma | :trebuchet-ms | :verdana}
 #+end_src
 Quite a long definition, eh?
 
