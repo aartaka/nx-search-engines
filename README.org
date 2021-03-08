@@ -69,7 +69,7 @@ settings equal to defaults.
 
 A syntax resembling CLHS/man pages is used in search engines description. Basically:
 - square brackets mean an optional element,
-- curly brackets mean a mandatory element,
+- curly brackets mean a mandatory element with several bar-separated options,
 - vertical bars mean that any of the bar-separated elements is fine,
 - asterisks mean any number of the element it is set after,
 - if there is a type name instead of actual value, then any value of that type is acceptable,
