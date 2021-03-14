@@ -82,6 +82,10 @@ Syntax for the DuckDuckGo-generating function is:
   (duckduckgo [:shortcut string]
               ;; You'd rarely need to use this
               [:fallback-url string]
+              ;; DuckDuckGo uses two (four?) object-related keywords.
+              ;; To ensure the right search object, use both :object and :object2.
+              [:object {:all | :images | :videos | :news}]
+              [:object2 {:all | :images | :videos | :news}]
               [:theme {:default | :basic | :contrast | :dark | :gray | :terminal}]
               [:get-requests boolean]
               [:video-playback {:prompt-me | :always-ddg | :always-third-party}]

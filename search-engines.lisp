@@ -64,6 +64,17 @@ Example:"
      :documentation "DuckDuckGo `nyxt:search-engine' with the configuration as capable as the built-in settings pane.
 See DuckDuckGo settings for the names of the necessary setting and use
 the matching kebab-case keywords for this helper.")
+  ;; DuckDuckGo uses two (four?) object-related keywords.
+  (object "ia" ((:all "web")
+                (:images "images")
+                (:videos "videos")
+                (:news "news")
+                (:meanings "meanings")))
+  (object2 "iax" ((:all "web")
+                  (:images "images")
+                  (:videos "videos")
+                  (:news "news")
+                  (:meanings "meanings")))
   ;;; Theming
   (theme "kae" ((:default  "")
                 (:basic    "b")
