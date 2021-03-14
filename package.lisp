@@ -5,6 +5,7 @@
   (:use #:cl)
   (:import-from #:nyxt
                 #:define-class
+                #:define-mode
                 #:define-command
                 #:search-engine)
   (:export #:duckduckgo
