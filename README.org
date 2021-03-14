@@ -155,6 +155,10 @@ Things left to do for DuckDuckGo:
 - Bind language settings.
 - Allow booleans where they fit (=:header-behavior=, =:safe-search=).
 
+*** DuckDuckGo Images
+A derived Image-search engine has the same syntax as the main one,
+except that it defaults to images.
+
 ** Google
 Syntax for Google helper is:
 #+begin_src
@@ -248,8 +252,6 @@ Things to do:
 - Shorten the keyword names?
 * Future Plans
 - Add more engines (see comments in search-engines.lisp).
-- Add =define-derived-search-engine= macro to define the half-configured
-  derivations of existing search-engine helpers.
 - Fill search-engines-mode.lisp with the mode and commands:
   - =search-engines-mode= to store task-specific engines (like image search engines).
   - =search-hint= and =search-image-hint= commands.

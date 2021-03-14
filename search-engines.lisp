@@ -57,6 +57,13 @@ Example:"
                                                         `(funcall ,(second values) ,arg-name)
                                                         (make-cond arg-name values)))))))))))))
 
+(defmacro define-derived-search-engine (name (parent-engine &rest arguments))
+  ;; TODO: Use `mopu:function-arglist' to reproduce original arglist?
+  `(progn
+     (serapeum:export-always (quote ,name))
+     (defun ,name (&rest args)
+      (apply (function ,parent-engine) ,@arguments args))))
+
 (define-search-engine duckduckgo
     (:shortcut "duckduckgo"
      :fallback-url "https://duckduckgo.com/"
@@ -296,6 +303,9 @@ the matching kebab-case keywords for this helper.")
   (site-icons "kf" ((t "")
                     (nil "-1"))))
 
+(define-derived-search-engine duckduckgo-images
+    (duckduckgo :object :images :object2 :images))
+
 (define-search-engine google
     (:shortcut "google"
      :fallback-url "google.com"
@@ -316,6 +326,9 @@ OBJECT -- One of :all :image, :video, :news, :shopping, :books,
                  (:shopping "shop")
                  (:books    "bks")
                  (:finance  "fin"))))
+
+(define-derived-search-engine google-images
+    (google :object :image))
 
 (serapeum:export-always 'bing-date)
 (declaim (ftype (function (local-time:timestamp local-time:timestamp) string) bing-date))
