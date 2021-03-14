@@ -250,8 +250,21 @@ though). Syntax is:
 
 Things to do:
 - Shorten the keyword names?
+* =search-engines-mode=
+This mode is enabling you to search the input field contents, links,
+and images with your search engine of choice. Once it's enabled, you
+can call =search-hint= command to search for a particular hint:
+- It it's a link or image, it's URL will be searched. In case of image
+  URL, an =image-search-url= of =search-engines-=mode= will be used.
+- If it's an input area (=<input>= or =<textarea>=), search the text
+  inside it.
+
+To set the engines for =search-hint=, customize =search-engines-mode=:
+#+begin_src lisp
+  (define-configuration engines:search-engines-mode
+    ((engines:search-engine (engines:duckduckgo))
+     (engines:image-search-engine (engines:duckduckgo-images))))
+#+end_src
+
 * Future Plans
 - Add more engines (see comments in search-engines.lisp).
-- Fill search-engines-mode.lisp with the mode and commands:
-  - =search-engines-mode= to store task-specific engines (like image search engines).
-  - =search-hint= and =search-image-hint= commands.
