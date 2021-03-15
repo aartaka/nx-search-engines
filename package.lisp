@@ -18,4 +18,4 @@
            #:bing-news
            #:bing-shopping
            #:wordnet)
-  (:documentation ""))
+  (:documentation "A collection of search engines for Nyxt browsers."))
