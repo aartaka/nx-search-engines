@@ -12,7 +12,7 @@
                         :type (or nyxt:search-engine null)
                         :documentation "The search engine to use when `search-hint' on images.")
    (keymap-scheme
-    (define-scheme "search-engines"
+    (nyxt::define-scheme "search-engines"
       scheme:cua
       (list "C-u M-g s" 'search-hint)
       scheme:emacs
