@@ -43,8 +43,13 @@ in your init file, and
 
   ;; Define buffer search-engines slot to be a list of several
   ;; nx-search-engines-provided ones.
-  (define-configuration buffer
-    ((search-engines (list (engines:google :shortcut "gmaps"
+  (define-configuration (buffer web-buffer)
+    ;; Enable `search-engine-mode' by default.
+    ((default-modes (push 'search:search-engines-mode %slot-default))
+     (override-map (keymap:define-key %slot-default
+                     ;; Bind your favorite key to `search-hint'.
+                     "C-c C-s" 'engines:search-hint))
+     (search-engines (list (engines:google :shortcut "gmaps"
                                            :object :maps)
                            (engines:wordnet :shortcut "wn"
                                             :show-word-frequencies t)
