@@ -10,15 +10,7 @@
                   :documentation "The search engine to use when `search-hint'")
    (image-search-engine (google-images)
                         :type (or nyxt:search-engine null)
-                        :documentation "The search engine to use when `search-hint' on images.")
-   (keymap-scheme
-    (nyxt::define-scheme "search-engines"
-      scheme:cua
-      (list "C-u M-g s" 'search-hint)
-      scheme:emacs
-      (list "M-g s" 'search-hint)
-      scheme:vi-normal
-      (list "g s" 'search-hint)))))
+                        :documentation "The search engine to use when `search-hint' on images.")))
 
 (defmethod %search-hint ((hint nyxt/web-mode::hint))
   (nyxt:echo "Unsupported operation for hint: can't search ~S." (class-of hint)))
