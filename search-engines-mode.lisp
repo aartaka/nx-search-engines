@@ -53,9 +53,9 @@
 
 (define-command search-hint (&key annotate-visible-only-p)
   "Search for the contents of the hint with default search engines.
-In case of links and input areas, default search engine of Nyxt is
-used (unless overriden by `search-engine').
-In case of images `image-search-engine' is used."
+In the case of links and input areas, a default search engine of Nyxt
+is used (unless overridden by `search-engine').  In case of images,
+`image-search-engine' is used."
   (nyxt/web-mode::query-hints "Search element" '%search-hint
                               :annotate-visible-only-p annotate-visible-only-p))
 
