@@ -3,14 +3,14 @@
 (in-package #:nx-search-engines)
 
 (define-mode search-engines-mode ()
-  "A mode to search hints in the dedicated search engine and image search-engine."
+  "A mode to search hints in the dedicated search engine and image search engine."
   ((search-engine (nyxt::default-search-engine
                    (nyxt:search-engines (nyxt:current-buffer)))
                   :type (or nyxt:search-engine null)
-                  :documentation "The search engine to use when `search-hint'")
+                  :documentation "The search engine to use when calling `search-hint'")
    (image-search-engine (google-images)
                         :type (or nyxt:search-engine null)
-                        :documentation "The search engine to use when `search-hint' on images.")))
+                        :documentation "The search engine to use when calling `search-hint' on images.")))
 
 (defmethod %search-hint ((hint nyxt/web-mode::hint))
   (nyxt:echo "Unsupported operation for hint: can't search ~S." (class-of hint)))
