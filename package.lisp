@@ -9,7 +9,9 @@
                 #:define-command
                 #:search-engine)
   (:export #:duckduckgo
+           #:duckduckgo-images
            #:google
+           #:google-images
            #:bing-date
            #:bing
            #:bing-images
