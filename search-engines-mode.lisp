@@ -56,6 +56,6 @@
 In the case of links and input areas, a default search engine of Nyxt
 is used (unless overridden by `search-engine').  In case of images,
 `image-search-engine' is used."
-  (nyxt/web-mode::query-hints "Search element" '%search-hint
+  (nyxt/web-mode::query-hints "Search element" (lambda (results) (%search-hint (first results)))
                               :annotate-visible-only-p annotate-visible-only-p))
 
