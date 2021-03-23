@@ -19,13 +19,13 @@
   (nyxt:buffer-load (nyxt::generate-search-query
                      (nyxt/web-mode::body hint)
                      (nyxt:search-url (search-engine (nyxt:find-submode (nyxt:current-buffer)
-                                                                        'nyxt::search-engines-mode))))))
+                                                                        'search-engines-mode))))))
 
 (defmethod %search-hint ((hint nyxt/web-mode::link-hint))
   (nyxt:buffer-load (nyxt::generate-search-query
                      (nyxt/web-mode::url hint)
                      (nyxt:search-url (search-engine (nyxt:find-submode (nyxt:current-buffer)
-                                                                        'nyxt::search-engines-mode))))))
+                                                                        'search-engines-mode))))))
 
 (nyxt:define-parenscript %input-area-get-text (&key nyxt-identifier)
   (defun qs (context selector)
@@ -37,19 +37,19 @@
   (nyxt:buffer-load (nyxt::generate-search-query
                      (%input-area-get-text :nyxt-identifier (nyxt/web-mode::identifier hint))
                      (nyxt:search-url (search-engine (nyxt:find-submode (nyxt:current-buffer)
-                                                                        'nyxt::search-engines-mode))))))
+                                                                        'search-engines-mode))))))
 (defmethod %search-hint ((hint nyxt/web-mode::textarea-hint))
   (nyxt:buffer-load (nyxt::generate-search-query
                      (%input-area-get-text :nyxt-identifier (nyxt/web-mode::identifier hint))
                      (nyxt:search-url (search-engine (nyxt:find-submode (nyxt:current-buffer)
-                                                                        'nyxt::search-engines-mode))))))
+                                                                        'search-engines-mode))))))
 
 (defmethod %search-hint ((hint nyxt/web-mode::image-hint))
   (nyxt:buffer-load (nyxt::generate-search-query
                      (nyxt/web-mode::url hint)
                      (nyxt:search-url (image-search-engine
                                        (nyxt:find-submode (nyxt:current-buffer)
-                                                          'nyxt::search-engines-mode))))))
+                                                          'search-engines-mode))))))
 
 (define-command search-hint (&key annotate-visible-only-p)
   "Search for the contents of the hint with default search engines.
