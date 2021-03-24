@@ -7,7 +7,7 @@
   ((search-engine (nyxt::default-search-engine
                    (nyxt:search-engines (nyxt:current-buffer)))
                   :type (or nyxt:search-engine null)
-                  :documentation "The search engine to use when calling `search-hint'")
+                  :documentation "The search engine to use when calling `search-hint'.")
    (image-search-engine (google-images)
                         :type (or nyxt:search-engine null)
                         :documentation "The search engine to use when calling `search-hint' on images.")))
