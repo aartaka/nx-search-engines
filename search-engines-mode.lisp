@@ -51,11 +51,15 @@
                                        (nyxt:find-submode (nyxt:current-buffer)
                                                           'search-engines-mode))))))
 
+(in-package #:nyxt)
+
 (define-command search-hint (&key annotate-visible-only-p)
   "Search for the contents of the hint with default search engines.
 In the case of links and input areas, a default search engine of Nyxt
 is used (unless overridden by `search-engine').  In case of images,
 `image-search-engine' is used."
-  (nyxt/web-mode::query-hints "Search element" (lambda (results) (%search-hint (first results)))
+  (nyxt/web-mode::query-hints "Search element" (lambda (results)
+                                                 (nx-search-engines:%search-hint
+                                                  (first results)))
                               :annotate-visible-only-p annotate-visible-only-p))
 
