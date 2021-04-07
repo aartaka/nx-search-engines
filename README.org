@@ -160,7 +160,7 @@ Things left to do for DuckDuckGo:
 - Bind language settings.
 - Allow booleans where they fit (=:header-behavior=, =:safe-search=).
 
-*** DuckDuckGo Images
+*** DuckDuckGo Images (=duckduckgo-images=)
 A derived Image-search engine has the same syntax as the main one,
 except that it defaults to images.
 
@@ -177,7 +177,7 @@ Syntax for Google helper is:
 Things left to do for Google:
 - Bind object-specific sorting settings.
 - Add keyword alias for =:safe-mode= (i.e., =:strict= as alias to =t=)
-  ** Google Images
+  ** Google Images (=google-images=)
   Same as Google, but =:object= defaults to =:images=.
 ** Bing
 Bing is /special/ -- it hosts separate types of searches on separate
