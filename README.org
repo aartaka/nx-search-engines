@@ -177,6 +177,8 @@ Syntax for Google helper is:
 Things left to do for Google:
 - Bind object-specific sorting settings.
 - Add keyword alias for =:safe-mode= (i.e., =:strict= as alias to =t=)
+  ** Google Images
+  Same as Google, but =:object= defaults to =:images=.
 ** Bing
 Bing is /special/ -- it hosts separate types of searches on separate
 paths, so we need to make several engines with different search-urls:
