@@ -7,7 +7,10 @@
                 #:define-class
                 #:define-mode
                 #:define-command
-                #:search-engine)
+                #:current-mode
+                #:search-engine
+                #:new-url-query
+                #:default-search-engine)
   (:export #:duckduckgo
            #:duckduckgo-images
            #:google
