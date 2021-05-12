@@ -28,6 +28,13 @@ to the =search-engines= in buffer configuration.
 #+end_src
 
 * Geting Started
+First, you need to clone this repository to where Nyxt can find it:
+#+begin_src sh
+  # The ~/.local/share/nyxt/extensions/ is the default path Nyxt looks
+  # for extensions in. Change to wherever you set your extension path.
+  git clone https://github.com/aartaka/nx-search-engines ~/.local/share/nyxt/extensions/nx-search-engines
+#+end_src
+
 The smallest possible configuration involving nx-search-engines is:
 #+begin_src lisp
   (in-package #:nyxt-user)
