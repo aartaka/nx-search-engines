@@ -37,10 +37,6 @@ First, you need to clone this repository to where Nyxt can find it:
 
 The smallest possible configuration involving nx-search-engines is:
 #+begin_src lisp
-  (in-package #:nyxt-user)
-
-  ;; Make ASDF know where to look for nx-search-engines.
-  (asdf:load-asd "/path/to/nx-search-engines.asd")
   ;; Load search-engines.lisp after loading nx-search-engines.
   (load-after-system :nx-search-engines (nyxt-init-file "search-engines.lisp"))
 #+end_src
