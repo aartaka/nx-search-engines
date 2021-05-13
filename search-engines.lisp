@@ -486,7 +486,6 @@ This search engine, invokable with \"wn\", will show:
   (show-sense-numbers        "o7" ((nil "") (t "1"))))
 
 ;; TODO:
-;; - Google Images
 ;; - YouTube
 ;; - Yahoo
 ;; - Amazon
