@@ -25,5 +25,7 @@
            #:bing-maps
            #:bing-news
            #:bing-shopping
-           #:wordnet)
+           #:wordnet
+           #:make-wikipedia-completion
+           #:wikipedia)
   (:documentation "A collection of search engines for Nyxt browser."))

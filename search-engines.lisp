@@ -485,6 +485,56 @@ This search engine, invokable with \"wn\", will show:
   (show-sense-keys           "o6" ((nil "") (t "1")))
   (show-sense-numbers        "o7" ((nil "") (t "1"))))
 
+(declaim (ftype (function (&key (:suggestion-limit fixnum)
+                                (:request-args list)
+                                (namespace (member :general
+                                                   :talk
+                                                   :user
+                                                   :user-talk
+                                                   :wikipedia
+                                                   :wikipedia-talk
+                                                   :file
+                                                   :file-talk
+                                                   :media-wiki
+                                                   :media-wiki-talk
+                                                   :template
+                                                   :template-talk
+                                                   :help
+                                                   :help-talk
+                                                   :category
+                                                   :category-talk))))
+                make-wikipedia-completion))
+(defun make-wikipedia-completion (&key (suggestion-limit 10) (namespace :general) request-args)
+  "Helper completion function for Wikipedia.
+SUGGESTION-LIMIT is how much suggestions you want to get.
+NAMESPACE is the Wikipedia-namespace to search in. Acceptable values
+are: :general, :talk, :user, :user-talk, :wikipedia, :wikipedia-talk,
+:file, :file-talk, :media-wiki, :media-wiki-talk, :template,
+:template-talk, :help, :help-talk, :category, and :category-talk.
+
+REQUEST-ARGS are additional request function arguments,
+for example '(proxy \"socks5://localhost:9050\") for proxying."
+  (make-search-completion-function
+   :base-url (str:concat "https://en.wikipedia.org/w/api.php?action=opensearch&format=json&search=~a"
+                         (format nil "&limit=~d&namespace=~d"
+                                 suggestion-limit
+                                 (position namespace (list :general :talk
+                                                           :user :user-talk
+                                                           :wikipedia :wikipedia-talk
+                                                           :file :file-talk
+                                                           :media-wiki :media-wiki-talk
+                                                           :template :template-talk
+                                                           :help :help-talk
+                                                           :category :category-talk))))
+   :processing-function (alexandria:compose #'second #'json:decode-json-from-string)
+   :request-args request-args))
+
+(define-search-engine wikipedia
+    (:shortcut "wikipedia"
+     :search-url "https://en.wikipedia.org/w/index.php?search=~a"
+     :fallback-url (quri:uri "https://en.wikipedia.org/")
+     :completion-function (make-wikipedia-completion)))
+
 ;; TODO:
 ;; - YouTube
 ;; - Yahoo
