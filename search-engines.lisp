@@ -2,7 +2,8 @@
 
 (in-package #:nx-search-engines)
 
-(defmacro define-search-engine (name (&key shortcut fallback-url base-search-url documentation)
+(defmacro define-search-engine (name (&key shortcut fallback-url base-search-url completion-function
+                                        documentation)
                                 &body keywords)
   "Defines a new `nyxt:search-engine' called NAME and having FALLBACK-URL.
 `nyxt:search-url' of the new engine is built from BASE-SEARCH-URL and KEYWORDS.
@@ -30,6 +31,7 @@ Example:"
        (defun ,name (&key
                        (fallback-url ,fallback-url)
                        (shortcut ,shortcut)
+                       (completion-function ,completion-function)
                        ,@(mapcar #'(lambda (k)
                                      (list (first k)                 ; name
                                            (if (eq (first (third k)) :function)
@@ -42,6 +44,7 @@ Example:"
           'search-engine
           :shortcut shortcut
           :fallback-url fallback-url
+          :completion-function completion-function
           :search-url (format nil "~a~{~a~}"
                               ,base-search-url
                               (delete
@@ -64,10 +67,23 @@ Example:"
      (defun ,name (&rest args)
       (apply (function ,parent-engine) ,@arguments args))))
 
+(defun make-duckduckgo-completion (&key request-args)
+  "Helper that generates DuckDuckGo search completion functions. The only
+thing that's left to pass to it is REQUEST-ARGS to slightly modify the
+request."
+  (make-search-completion-function
+   :base-url "https://duckduckgo.com/ac/?q=~a"
+   :processing-function
+   #'(lambda (results)
+       (mapcar #'cdar
+               (json:decode-json-from-string results)))
+   :request-args request-args))
+
 (define-search-engine duckduckgo
     (:shortcut "duckduckgo"
      :fallback-url "https://duckduckgo.com/"
      :base-search-url "https://duckduckgo.com/?q=~a"
+     :completion-function (make-duckduckgo-completion)
      :documentation "DuckDuckGo `nyxt:search-engine' with the configuration as capable as the built-in settings pane.
 See DuckDuckGo settings for the names of the necessary setting and use
 the matching kebab-case keywords for this helper.")
@@ -306,10 +322,25 @@ the matching kebab-case keywords for this helper.")
 (define-derived-search-engine duckduckgo-images
     (duckduckgo :object :images :object2 :images))
 
+(defun make-google-completion (&key request-args)
+  "Helper that generates Google search completion functions. The only
+thing that's left to pass to it is REQUEST-ARGS to slightly modify the
+request."
+  (make-search-completion-function
+   :base-url "https://www.google.com/complete/search?q=~a&client=gws-wiz"
+   :processing-function
+   #'(lambda (results)
+       (mapcar (alexandria:compose (alexandria:curry #'str:replace-using '("<b>" "" "</b>" ""))
+                                   #'first)
+               (first (json:decode-json-from-string
+                       (str:replace-first "window.google.ac.h(" "" results)))))
+   :request-args request-args))
+
 (define-search-engine google
     (:shortcut "google"
      :fallback-url "google.com"
      :base-search-url "google.com/search?q=~a"
+     :completion-function (make-google-completion)
      :documentation "Google `nyxt:search-engine'.
 Does not support advanced results sorting as of now.
 Arguments:

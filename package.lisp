@@ -10,9 +10,12 @@
                 #:current-mode
                 #:search-engine
                 #:new-url-query
-                #:default-search-engine)
-  (:export #:duckduckgo
+                #:default-search-engine
+                #:make-search-completion-function)
+  (:export #:make-duckduckgo-completion
+           #:duckduckgo
            #:duckduckgo-images
+           #:make-google-completion
            #:google
            #:google-images
            #:bing-date
