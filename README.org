@@ -166,6 +166,12 @@ Things left to do for DuckDuckGo:
 *** DuckDuckGo Images (=duckduckgo-images=)
 A derived Image-search engine has the same syntax as the main one,
 except that it defaults to images.
+*** DuckDuckGo completion helper
+    =make-duckduckgo-completion= returns a search-ready completion
+    function (it's already included if you use =duckduckgo=). Syntax is:
+#+begin_src
+(make-duckduckgo-completion [:request-args list])
+#+end_src
 
 ** Google
 Syntax for Google helper is:
@@ -180,8 +186,15 @@ Syntax for Google helper is:
 Things left to do for Google:
 - Bind object-specific sorting settings.
 - Add keyword alias for =:safe-mode= (i.e., =:strict= as alias to =t=)
-  ** Google Images (=google-images=)
+*** Google Images (=google-images=)
   Same as Google, but =:object= defaults to =:images=.
+*** Google completion helper
+    =make-google-completion= returns a search-ready completion function
+    (it's already included if you use =google=). Syntax is:
+#+begin_src
+    (make-google-completion [:request-args list])
+#+end_src
+
 ** Bing
 Bing is /special/ -- it hosts separate types of searches on separate
 paths, so we need to make several engines with different search-urls:
@@ -260,6 +273,48 @@ though). Syntax is:
 
 Things to do:
 - Shorten the keyword names?
+** Wikipedia
+   Wikipedia is included in Nyxt by default, and there's not much you
+   can configure in it's search, but it should be in this repo :) Syntax:
+#+begin_src
+(wikipedia [:shortcut string]
+           ;; You'd rarely need to use this
+           [:fallback-url string]
+           [:completion-function function])
+#+end_src
+*** Wikipedia completion function helper
+    =make-wikipedia-completion= returns a search-ready completion
+    function (it's already included if you use =wikipedia=). Syntax is:
+#+begin_src
+(make-wikipedia-completion [:suggestion-limit integer]
+                           [:namespace namespace-keyword]
+                           [:request-args list])
+
+namespace-keyword := {:general | :talk | :user | :user-talk | :wikipedia | :wikipedia-talk |
+                      :file | :file-talk | :media-wiki | :media-wiki-talk | :template |
+                      :template-talk | :help | :help-talk | :category | :category-talk}
+#+end_src
+
+** Yahoo
+   Yahoo is still under development (I'm trying to figure out its
+   sorting mechanism). Usable, though. Syntax:
+#+begin_src
+(yahoo [:shortcut string]
+       ;; You'd rarely need to use this
+       [:fallback-url string]
+       [:completion-function function]
+       [:number-of-results number]
+       [:encoding {:utf}]
+       [:domain {:any | :dot-com | :dot-edu | :dot-gov | :dot-org}]
+       [:date {:past-day | :past-week | :past-month}])
+#+end_src
+*** Yahoo completion helper
+    =make-yahoo-completion= returns a search-ready completion
+    function (it's already included if you use =yahoo=). Syntax is:
+#+begin_src
+(make-yahoo-completion [:suggestion-limit integer]
+                       [:request-args list])
+#+end_src
 * =search-engines-mode=
 This mode is enabling you to search the input field contents, links,
 and images with your search engine of choice. Once it's enabled, you
