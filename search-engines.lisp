@@ -376,7 +376,7 @@ Use it for the value of :date argument to `bing'"
 
 (define-search-engine bing
     (:shortcut "bing"
-     :fallback-url "https://www.bing.com/"
+     :fallback-url (quri:uri "https://www.bing.com/")
      :base-search-url "https://www.bing.com/search?q=~a"
      :documentation "`nyxt:search-engine' for Bing.
 MY-LANGUAGE-ONLY and MY-COUNTRY-ONLY are pre-defined by Bing based on
@@ -397,25 +397,25 @@ generate with `bing-date'.")
 
 (define-search-engine bing-images
     (:shortcut "bing-images"
-     :fallback-url "https://www.bing.com/"
+     :fallback-url (quri:uri "https://www.bing.com/")
      :base-search-url "https://www.bing.com/images/search?q=~a"
      :documentation "`nyxt:search-engine' for Bing Images."))
 
 (define-search-engine bing-videos
     (:shortcut "bing-videos"
-     :fallback-url "https://www.bing.com/"
+     :fallback-url (quri:uri "https://www.bing.com/")
      :base-search-url "https://www.bing.com/videos/search?q=~a"
      :documentation "`nyxt:search-engine' for Bing Videos."))
 
 (define-search-engine bing-maps
     (:shortcut "bing-maps"
-     :fallback-url "https://www.bing.com/"
+     :fallback-url (quri:uri "https://www.bing.com/")
      :base-search-url "https://www.bing.com/maps/search?q=~a"
      :documentation "`nyxt:search-engine' for Bing Maps."))
 
 (define-search-engine bing-news
     (:shortcut "bing-news"
-     :fallback-url "https://www.bing.com/"
+     :fallback-url (quri:uri "https://www.bing.com/")
      :base-search-url "https://www.bing.com/news/search?q=~a"
      :documentation "`nyxt:search-engine' for Bing News.
 
@@ -439,12 +439,12 @@ INTERVAL is the time since news publishing. It can be one of :all,
 
 (define-search-engine bing-shopping
     (:shortcut "bing-shopping"
-     :fallback-url "https://www.bing.com/"
+     :fallback-url (quri:uri "https://www.bing.com/")
      :base-search-url "https://www.bing.com/shopping/search?q=~a"
      :documentation "`nyxt:search-engine' for Bing Shopping."))
 
 (define-search-engine wordnet (:shortcut "wordnet"
-                               :fallback-url "http://wordnetweb.princeton.edu/perl/webwn"
+                               :fallback-url (quri:uri "http://wordnetweb.princeton.edu/perl/webwn")
                                :base-search-url "http://wordnetweb.princeton.edu/perl/webwn?s=~a"
                                :documentation "`nyxt:search-engine' for WordNet.
 
