@@ -251,7 +251,7 @@ though). Syntax is:
          [:show-examples boolean]
          [:show-glosses boolean]
          [:show-word-frequencies boolean]
-         [:show-db-loactions boolean]
+         [:show-db-locations boolean]
          [:show-lexical-file-info boolean]
          [:show-lexical-file-numbers boolean]
          [:show-sense-keys boolean]
