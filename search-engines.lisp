@@ -535,6 +535,39 @@ for example '(proxy \"socks5://localhost:9050\") for proxying."
      :fallback-url (quri:uri "https://en.wikipedia.org/")
      :completion-function (make-wikipedia-completion)))
 
+(defun make-yahoo-completion (&key request-args (suggestion-limit 10))
+  "Completion helper for Yahoo! search engine.
+SUGGESTION-LIMIT is how much suggestions you want to see.
+REQUEST-ARGS is a list of args to pass to request function."
+  (make-search-completion-function
+   :base-url (str:concat "https://search.yahoo.com/sugg/gossip/gossip-us-ura/?command=~a&output=sd1"
+                         (format nil "&nresults=~d" suggestion-limit))
+   :processing-function
+   #'(lambda (results)
+       (mapcar #'cdar
+               (alexandria:assoc-value
+                (json:decode-json-from-string
+                 (ppcre:regex-replace "YAHOO.*\\(" results ""))
+                :r)))
+   :request-args request-args))
+
+(define-search-engine yahoo
+    (:shortcut "yahoo"
+     :fallback-url (quri:uri "https://search.yahoo.com/")
+     :base-search-url "https://search.yahoo.com/search?p=~a"
+     :completion-function (make-yahoo-completion)
+     :documentation "Yahoo! `nyxt:search-engine'.")
+  (number-of-results "n" ((:default "10")))
+  (encoding "ei" ((:utf) "UTF-8"))
+  (domain "vs" ((:any "")
+                (:dot-com ".com")
+                (:dot-edu ".edu")
+                (:dot-gov ".gov")
+                (:dot-org ".org")))
+  (date "btf" ((:past-day "d")
+               (:past-week "d")
+               (:past-month "m"))))
+
 ;; TODO:
 ;; - YouTube
 ;; - Yahoo

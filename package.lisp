@@ -27,5 +27,7 @@
            #:bing-shopping
            #:wordnet
            #:make-wikipedia-completion
-           #:wikipedia)
+           #:wikipedia
+           #:make-yahoo-completion
+           #:yahoo)
   (:documentation "A collection of search engines for Nyxt browser."))
