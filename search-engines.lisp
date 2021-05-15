@@ -531,7 +531,7 @@ for example '(proxy \"socks5://localhost:9050\") for proxying."
 
 (define-search-engine wikipedia
     (:shortcut "wikipedia"
-     :search-url "https://en.wikipedia.org/w/index.php?search=~a"
+     :base-search-url "https://en.wikipedia.org/w/index.php?search=~a"
      :fallback-url (quri:uri "https://en.wikipedia.org/")
      :completion-function (make-wikipedia-completion)))
 
