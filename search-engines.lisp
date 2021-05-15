@@ -558,7 +558,7 @@ REQUEST-ARGS is a list of args to pass to request function."
      :completion-function (make-yahoo-completion)
      :documentation "Yahoo! `nyxt:search-engine'.")
   (number-of-results "n" ((:default "10")))
-  (encoding "ei" ((:utf) "UTF-8"))
+  (encoding "ei" ((:utf "UTF-8")))
   (domain "vs" ((:any "")
                 (:dot-com ".com")
                 (:dot-edu ".edu")
