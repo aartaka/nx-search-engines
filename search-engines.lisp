@@ -32,6 +32,7 @@ Example:"
                        (fallback-url ,fallback-url)
                        (shortcut ,shortcut)
                        (completion-function ,completion-function)
+                       (base-search-url ,base-search-url)
                        ,@(mapcar #'(lambda (k)
                                      (list (first k)                 ; name
                                            (if (eq (first (third k)) :function)
@@ -46,7 +47,7 @@ Example:"
           :fallback-url fallback-url
           :completion-function completion-function
           :search-url (format nil "~a~{~a~}"
-                              ,base-search-url
+                              base-search-url
                               (delete
                                nil
                                (list
