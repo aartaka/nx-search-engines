@@ -88,8 +88,8 @@ A syntax resembling CLHS/man pages is used in search engines description. Basica
 Syntax for the DuckDuckGo-generating function is:
 #+begin_src
   (duckduckgo [:shortcut string]
-              ;; You'd rarely need to use this
-              [:fallback-url string]
+              [:fallback-url quri:uri]
+              [:base-search-url string]
               ;; DuckDuckGo uses two (four?) object-related keywords.
               ;; To ensure the right search object, use both :object and :object2.
               [:object {:all | :images | :videos | :news}]
@@ -177,8 +177,8 @@ except that it defaults to images.
 Syntax for Google helper is:
 #+begin_src
 (google [:shortcut string]
-        ;; You'd rarely need to use this
-        [:fallback-url string]
+        [:fallback-url quri:uri]
+        [:base-search-url string]
         [:safe-search boolean]
         [:object {:all | :image | :video | :news | :shopping | :books | :finance}])
 #+end_src
@@ -202,8 +202,8 @@ paths, so we need to make several engines with different search-urls:
 Syntax is:
 #+begin_src
 (bing [:shortcut string]
-      ;; You'd rarely need to use this
-      [:fallback-url string]
+      [:fallback-url quri:uri]
+      [:base-search-url string]
       [:my-language-only boolean]
       [:my-country-only boolean]
       [:date {:all | :past-24-hours | :past-week | :past-month | :past-year |
@@ -219,29 +219,29 @@ Things to do:
 Syntax is:
 #+begin_src
 (bing-images [:shortcut string]
-             ;; You'd rarely need to use this
-             [:fallback-url string])
+             [:fallback-url quri:uri]
+             [:base-search-url string])
 #+end_src
 *** Bing Videos
 Syntax is:
 #+begin_src
 (bing-videos [:shortcut string]
-             ;; You'd rarely need to use this
-             [:fallback-url string])
+             [:fallback-url quri:uri]
+             [:base-search-url string])
 #+end_src
-*** Bing Mapsb
+*** Bing Maps
 Syntax is:
 #+begin_src
 (bing-maps [:shortcut string]
-           ;; You'd rarely need to use this
-           [:fallback-url string])
+           [:fallback-url quri:uri]
+           [:base-search-url string])
 #+end_src
 *** Bing News
 Syntax is:
 #+begin_src
 (bing-news [:shortcut string]
-           ;; You'd rarely need to use this
-           [:fallback-url string]
+           [:fallback-url quri:uri]
+           [:base-search-url string]
            [:interval {:all | :past-5-minutes | :past-15-mimutes | :past-30-minutes |
                        :past-hour | :past-4-hours | :past-6-hours | :past-24-hours |
                        :past-day | :past-7-days | :past-week | :past-30-days | :past-month}])
@@ -250,8 +250,8 @@ Syntax is:
 Syntax is:
 #+begin_src
 (bing-shopping [:shortcut string]
-               ;; You'd rarely need to use this
-               [:fallback-url string])
+               [:fallback-url quri:uri]
+               [:base-search-url string])
 #+end_src
 ** WordNet
 While WordNet is not a general purpose search engine, it's a great
@@ -259,8 +259,8 @@ dictionary and a linguistic tool (I mostly use it as a dictionary,
 though). Syntax is:
 #+begin_src
 (wordnet [:shortcut string]
-         ;; You'd rarely need to use this
-         [:fallback-url string]
+         [:fallback-url quri:uri]
+         [:base-search-url string]
          [:show-examples boolean]
          [:show-glosses boolean]
          [:show-word-frequencies boolean]
@@ -278,8 +278,8 @@ Things to do:
    can configure in it's search, but it should be in this repo :) Syntax:
 #+begin_src
 (wikipedia [:shortcut string]
-           ;; You'd rarely need to use this
-           [:fallback-url string]
+           [:fallback-url quri:uri]
+           [:base-search-url string]
            [:completion-function function])
 #+end_src
 *** Wikipedia completion function helper
@@ -300,8 +300,8 @@ namespace-keyword := {:general | :talk | :user | :user-talk | :wikipedia | :wiki
    sorting mechanism). Usable, though. Syntax:
 #+begin_src
 (yahoo [:shortcut string]
-       ;; You'd rarely need to use this
-       [:fallback-url string]
+       [:fallback-url quri:uri]
+       [:base-search-url string]
        [:completion-function function]
        [:number-of-results number]
        [:encoding {:utf}]
