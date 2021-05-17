@@ -569,6 +569,28 @@ REQUEST-ARGS is a list of args to pass to request function."
                (:past-week "d")
                (:past-month "m"))))
 
+(define-search-engine searx
+    (:shortcut "searx"
+     :fallback-url (quri:uri "https://searx.bar")
+     :base-search-url "https://searx.bar/search?q=~a"
+     :documentation "SearX `nyxt:search-engine'.")
+  (categories "categories" ((:general "general")
+                            (:images "images")
+                            (:files "files")
+                            (:it "it")
+                            (:map "map")
+                            (:music "music")
+                            (:news "news")
+                            (:science "science")
+                            (:social-media "social media")
+                            (:videos "videos")))
+  (language "language" ((:default "")))
+  (time-range "time_range" ((:default "")
+                            (:day "day")
+                            (:week "week")
+                            (:month "month")
+                            (:year "year"))))
+
 ;; TODO:
 ;; - YouTube
 ;; - Yahoo
@@ -585,7 +607,6 @@ REQUEST-ARGS is a list of args to pass to request function."
 ;; - Ecosia
 ;; - Qwant
 ;; - Search Encrypt
-;; - SearX
 ;; - Yandex
 ;; - Yandex.Images
 ;; - Gibiru

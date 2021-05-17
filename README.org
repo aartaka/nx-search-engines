@@ -315,6 +315,18 @@ namespace-keyword := {:general | :talk | :user | :user-talk | :wikipedia | :wiki
 (make-yahoo-completion [:suggestion-limit integer]
                        [:request-args list])
 #+end_src
+** SearX
+   Syntax:
+#+begin_src
+(searx [:shortcut string]
+       [:fallback-url quri:uri]
+       [:base-search-url string] ; customize the instance there
+       [:completion-function function]
+       [:categories {:general | :images | :files | :map | :it |
+                     :news | :science | :social-media | :videos}]
+       [:language string] ; like en-US
+       [:time-range {:day | :week | :month | :year}])
+#+end_src
 * =search-engines-mode=
 This mode is enabling you to search the input field contents, links,
 and images with your search engine of choice. Once it's enabled, you
