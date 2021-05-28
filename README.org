@@ -20,7 +20,7 @@ to the =search-engines= in buffer configuration.
 
 #+begin_src lisp
   (define-configuration buffer
-    ((search-engines (append %slot-default
+    ((search-engines (append %slot-default%
                              (list (engines:duckduckgo
                                     :theme :terminal
                                     :instant-answers nil
@@ -48,8 +48,8 @@ in your init file, and
   ;; nx-search-engines-provided ones.
   (define-configuration (buffer web-buffer)
     ;; Enable `search-engine-mode' by default.
-    ((default-modes (push 'search:search-engines-mode %slot-default))
-     (override-map (keymap:define-key %slot-default
+    ((default-modes (append '(search:search-engines-mode) %slot-default%))
+     (override-map (keymap:define-key %slot-default%
                      ;; Bind your favorite key to `search-hint'.
                      "C-c C-s" 'engines:search-hint))
      (search-engines (list (engines:google :shortcut "gmaps"
