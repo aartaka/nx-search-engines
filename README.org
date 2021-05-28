@@ -48,7 +48,7 @@ in your init file, and
   ;; nx-search-engines-provided ones.
   (define-configuration (buffer web-buffer)
     ;; Enable `search-engine-mode' by default.
-    ((default-modes (append '(search:search-engines-mode) %slot-default%))
+    ((default-modes (append '(engines:search-engines-mode) %slot-default%))
      (override-map (keymap:define-key %slot-default%
                      ;; Bind your favorite key to `search-hint'.
                      "C-c C-s" 'engines:search-hint))
