@@ -82,7 +82,7 @@ request."
 
 (define-search-engine duckduckgo
     (:shortcut "duckduckgo"
-     :fallback-url "https://duckduckgo.com/"
+     :fallback-url (quri:uri "https://duckduckgo.com/")
      :base-search-url "https://duckduckgo.com/?q=~a"
      :completion-function (make-duckduckgo-completion)
      :documentation "DuckDuckGo `nyxt:search-engine' with the configuration as capable as the built-in settings pane.
