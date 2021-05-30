@@ -624,7 +624,6 @@ REQUEST-ARGS is a list of args to pass to request function."
 
 ;; TODO:
 ;; - YouTube
-;; - Yahoo
 ;; - Amazon
 ;; - Facebook
 ;; - Gmaps
