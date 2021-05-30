@@ -597,7 +597,7 @@ REQUEST-ARGS is a list of args to pass to request function."
   (let ((parsed-int (nth-value 0 (parse-integer input :junk-allowed t))))
     (if (plusp parsed-int)
         (format "~s" nil parsed-int)
-        ((log:warn "The value specified for IMAGES-SIZE-EXACT-WIDTH or IMAGES-SIZE-EXACT-HEIGHT
+        (progn (log:warn "The value specified for IMAGES-SIZE-EXACT-WIDTH or IMAGES-SIZE-EXACT-HEIGHT
 is not a positive integer. Defaulting to empty value")
          ""))))
 
@@ -607,7 +607,7 @@ is not a positive integer. Defaulting to empty value")
          (parsed-hex-int-string (format nil "~X" parsed-dec-int)))
     (if (eql (length parsed-hex-int-string) 162)
         parsed-hex-int-string
-        ((log:warn "The value specified for SETTINGS-STRING is not valid.
+        (progn (log:warn "The value specified for SETTINGS-STRING is not valid.
  Defaulting to empty value")
          ""))))
 
@@ -615,7 +615,7 @@ is not a positive integer. Defaulting to empty value")
     (:shortcut "startpage"
      :fallback-url (quri:uri "https://startpage.com/")
      :base-search-url "https://startpage.com/?query=~a"
-     :completion-function (make-startpage-completion)
+     ;; :completion-function (make-startpage-completion) ; TODO write it
      :documentation "Startpage `nyxt:search-engine' which can configure the settings accessible from the search page.
 In order to specify settings from Startpage's \"Settings\" page, set `settings-string' to the hexadecimal number situated
 after \"prfe=\" in the \"Save without cookie\" section.")
@@ -677,11 +677,6 @@ after \"prfe=\" in the \"Save without cookie\" section.")
                             (:medium "isz:m")
                             (:large "isz:l")
                             (:icon "isz:i")))
-  (images-size "flimgsize" ((:any "")
-                            (:large "isz:l")
-                            (:medium "isz:m")
-                            (:large "isz:l")
-                            (:icon "isz:i")))
   (images-size-predefined "image-size-select" ((:400x300 "isz:lt,islt:qsvgs")
                                                (:640x480 "isz:lt,islt:vga")
                                                (:800x600 "isz:lt,islt:svga")
@@ -698,8 +693,8 @@ after \"prfe=\" in the \"Save without cookie\" section.")
                                                (:9600x7200 "isz:lt,islt:70mp"))) ; 70MP
   ;; specify exact image width and/or height in pixels. If only one value is used, the other should be present but
   ;; empty, i.e. `&flimgexwidth=400&flimgexwidth=', in which case square images will be returned. TODO remove this and add to README
-  (images-size-exact-width "flimgexwidth" (:function #'startpage-image-size)) ;; TODO needs function definition
-  (images-size-exact-height "flimgexheight" (:function #'startpage-image-size)) ;; TODO needs function definition
+  (images-size-exact-width "flimgexwidth" (:function #'startpage-image-size))
+  (images-size-exact-height "flimgexheight" (:function #'startpage-image-size))
   (images-color "flimgcolor" ((:any "ic:")
                               (:color-only "ic:color")
                               (:black-white "ic:gray")
@@ -734,7 +729,6 @@ after \"prfe=\" in the \"Save without cookie\" section.")
   ;; `https://www.startpage.com/do/mypage.pl?prfe=STRING', where STRING is a 162 character long
   ;; hexadecimal number, which should be the value of `settings-string'. TODO move this to README
   (settings-string "prfe" (:function #'startpage-settings-string)))
-
 ;; TODO:
 ;; - YouTube
 ;; - Yahoo
