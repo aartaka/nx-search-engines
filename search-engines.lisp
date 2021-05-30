@@ -8,13 +8,44 @@
   "Defines a new `nyxt:search-engine' called NAME and having FALLBACK-URL.
 `nyxt:search-url' of the new engine is built from BASE-SEARCH-URL and KEYWORDS.
 
-BASE-SEARCH-URL is a control string with one placeholder (e.g.,
-\"example.com/?q=~a\") each keyword in KEYWORDS is a list of a
-form (KEYWORD URI-PARAMETER VALUES), where VALUES is either
-- an association list of possible values and their URI representations, or
-- a function to process the value provided by the user.
+FALLBACK-URL, SHORTCUT, AND COMPLETION-FUNCTION are documented in
+`nyxt:search-engine'.
 
-Example:"
+DOCUMENTATION is the documentation string for the function that
+define-search-engine generates.
+
+BASE-SEARCH-URL is a control string with one placeholder (e.g.,
+\"example.com/?q=~a\").
+
+Each keyword in KEYWORDS is a list like (KEYWORD URI-PARAM VALUES),
+where VALUES is either
+- an association list of possible values and their URI representations, or
+- a (:function FUNC) list where FUNC is function to process the value
+  provided by the user.
+
+Examples (documentation and completion functions omitted for brevity):
+Simple search engine for Wikipedia:
+
+\(define-search-engine wikipedia
+    (:shortcut \"wikipedia\"
+     :base-search-url \"https://en.wikipedia.org/w/index.php?search=~a\"
+     :fallback-url (quri:uri \"https://en.wikipedia.org/\")))
+
+A more involved example with keywords:
+
+\(define-search-engine google
+    (:shortcut \"google\"
+     :fallback-url \"google.com\"
+     :base-search-url \"google.com/search?q=~a\")
+  (safe-search \"safe\" ((t   \"strict\")
+                         (nil \"images\")))
+  (object \"tbm\" ((:all      \"\")
+                   (:image    \"isch\")
+                   (:video    \"vid\")
+                   (:news     \"nws\")
+                   (:shopping \"shop\")
+                   (:books    \"bks\")
+                   (:finance  \"fin\"))))"
   (flet ((supplied-p (symbol)
            (intern (format nil "~s-SUPPLIED-P" symbol)
                    (symbol-package symbol)))
