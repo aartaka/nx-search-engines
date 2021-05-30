@@ -596,8 +596,9 @@ REQUEST-ARGS is a list of args to pass to request function."
      :fallback-url (quri:uri "https://startpage.com/")
      :base-search-url "https://startpage.com/?query=~a"
      :completion-function (make-startpage-completion)
-     :documentation "Startpage `nyxt:search-engine' with the configuration as capable as the built-in settings pane.
-See Startpage settings for the names of the necessary settings and use
+     :documentation "Startpage `nyxt:search-engine' which can configure the settings accessible from the search page.
+In order to specify settings from Startpage's \"Settings\" page, set `settings-string' to the hexadecimal number situated
+after "prfe=" in the \"Save without cookie\" section. See Startpage settings for the names of the necessary settings and use
 the matching kebab-case keywords for this helper.")
   (object "cat" ((:web "web")
                  (:images "pics")
