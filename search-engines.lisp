@@ -603,9 +603,9 @@ is not a positive integer. Defaulting to empty value")
 
 (declaim (ftype (function (string) string) startpage-settings-string))
 (defun startpage-settings-string (input)
-  (let* ((parsed-dec-int (nth-value 0 (parse-integer input :junk-allowed t :radix 12)))
+  (let* ((parsed-dec-int (nth-value 0 (parse-integer input :junk-allowed t :radix 16)))
          (parsed-hex-int-string (format nil "~X" parsed-dec-int)))
-    (if (eql (length parsed-hex-int-string) 162)
+    (if (eql (length parsed-hex-int-string) 160) ; The settings string should be 160 characters long.
         parsed-hex-int-string
         (progn (log:warn "The value specified for SETTINGS-STRING is not valid.
  Defaulting to empty value")
@@ -726,7 +726,7 @@ after \"prfe=\" in the \"Save without cookie\" section.")
                           (:mont "m")))
   ;; To use the advanced settings, users should visit https://startpage.com/do/settings,
   ;; modify settings then click on "copy settings URL". The copied URL is of the form
-  ;; `https://www.startpage.com/do/mypage.pl?prfe=STRING', where STRING is a 162 character long
+  ;; `https://www.startpage.com/do/mypage.pl?prfe=STRING', where STRING is a 160 character long
   ;; hexadecimal number, which should be the value of `settings-string'. TODO move this to README
   (settings-string "prfe" (:function #'startpage-settings-string)))
 ;; TODO:
