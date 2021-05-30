@@ -591,6 +591,132 @@ REQUEST-ARGS is a list of args to pass to request function."
                             (:month "month")
                             (:year "year"))))
 
+(define-search-engine startpage
+    (:shortcut "startpage"
+     :fallback-url (quri:uri "https://startpage.com/")
+     :base-search-url "https://startpage.com/?query=~a"
+     :completion-function (make-startpage-completion)
+     :documentation "Startpage `nyxt:search-engine' with the configuration as capable as the built-in settings pane.
+See Startpage settings for the names of the necessary settings and use
+the matching kebab-case keywords for this helper.")
+  (object "cat" ((:web "web")
+                 (:images "pics")
+                 (:videos "video")
+                 (:news "news")))
+  (web-date "with_date" ((:any "")
+                         (:day "d")
+                         (:week "w")
+                         (:month "m")
+                         (:year "y")))
+  (web-family-filter "qadf" ((:off)
+                             (:on "none")))
+  (web-region "qsr" ((:all "all")
+                     (:australia "en_AU")
+                     (:austria "de_AT")
+                     (:belarus "ry_BY")
+                     (:belgium-fr "fr_BE")
+                     (:belgium-nl "nl_BE")
+                     (:brazil "pt-BR_BR")
+                     (:bulgaria "bg_BG")
+                     (:canada "en_CA")
+                     (:canada-fr "en_FR")
+                     (:chile "es_CL")
+                     (:china "zh-CN_CN")
+                     (:denmark "da_DK")
+                     (:egypt "ar_EG")
+                     (:finland "fi_FI")
+                     (:france "fr_FR")
+                     (:germany "de_DE")
+                     (:greece "el_GR")
+                     (:honk-kong "zh-TW_HK")
+                     (:india "hi_IN")
+                     (:japan "ja_JP")
+                     (:korean "ko_KR")
+                     (:malaysia "ms_MY")
+                     (:malaysia-en "en_MY")
+                     (:netherlands "nl_NL")
+                     (:norway "no_NO")
+                     (:poland "pl_PL")
+                     (:portugal "pt_PT")
+                     (:romania "ro_RO")
+                     (:russia "ru_RU")
+                     (:south-africa "en_ZA")
+                     (:spain "es_ES")
+                     (:spain-ca "ca_ES")
+                     (:sweden "sv_SE")
+                     (:switzerland-de "de_CH")
+                     (:switzerland-fr "fr_CH")
+                     (:switzerland-it "it_CH")
+                     (:taiwan "zh-TW_TW")
+                     (:turkey "tr_TR")
+                     (:united-kingdom "en-GB_GB")
+                     (:united-states-en "en_US")
+                     (:united-states-es "es_US")))
+  (images-size "flimgsize" ((:any "")
+                            (:large "isz%3Al")
+                            (:medium "isz%3Am")
+                            (:large "isz%3Al")
+                            (:icon "isz%3Ai")))
+  (images-size "flimgsize" ((:any "")
+                            (:large "isz%3Al")
+                            (:medium "isz%3Am")
+                            (:large "isz%3Al")
+                            (:icon "isz%3Ai")))
+  (images-size-predefined "image-size-select" ((:400x300 "isz%3Alt%2Cislt%3Aqsvgs")
+                                               (:640x480 "isz%3Alt%2Cislt%3Avga")
+                                               (:800x600 "isz%3Alt%2Cislt%3Asvga")
+                                               (:1024x768 "isz%3Alt%2Cislt%3Axga")
+                                               (:1600x1200 "isz%3Alt%2Cislt%3A2mp") ; 2MP
+                                               (:2272x1704 "isz%3Alt%2Cislt%3A4mp") ; 4MP
+                                               (:2816x2112 "isz%3Alt%2Cislt%3A6mp") ; 6MP
+                                               (:3264x2448 "isz%3Alt%2Cislt%3A8mp") ; 8MP
+                                               (:3648x2736 "isz%3Alt%2Cislt%3A10mp") ; 10MP
+                                               (:4096x3072 "isz%3Alt%2Cislt%3A12mp") ; 12MP
+                                               (:4480x3360 "isz%3Alt%2Cislt%3A15mp") ; 15MP
+                                               (:5120x3840 "isz%3Alt%2Cislt%3A20mp") ; 20MP
+                                               (:7216x5412 "isz%3Alt%2Cislt%3A40mp") ; 40MP
+                                               (:9600x7200 "isz%3Alt%2Cislt%3A70mp"))) ; 70MP
+  ;; specify exact image width and/or height in pixels. If only one value is used, the other should be present but
+  ;; empty, i.e. `&flimgexwidth=400&flimgexwidth=', in which case square images will be returned.
+  (images-size-exact-width "flimgexwidth" (startpage-image-size)) ;; TODO needs function definition
+  (images-size-exact-width "flimgexheight" (startpage-image-size)) ;; TODO needs function definition
+
+  (images-color "flimgcolor" ((:any "ic%3A")
+                              (:color-only "ic%3Acolor")
+                              (:black-white "ic%3Agray")
+                              (:transparent "ic%3Atrans")
+                              (:red "ic%3Aspecific%2Cisc%3Ared")
+                              (:orange "ic%3Aspecific%2Cisc%3Aorange")
+                              (:yellow "ic%3Aspecific%2Cisc%3Ayellow")
+                              (:green "ic%3Aspecific%2Cisc%3Agreen")
+                              (:teal "ic%3Aspecific%2Cisc%3Ateal")
+                              (:blue "ic%3Aspecific%2Cisc%3Ablue")
+                              (:purple "ic%3Aspecific%2Cisc%3Apurple")
+                              (:pink "ic%3Aspecific%2Cisc%3Apink")
+                              (:gray "ic%3Aspecific%2Cisc%3Agray")
+                              (:black "ic%3Aspecific%2Cisc%3Ablack")
+                              (:brown "ic%3Aspecific%2Cisc%3Abrown")))
+  (images-type "flimgtype" ((:any "")
+                            (:jpg "jpg")
+                            (:png "png")
+                            (:gif "gif")))
+  (videos-filter "sort_by" ((:relevant "")
+                            (:popular "popular")
+                            (:recent "recent")))
+  (videos-length "with_duration" ((:any "")
+                                  (:short "short")
+                                  (:medium "medium")
+                                  (:long "long")))
+  (news-date "with_date" ((:day "d")
+                          (:week "w")
+                          (:mont "m")))
+  ;; To use the advanced settings, users should visit https://startpage.com/do/settings,
+  ;; modify settings then click on "copy settings URL". The copied URL is of the form
+  ;; `https://www.startpage.com/do/mypage.pl?prfe=STRING', where STRING is a 162 character long
+  ;; hexadecimal number, which should be the value of `settings-string'.
+(settings-string "prfe" (startpage-settings-string)) ; TODO write function
+
+  )
 ;; TODO:
 ;; - YouTube
 ;; - Yahoo
@@ -603,7 +729,6 @@ REQUEST-ARGS is a list of args to pass to request function."
 ;; - Baidu
 ;; - WolframAlpha
 ;; - Boardreader
-;; - StartPage
 ;; - Ecosia
 ;; - Qwant
 ;; - Search Encrypt
