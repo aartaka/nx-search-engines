@@ -591,15 +591,34 @@ REQUEST-ARGS is a list of args to pass to request function."
                             (:month "month")
                             (:year "year"))))
 
-(define-search-engine startpage
+(serapeum:export-always 'startpage-image-size)
+(declaim (ftype (function (string) string) startpage-image-size))
+(defun startpage-image-size (input)
+  (let ((parsed-int (nth-value 0 (parse-integer input :junk-allowed t))))
+    (if (plusp parsed-int)
+        (format "~s" nil parsed-int)
+        ((log:warn "The value specified for IMAGES-SIZE-EXACT-WIDTH or IMAGES-SIZE-EXACT-HEIGHT
+is not a positive integer. Defaulting to empty value")
+         ""))))
+
+(declaim (ftype (function (string) string) startpage-settings-string))
+(defun startpage-settings-string (input)
+  (let* ((parsed-dec-int (nth-value 0 (parse-integer input :junk-allowed t :radix 12)))
+         (parsed-hex-int-string (format nil "~X" parsed-dec-int)))
+    (if (eql (length parsed-hex-int-string) 162)
+        parsed-hex-int-string
+        ((log:warn "The value specified for SETTINGS-STRING is not valid.
+ Defaulting to empty value")
+         ""))))
+
+(define-search-engine startpage ; TODO test with POST requests
     (:shortcut "startpage"
      :fallback-url (quri:uri "https://startpage.com/")
      :base-search-url "https://startpage.com/?query=~a"
      :completion-function (make-startpage-completion)
      :documentation "Startpage `nyxt:search-engine' which can configure the settings accessible from the search page.
 In order to specify settings from Startpage's \"Settings\" page, set `settings-string' to the hexadecimal number situated
-after "prfe=" in the \"Save without cookie\" section. See Startpage settings for the names of the necessary settings and use
-the matching kebab-case keywords for this helper.")
+after \"prfe=\" in the \"Save without cookie\" section.")
   (object "cat" ((:web "web")
                  (:images "pics")
                  (:videos "video")
@@ -654,49 +673,48 @@ the matching kebab-case keywords for this helper.")
                      (:united-states-en "en_US")
                      (:united-states-es "es_US")))
   (images-size "flimgsize" ((:any "")
-                            (:large "isz%3Al")
-                            (:medium "isz%3Am")
-                            (:large "isz%3Al")
-                            (:icon "isz%3Ai")))
+                            (:large "isz:l")
+                            (:medium "isz:m")
+                            (:large "isz:l")
+                            (:icon "isz:i")))
   (images-size "flimgsize" ((:any "")
-                            (:large "isz%3Al")
-                            (:medium "isz%3Am")
-                            (:large "isz%3Al")
-                            (:icon "isz%3Ai")))
-  (images-size-predefined "image-size-select" ((:400x300 "isz%3Alt%2Cislt%3Aqsvgs")
-                                               (:640x480 "isz%3Alt%2Cislt%3Avga")
-                                               (:800x600 "isz%3Alt%2Cislt%3Asvga")
-                                               (:1024x768 "isz%3Alt%2Cislt%3Axga")
-                                               (:1600x1200 "isz%3Alt%2Cislt%3A2mp") ; 2MP
-                                               (:2272x1704 "isz%3Alt%2Cislt%3A4mp") ; 4MP
-                                               (:2816x2112 "isz%3Alt%2Cislt%3A6mp") ; 6MP
-                                               (:3264x2448 "isz%3Alt%2Cislt%3A8mp") ; 8MP
-                                               (:3648x2736 "isz%3Alt%2Cislt%3A10mp") ; 10MP
-                                               (:4096x3072 "isz%3Alt%2Cislt%3A12mp") ; 12MP
-                                               (:4480x3360 "isz%3Alt%2Cislt%3A15mp") ; 15MP
-                                               (:5120x3840 "isz%3Alt%2Cislt%3A20mp") ; 20MP
-                                               (:7216x5412 "isz%3Alt%2Cislt%3A40mp") ; 40MP
-                                               (:9600x7200 "isz%3Alt%2Cislt%3A70mp"))) ; 70MP
+                            (:large "isz:l")
+                            (:medium "isz:m")
+                            (:large "isz:l")
+                            (:icon "isz:i")))
+  (images-size-predefined "image-size-select" ((:400x300 "isz:lt,islt:qsvgs")
+                                               (:640x480 "isz:lt,islt:vga")
+                                               (:800x600 "isz:lt,islt:svga")
+                                               (:1024x768 "isz:lt,islt:xga")
+                                               (:1600x1200 "isz:lt,islt:2mp") ; 2MP
+                                               (:2272x1704 "isz:lt,islt:4mp") ; 4MP
+                                               (:2816x2112 "isz:lt,islt:6mp") ; 6MP
+                                               (:3264x2448 "isz:lt,islt:8mp") ; 8MP
+                                               (:3648x2736 "isz:lt,islt:10mp") ; 10MP
+                                               (:4096x3072 "isz:lt,islt:12mp") ; 12MP
+                                               (:4480x3360 "isz:lt,islt:15mp") ; 15MP
+                                               (:5120x3840 "isz:lt,islt:20mp") ; 20MP
+                                               (:7216x5412 "isz:lt,islt:40mp") ; 40MP
+                                               (:9600x7200 "isz:lt,islt:70mp"))) ; 70MP
   ;; specify exact image width and/or height in pixels. If only one value is used, the other should be present but
-  ;; empty, i.e. `&flimgexwidth=400&flimgexwidth=', in which case square images will be returned.
-  (images-size-exact-width "flimgexwidth" (startpage-image-size)) ;; TODO needs function definition
-  (images-size-exact-width "flimgexheight" (startpage-image-size)) ;; TODO needs function definition
-
-  (images-color "flimgcolor" ((:any "ic%3A")
-                              (:color-only "ic%3Acolor")
-                              (:black-white "ic%3Agray")
-                              (:transparent "ic%3Atrans")
-                              (:red "ic%3Aspecific%2Cisc%3Ared")
-                              (:orange "ic%3Aspecific%2Cisc%3Aorange")
-                              (:yellow "ic%3Aspecific%2Cisc%3Ayellow")
-                              (:green "ic%3Aspecific%2Cisc%3Agreen")
-                              (:teal "ic%3Aspecific%2Cisc%3Ateal")
-                              (:blue "ic%3Aspecific%2Cisc%3Ablue")
-                              (:purple "ic%3Aspecific%2Cisc%3Apurple")
-                              (:pink "ic%3Aspecific%2Cisc%3Apink")
-                              (:gray "ic%3Aspecific%2Cisc%3Agray")
-                              (:black "ic%3Aspecific%2Cisc%3Ablack")
-                              (:brown "ic%3Aspecific%2Cisc%3Abrown")))
+  ;; empty, i.e. `&flimgexwidth=400&flimgexwidth=', in which case square images will be returned. TODO remove this and add to README
+  (images-size-exact-width "flimgexwidth" (:function #'startpage-image-size)) ;; TODO needs function definition
+  (images-size-exact-height "flimgexheight" (:function #'startpage-image-size)) ;; TODO needs function definition
+  (images-color "flimgcolor" ((:any "ic:")
+                              (:color-only "ic:color")
+                              (:black-white "ic:gray")
+                              (:transparent "ic:trans")
+                              (:red "ic:specific,isc:red")
+                              (:orange "ic:specific,isc:orange")
+                              (:yellow "ic:specific,isc:yellow")
+                              (:green "ic:specific,isc:green")
+                              (:teal "ic:specific,isc:teal")
+                              (:blue "ic:specific,isc:blue")
+                              (:purple "ic:specific,isc:purple")
+                              (:pink "ic:specific,isc:pink")
+                              (:gray "ic:specific,isc:gray")
+                              (:black "ic:specific,isc:black")
+                              (:brown "ic:specific,isc:brown")))
   (images-type "flimgtype" ((:any "")
                             (:jpg "jpg")
                             (:png "png")
@@ -714,8 +732,8 @@ the matching kebab-case keywords for this helper.")
   ;; To use the advanced settings, users should visit https://startpage.com/do/settings,
   ;; modify settings then click on "copy settings URL". The copied URL is of the form
   ;; `https://www.startpage.com/do/mypage.pl?prfe=STRING', where STRING is a 162 character long
-  ;; hexadecimal number, which should be the value of `settings-string'.
-  (settings-string "prfe" (startpage-settings-string))) ; TODO write function
+  ;; hexadecimal number, which should be the value of `settings-string'. TODO move this to README
+  (settings-string "prfe" (:function #'startpage-settings-string)))
 
 ;; TODO:
 ;; - YouTube
