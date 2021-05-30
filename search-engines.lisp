@@ -714,9 +714,8 @@ the matching kebab-case keywords for this helper.")
   ;; modify settings then click on "copy settings URL". The copied URL is of the form
   ;; `https://www.startpage.com/do/mypage.pl?prfe=STRING', where STRING is a 162 character long
   ;; hexadecimal number, which should be the value of `settings-string'.
-(settings-string "prfe" (startpage-settings-string)) ; TODO write function
+  (settings-string "prfe" (startpage-settings-string))) ; TODO write function
 
-  )
 ;; TODO:
 ;; - YouTube
 ;; - Yahoo
