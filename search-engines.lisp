@@ -734,7 +734,7 @@ after \"prfe=\" in the \"Save without cookie\" section.")
                                   (:long "long")))
   (news-date "with_date" ((:day "d")
                           (:week "w")
-                          (:mont "m")))
+                          (:month "m")))
   ;; To use the advanced settings, users should visit https://startpage.com/do/settings,
   ;; modify settings then click on "copy settings URL". The copied URL is of the form
   ;; `https://www.startpage.com/do/mypage.pl?prfe=STRING', where STRING is a 160 character long
