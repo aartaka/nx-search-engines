@@ -614,7 +614,7 @@ is not a positive integer. Defaulting to empty value")
 (define-search-engine startpage ; TODO test with POST requests
     (:shortcut "startpage"
      :fallback-url (quri:uri "https://startpage.com/")
-     :base-search-url "https://startpage.com/?query=~a"
+     :base-search-url "https://startpage.com/do/search?query=~a"
      ;; :completion-function (make-startpage-completion) ; TODO write it
      :documentation "Startpage `nyxt:search-engine' which can configure the settings accessible from the search page.
 In order to specify settings from Startpage's \"Settings\" page, set `settings-string' to the hexadecimal number situated
