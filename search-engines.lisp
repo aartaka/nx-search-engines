@@ -611,11 +611,22 @@ is not a positive integer. Defaulting to empty value")
  Defaulting to empty value")
          ""))))
 
-(define-search-engine startpage ; TODO test with POST requests
+(defun make-startpage-completion (&key request-args)
+  "Helper that generates Startpage search completion functions.
+REQUEST-ARGS is a list of args to pass to request function."
+  (make-search-completion-function
+   :base-url "https://startpage.com/suggestions?q=~a&segment=startpage.udog"
+   :processing-function
+   #'(lambda (results)
+       (mapcar #'cdar
+               (cddadr (json:decode-json-from-string results))))
+   :request-args request-args))
+
+(define-search-engine startpage ; TODO check that URL settings override cookies settings
     (:shortcut "startpage"
      :fallback-url (quri:uri "https://startpage.com/")
      :base-search-url "https://startpage.com/do/search?query=~a"
-     ;; :completion-function (make-startpage-completion) ; TODO write it
+     :completion-function (make-startpage-completion)
      :documentation "Startpage `nyxt:search-engine' which can configure the settings accessible from the search page.
 In order to specify settings from Startpage's \"Settings\" page, set `settings-string' to the hexadecimal number situated
 after \"prfe=\" in the \"Save without cookie\" section.")
