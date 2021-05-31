@@ -622,7 +622,7 @@ REQUEST-ARGS is a list of args to pass to request function."
                (cddadr (json:decode-json-from-string results))))
    :request-args request-args))
 
-(define-search-engine startpage ; TODO check that URL settings override cookies settings
+(define-search-engine startpage ; TODO check that URL settings override cookies settings TODO add language UI `lui' and search `language'
     (:shortcut "startpage"
      :fallback-url (quri:uri "https://startpage.com/")
      :base-search-url "https://startpage.com/do/search?query=~a"
