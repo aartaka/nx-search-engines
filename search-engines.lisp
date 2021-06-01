@@ -622,7 +622,7 @@ REQUEST-ARGS is a list of args to pass to request function."
                (cddadr (json:decode-json-from-string results))))
    :request-args request-args))
 
-(define-search-engine startpage ; TODO check that URL settings override cookies settings TODO add language UI `lui' and search `language'
+(define-search-engine startpage
     (:shortcut "startpage"
      :fallback-url (quri:uri "https://startpage.com/")
      :base-search-url "https://startpage.com/do/search?query=~a"
@@ -794,8 +794,6 @@ after \"prfe=\" in the URL displayed in the \"Save without cookie\" section.")
                                                (:5120x3840 "isz:lt,islt:20mp") ; 20MP
                                                (:7216x5412 "isz:lt,islt:40mp") ; 40MP
                                                (:9600x7200 "isz:lt,islt:70mp"))) ; 70MP
-  ;; specify exact image width and/or height in pixels. If only one value is used, the other should be present but
-  ;; empty, i.e. `&flimgexwidth=400&flimgexwidth=', in which case square images will be returned. TODO remove this and add to README
   (images-size-exact-width "flimgexwidth" (:function #'startpage-image-size))
   (images-size-exact-height "flimgexheight" (:function #'startpage-image-size))
   (images-color "flimgcolor" ((:any "ic:")
@@ -827,11 +825,9 @@ after \"prfe=\" in the URL displayed in the \"Save without cookie\" section.")
   (news-date "with_date" ((:day "d")
                           (:week "w")
                           (:month "m")))
-  ;; To use the advanced settings, users should visit https://startpage.com/do/settings,
-  ;; modify settings then click on "copy settings URL". The copied URL is of the form
-  ;; `https://www.startpage.com/do/mypage.pl?prfe=STRING', where STRING is a 160 character long
-  ;; hexadecimal number, which should be the value of `settings-string'. TODO move this to README
+
   (settings-string "prfe" (:function #'startpage-settings-string)))
+
 ;; TODO:
 ;; - YouTube
 ;; - Yahoo
