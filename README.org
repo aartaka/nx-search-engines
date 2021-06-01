@@ -333,69 +333,6 @@ In order to specify settings from Startpage's "Settings" page, set `:settings-st
 after "prfe=" in the URL displayed in the "Save without cookie" section.
 Syntax:
 #+begin_src
-  (duckduckgo [:shortcut string]
-              [:fallback-url quri:uri]
-              [:base-search-url string]
-              [:object {:all | :images | :videos | :news}]
-              [:object2 {:all | :images | :videos | :news}]
-              [:theme {:default | :basic | :contrast | :dark | :gray | :terminal}]
-              [:get-requests boolean]
-              [:video-playback {:prompt-me | :always-ddg | :always-third-party}]
-              [:redirect boolean]
-              ;; Some of these are abbreviations added for convenience.
-              ;; You can suggest yours if it's widespread in your country!
-              [:region {:argentina | :australia | :austria | :belgium-fr | :belgium-nl |
-                        :brazil | :bulgaria | :canada-en | :canada-fr | :catalonia | :chile |
-                        :china | :colombia | :croatia | :czech-republic | :denmark | :estonia |
-                        :finland | :france | :germany | :greece | :hong-kong | :hungary |
-                        :india-en | :india | :indonesia-en | :indonesia | :ireland |
-                        :israel-en | :israel | :italy | :japan | :korea | :latvia |
-                        :lithuania | :malaysia-en | :malaysia | :mexico | :netherlands |
-                        :new-zealand | :norway | :pakistan-en | :peru | :philippines-en |
-                        :philippines | :poland | :portugal | :romania | :russia |
-                        :russian-federation | :saudi-arabia | :singapore | :slovakia |
-                        :slovenia | :south-africa | :spain-ca | :spain-es | :spain |
-                        :sweden | :switzerland-de | :switzerland-fr | :taiwan | :thailand-en |
-                        :thailand | :turkey | :us-english | :us-en | :us | :us-spanish |
-                        :us-es | :ukraine | :united-kingdom | :uk | :vietnam-en | :vietnam}]
-              ;; Not yet written properly, too much Unicode
-              [:language string]
-              [:safe-search {:moderate | :strict | :off}]
-              [:instant-answers boolean]
-              [:infinite-scroll-for-media boolean]
-              [:infinite-scroll boolean]
-              [:autocomplete-suggestions boolean]
-              [:open-in-new-tab boolean]
-              [:advertisements boolean]
-              [:keyboard-shortcuts boolean]
-              [:units-of-measure {:no-preference | :metric | :us-based}]
-              [:map-rendering {:not-set | :best-available | :image-tiles}]
-              [:page-break-numbers {:on | :off | :lines}]
-              [:install-duckduckgo boolean]
-              [:install-reminders boolean]
-              [:privacy-newsletter boolean]
-              [:newsletter-reminders boolean]
-              [:homepage-privacy-tips boolean]
-              [:help-improve-duckduckgo boolean]
-              [:font font-name]
-              [:font-size {:large | :small | :medium | :larger | :largest}]
-              [:page-width {:normal | :wide | :super-wide}]
-              [:center-alignment boolean]
-              [:background-color color-code-string]
-              [:header-behavior {:on-dynamic | :on-fixed | :off | :on-scrolling}]
-              [:header-color color-code-string]
-              [:result-title-font font-name]
-              [:result-title-color color-code-string]
-              [:result-visited-title-color color-code-string]
-              [:result-title-underline boolean]
-              [:result-description-color color-code-string]
-              [:result-url-color color-code-string]
-              [:result-module-color color-code-string]
-              [:result-full-urls boolean]
-              [:result-urls-above-snipper boolean]
-              [:result-visible-checkmark boolean]
-              [:site-icons boolean])
-
     (startpage [:shortcut string]
                [:fallback-url quri:uri]
                [:base-search-url string]
