@@ -327,6 +327,131 @@ namespace-keyword := {:general | :talk | :user | :user-talk | :wikipedia | :wiki
        [:language string] ; like en-US
        [:time-range {:day | :week | :month | :year}])
 #+end_src
+** Startpage
+All the settings which are accessible from the search page can be configured.
+In order to specify settings from Startpage's "Settings" page, set `:settings-string` to the hexadecimal number situated
+after "prfe=" in the URL displayed in the "Save without cookie" section.
+Syntax:
+#+begin_src
+  (duckduckgo [:shortcut string]
+              [:fallback-url quri:uri]
+              [:base-search-url string]
+              [:object {:all | :images | :videos | :news}]
+              [:object2 {:all | :images | :videos | :news}]
+              [:theme {:default | :basic | :contrast | :dark | :gray | :terminal}]
+              [:get-requests boolean]
+              [:video-playback {:prompt-me | :always-ddg | :always-third-party}]
+              [:redirect boolean]
+              ;; Some of these are abbreviations added for convenience.
+              ;; You can suggest yours if it's widespread in your country!
+              [:region {:argentina | :australia | :austria | :belgium-fr | :belgium-nl |
+                        :brazil | :bulgaria | :canada-en | :canada-fr | :catalonia | :chile |
+                        :china | :colombia | :croatia | :czech-republic | :denmark | :estonia |
+                        :finland | :france | :germany | :greece | :hong-kong | :hungary |
+                        :india-en | :india | :indonesia-en | :indonesia | :ireland |
+                        :israel-en | :israel | :italy | :japan | :korea | :latvia |
+                        :lithuania | :malaysia-en | :malaysia | :mexico | :netherlands |
+                        :new-zealand | :norway | :pakistan-en | :peru | :philippines-en |
+                        :philippines | :poland | :portugal | :romania | :russia |
+                        :russian-federation | :saudi-arabia | :singapore | :slovakia |
+                        :slovenia | :south-africa | :spain-ca | :spain-es | :spain |
+                        :sweden | :switzerland-de | :switzerland-fr | :taiwan | :thailand-en |
+                        :thailand | :turkey | :us-english | :us-en | :us | :us-spanish |
+                        :us-es | :ukraine | :united-kingdom | :uk | :vietnam-en | :vietnam}]
+              ;; Not yet written properly, too much Unicode
+              [:language string]
+              [:safe-search {:moderate | :strict | :off}]
+              [:instant-answers boolean]
+              [:infinite-scroll-for-media boolean]
+              [:infinite-scroll boolean]
+              [:autocomplete-suggestions boolean]
+              [:open-in-new-tab boolean]
+              [:advertisements boolean]
+              [:keyboard-shortcuts boolean]
+              [:units-of-measure {:no-preference | :metric | :us-based}]
+              [:map-rendering {:not-set | :best-available | :image-tiles}]
+              [:page-break-numbers {:on | :off | :lines}]
+              [:install-duckduckgo boolean]
+              [:install-reminders boolean]
+              [:privacy-newsletter boolean]
+              [:newsletter-reminders boolean]
+              [:homepage-privacy-tips boolean]
+              [:help-improve-duckduckgo boolean]
+              [:font font-name]
+              [:font-size {:large | :small | :medium | :larger | :largest}]
+              [:page-width {:normal | :wide | :super-wide}]
+              [:center-alignment boolean]
+              [:background-color color-code-string]
+              [:header-behavior {:on-dynamic | :on-fixed | :off | :on-scrolling}]
+              [:header-color color-code-string]
+              [:result-title-font font-name]
+              [:result-title-color color-code-string]
+              [:result-visited-title-color color-code-string]
+              [:result-title-underline boolean]
+              [:result-description-color color-code-string]
+              [:result-url-color color-code-string]
+              [:result-module-color color-code-string]
+              [:result-full-urls boolean]
+              [:result-urls-above-snipper boolean]
+              [:result-visible-checkmark boolean]
+              [:site-icons boolean])
+
+    (startpage [:shortcut string]
+               [:fallback-url quri:uri]
+               [:base-search-url string]
+               [:object {:web | :images | :videos | :news }
+               ;; If `language-ui` or `language-results` are set in Startpage's settings page, either via a
+               ;; cookies or the settings string, the settings below will be overridden.
+               [:language-ui {:dansk | :deutsch | :english | :espanol | :francais |
+                              :nederlands | :norsk | :polski | :portugues | :svenska}]
+               [:language-results  {:afrikaans | :albanian | :amharic | :arabic | :azerbaijani |
+                                    :basque | :belarusian | :bengali | :bihari | :bosnian | :bulgarian |
+                                    :catalan | :croatian | :czech | :dansk | :deutsch | :english |
+                                    :english_uk | :espanol | :esperanto | :estonian | :fantizhengwen |
+                                    :faroese | :francais | :frisian | :gaelic | :galician | :georgian |
+                                    :greek | :gujarati | :hangul | :hebrew | :hindi | :hungarian |
+                                    :icelandic | :indonesian | :interlingua | :irish | :italiano |
+                                    :javanese | :jiantizhongwen | :kannada | :latin | :latvian |
+                                    :lithuanian | :macedonian | :malay | :malayalam | :maltese |
+                                    :marathi | :nederlands | :nepali | :nihongo | :norsk | :occitan |
+                                    :persian | :polski | :portugues | :punjabi | :romanian | :russian |
+                                    :serbian | :sinhalese | :slovak | :slovenian | :sudanese | :suomi |
+                                    :svenska | :swahili | :tagalog | :tamil | :telugu | :thai | :tigrinya |
+                                    :turkce | :ukrainian | :urdu | :uzbek | :vietnamese | :welsh |
+                                    :xhosa | :zulu}]
+               [[:web-date {:any | :day | :week | :month | :year}]
+               [:web-family-filter {:off | :on}]
+               [:web-region {:all :australia | :austria | :belarus |
+                             :belgium-fr | :belgium-nl | :brazil | :bulgaria | :canada |
+                             :canada-fr | :chile | :china | :denmark | :egypt | :finland |
+                             :france | :germany | :greece | :honk-kong | :india | :japan |
+                             :korean | :malaysia | :malaysia-en | :netherlands | :norway |
+                             :poland | :portugal | :romania | :russia | :south-africa | :spain |
+                             :spain-ca | :sweden | :switzerland-de | :switzerland-fr | :switzerland-it |
+                             :taiwan | :turkey | :united-kingdom | :united-states-en | :united-states-es}]]
+               [[:images-size {:any :large :medium :large :icon}]
+               [:images-size-predefined {:400x300 | :640x480 | :800x600 | :1024x768 |
+                                        :1600x1200 ;2MP | :2272x1704 ;4MP | :2816x2112 ;6MP |
+                                        :3264x2448 ;8MP | :3648x2736 ;10MP | :4096x3072 ;12MP |
+                                        :4480x3360 ;15MP :5120x3840 ;20MP :7216x5412 ;40MP :9600x7200 ;70MP}]
+               ;; Specify exact image width and/or height in pixels. If only one value is used, the other should be present but
+               ;; empty, e.g `:image size-exact-width "400" :images-size-exact-height ""` in which case square images will
+               ;; be returned.
+               [:images-size-exact-width positive-integer
+                :images-size-exact-height positive-integer]
+               [:images-color {:any | :color-only | :black-white | :transparent | :red | :orange |
+                                            :yellow | :green | :teal | :blue | :purple | :pink |
+                                            :gray | :black | :brown}]
+               [:images-type  {:any | :jpg | :png | :gif}]]
+               [[videos-filter  {:relevant | :popular | :recent}]
+               [videos-length {:any | :short | :medium | :long}]]
+               [news-date  {:day | :week | :month }]
+               ;; To use the advanced settings, users should visit https://startpage.com/do/settings,
+               ;; modify settings then click on "copy settings URL". The copied URL is of the form
+               ;; `https://www.startpage.com/do/mypage.pl?prfe=STRING', where STRING is a 160 character long
+               ;; hexadecimal number, which should be the value of `settings-string'.
+               [settings-string string])
+#+end_src
 * =search-engines-mode=
 This mode is enabling you to search the input field contents, links,
 and images with your search engine of choice. Once it's enabled, you
