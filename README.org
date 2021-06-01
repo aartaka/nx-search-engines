@@ -361,7 +361,8 @@ Syntax:
                                     :tamil | :telugu | :thai | :tigrinya |
                                     :turkce | :ukrainian | :urdu | :uzbek |
                                     :vietnamese | :welsh | :xhosa | :zulu}]
-               [[:web-date {:any | :day | :week | :month | :year}]
+               ;; web search arguments:
+               [:web-date {:any | :day | :week | :month | :year}]
                [:web-family-filter {:off | :on}]
                [:web-region {:all :australia | :austria | :belarus |
                              :belgium-fr | :belgium-nl | :brazil | :bulgaria | :canada |
@@ -371,8 +372,9 @@ Syntax:
                              :poland | :portugal | :romania | :russia | :south-africa |
                              :spain | :spain-ca | :sweden | :switzerland-de |
                              :switzerland-fr | :switzerland-it | :taiwan | :turkey |
-                             :united-kingdom | :united-states-en | :united-states-es}]]
-               [[:images-size {:any :large :medium :large :icon}]
+                             :united-kingdom | :united-states-en | :united-states-es}]
+               ;; image search arguments:
+               [:images-size {:any :large :medium :large :icon}]
                [:images-size-predefined {:400x300 | :640x480 | :800x600 | :1024x768 |
                                         :1600x1200 ;2MP | :2272x1704 ;4MP | :2816x2112 ;6MP |
                                         :3264x2448 ;8MP | :3648x2736 ;10MP | :4096x3072 ;12MP |
@@ -387,9 +389,11 @@ Syntax:
                [:images-color {:any | :color-only | :black-white | :transparent |
                 :red | :orange | :yellow | :green | :teal | :blue | :purple |
                 :pink | :gray | :black | :brown}]
-               [:images-type  {:any | :jpg | :png | :gif}]]
-               [[videos-filter  {:relevant | :popular | :recent}]
-               [videos-length {:any | :short | :medium | :long}]]
+               [:images-type  {:any | :jpg | :png | :gif}]
+               ;; video search arguments:
+               [videos-filter  {:relevant | :popular | :recent}]
+               [videos-length {:any | :short | :medium | :long}]
+               ;; news search arguments:
                [news-date  {:day | :week | :month }]
                ;; To use the advanced settings, users should visit https://startpage.com/do/settings,
                ;; modify settings then click on "copy settings URL". The copied
