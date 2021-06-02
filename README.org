@@ -363,7 +363,7 @@ Syntax:
                                     :vietnamese | :welsh | :xhosa | :zulu}]
                ;; web search arguments:
                [:web-date {:any | :day | :week | :month | :year}]
-               [:web-family-filter {:off | :on}]
+               [family-filter {:off | :on}]
                [:web-region {:all :australia | :austria | :belarus |
                              :belgium-fr | :belgium-nl | :brazil | :bulgaria | :canada |
                              :canada-fr | :chile | :china | :denmark | :egypt | :finland |
@@ -374,6 +374,7 @@ Syntax:
                              :switzerland-fr | :switzerland-it | :taiwan | :turkey |
                              :united-kingdom | :united-states-en | :united-states-es}]
                ;; image search arguments:
+               [family-filter {:off | :on}]
                [:images-size {:any :large :medium :large :icon}]
                [:images-size-predefined {:400x300 | :640x480 | :800x600 | :1024x768 |
                                         :1600x1200 ;2MP | :2272x1704 ;4MP | :2816x2112 ;6MP |
@@ -391,6 +392,7 @@ Syntax:
                 :pink | :gray | :black | :brown}]
                [:images-type  {:any | :jpg | :png | :gif}]
                ;; video search arguments:
+               [family-filter {:off | :on}]
                [videos-filter  {:relevant | :popular | :recent}]
                [videos-length {:any | :short | :medium | :long}]
                ;; news search arguments:
