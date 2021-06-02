@@ -633,13 +633,11 @@ REQUEST-ARGS is a list of args to pass to request function."
 
 (declaim (ftype (function (string) string) startpage-settings-string))
 (defun startpage-settings-string (input)
-  (let* ((parsed-dec-int (parse-integer input :junk-allowed t :radix 16))
-         (parsed-hex-int-string (format nil "~X" parsed-dec-int)))
-    (if (eql (length parsed-hex-int-string) 160) ; The settings string should be 160 characters long.
-        parsed-hex-int-string
-        (progn (log:warn "The value specified for SETTINGS-STRING is not valid.
+  (if (ppcre:scan "[0-9a-fA-F]{160}" input)
+      input
+      (progn (log:warn "The value specified for SETTINGS-STRING is not valid.
  Defaulting to empty value")
-               ""))))
+             "")))
 
 (defun make-startpage-completion (&key request-args)
   "Helper that generates Startpage search completion functions.
