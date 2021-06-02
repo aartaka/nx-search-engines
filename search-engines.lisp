@@ -855,7 +855,6 @@ after \"prfe=\" in the URL displayed in the \"Save without cookie\" section.")
                           (:day "d")
                           (:week "w")
                           (:month "m")))
-
   (settings-string "prfe" (:function #'startpage-settings-string)))
 
 ;; TODO:
