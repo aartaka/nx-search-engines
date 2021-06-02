@@ -376,7 +376,7 @@ Syntax:
                ;; image search arguments:
                [family-filter {:off | :on}]
                [:images-size {:any :large :medium :large :icon}]
-               [:images-size-predefined {:400x300 | :640x480 | :800x600 | :1024x768 |
+               [:images-size-predefined {:any | :400x300 | :640x480 | :800x600 | :1024x768 |
                                         :1600x1200 ;2MP | :2272x1704 ;4MP | :2816x2112 ;6MP |
                                         :3264x2448 ;8MP | :3648x2736 ;10MP | :4096x3072 ;12MP |
                                         :4480x3360 ;15MP :5120x3840 ;20MP :7216x5412 ;40MP
