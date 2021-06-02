@@ -55,7 +55,7 @@ A more involved example with keywords:
                       :collect
                       `((equal ,arg-name ,(first value))
                         ,(second value))
-                        :into clauses
+                      :into clauses
                       :finally (return (append clauses (list `(t ,arg-name))))))))
     `(progn
        (serapeum:export-always (quote ,name))
