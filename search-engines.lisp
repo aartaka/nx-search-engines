@@ -646,7 +646,7 @@ is not a positive integer. Defaulting to empty value")
   "Helper that generates Startpage search completion functions.
 REQUEST-ARGS is a list of args to pass to request function."
   (make-search-completion-function
-   :base-url "https://startpage.com/suggestions?q=~a&segment=startpage.udog"
+   :base-url "https://startpage.com/suggestions?q=~a"
    :processing-function
    #'(lambda (results)
        (mapcar #'cdar
