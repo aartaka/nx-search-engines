@@ -392,7 +392,7 @@ Syntax:
                [videos-filter  {:relevant | :popular | :recent}]
                [videos-length {:any | :short | :medium | :long}]
                ;; news search arguments:
-               [news-date  {:day | :week | :month }]
+               [news-date  {:any | :day | :week | :month }]
                ;; To use the advanced settings, users should visit https://startpage.com/do/settings,
                ;; modify settings then click on "copy settings URL". The copied
                ;; URL is of the form
