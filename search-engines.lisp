@@ -625,12 +625,11 @@ REQUEST-ARGS is a list of args to pass to request function."
 (serapeum:export-always 'startpage-image-size)
 (declaim (ftype (function (string) string) startpage-image-size))
 (defun startpage-image-size (input)
-  (let ((parsed-int (parse-integer input :junk-allowed t)))
-    (if (plusp parsed-int)
-        (format "~s" nil parsed-int)
-        (progn (log:warn "The value specified for IMAGES-SIZE-EXACT-WIDTH or IMAGES-SIZE-EXACT-HEIGHT
-is not a positive integer. Defaulting to empty value")
-               ""))))
+     (if (plusp input)
+         input
+         (progn (log:warn "The value specified for IMAGES-SIZE-EXACT-WIDTH or IMAGES-SIZE-EXACT-HEIGHT
+ is not a positive integer. Defaulting to empty value")
+          "")))
 
 (declaim (ftype (function (string) string) startpage-settings-string))
 (defun startpage-settings-string (input)
