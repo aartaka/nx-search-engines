@@ -345,7 +345,7 @@ Syntax:
                                     :azerbaijani | :basque | :belarusian | :bengali |
                                     :bihari | :bosnian | :bulgarian | :catalan |
                                     :croatian | :czech | :dansk | :deutsch | :english |
-                                    :english_uk | :espanol | :esperanto | :estonian |
+                                    :english-uk | :espanol | :esperanto | :estonian |
                                     :fantizhengwen | :faroese | :francais | :frisian |
                                     :gaelic | :galician | :georgian | :greek |
                                     :gujarati | :hangul | :hebrew | :hindi | :hungarian |
