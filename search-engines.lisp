@@ -519,22 +519,22 @@ This search engine, invokable with \"wn\", will show:
 
 (declaim (ftype (function (&key (:suggestion-limit fixnum)
                                 (:request-args list)
-                                (namespace (member :general
-                                                   :talk
-                                                   :user
-                                                   :user-talk
-                                                   :wikipedia
-                                                   :wikipedia-talk
-                                                   :file
-                                                   :file-talk
-                                                   :media-wiki
-                                                   :media-wiki-talk
-                                                   :template
-                                                   :template-talk
-                                                   :help
-                                                   :help-talk
-                                                   :category
-                                                   :category-talk))))
+                                (:namespace (member :general
+                                                    :talk
+                                                    :user
+                                                    :user-talk
+                                                    :wikipedia
+                                                    :wikipedia-talk
+                                                    :file
+                                                    :file-talk
+                                                    :media-wiki
+                                                    :media-wiki-talk
+                                                    :template
+                                                    :template-talk
+                                                    :help
+                                                    :help-talk
+                                                    :category
+                                                    :category-talk))))
                 make-wikipedia-completion))
 (defun make-wikipedia-completion (&key (suggestion-limit 10) (namespace :general) request-args)
   "Helper completion function for Wikipedia.
