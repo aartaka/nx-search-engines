@@ -363,7 +363,7 @@ Syntax:
                                     :vietnamese | :welsh | :xhosa | :zulu}]
                ;; web search arguments:
                [:web-date {:any | :day | :week | :month | :year}]
-               [family-filter {:off | :on}]
+               [family-filter boolean]
                [:web-region {:all :australia | :austria | :belarus |
                              :belgium-fr | :belgium-nl | :brazil | :bulgaria | :canada |
                              :canada-fr | :chile | :china | :denmark | :egypt | :finland |
