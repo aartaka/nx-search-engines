@@ -623,7 +623,7 @@ REQUEST-ARGS is a list of args to pass to request function."
                             (:year "year"))))
 
 (serapeum:export-always 'startpage-image-size)
-(declaim (ftype (function (string) string) startpage-image-size))
+(declaim (ftype (function (integer) (or integer string)) startpage-image-size))
 (defun startpage-image-size (input)
      (if (plusp input)
          input
