@@ -165,6 +165,12 @@ Things left to do for DuckDuckGo:
 *** DuckDuckGo Images (=duckduckgo-images=)
 A derived Image-search engine has the same syntax as the main one,
 except that it defaults to images.
+*** HTML-only DuckDuckGo (=duckduckgo-html-only=)
+This one can come in handy if you're into =noscript-mode=. Everything's
+the same as usual DDG, but it requires no JS to run and has much less
+configuration (barely any). Search completion is inherited from usual
+DDG, so you can have both dynamically loaded suggestions and HTML-only
+search :D
 *** DuckDuckGo completion helper
     =make-duckduckgo-completion= returns a search-ready completion
     function (it's already included if you use =duckduckgo=). Syntax is:

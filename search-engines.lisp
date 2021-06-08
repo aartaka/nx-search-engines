@@ -354,6 +354,9 @@ the matching kebab-case keywords for this helper.")
 (define-derived-search-engine duckduckgo-images
     (duckduckgo :object :images :object2 :images))
 
+(define-derived-search-engine duckduckgo-html-only
+    (duckduckgo :base-search-url "https://html.duckduckgo.com/html/?q=~a"))
+
 (defun make-google-completion (&key request-args)
   "Helper that generates Google search completion functions. The only
 thing that's left to pass to it is REQUEST-ARGS to slightly modify the
