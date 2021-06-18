@@ -35,8 +35,8 @@ A more involved example with keywords:
 
 \(define-search-engine google
     (:shortcut \"google\"
-     :fallback-url \"google.com\"
-     :base-search-url \"google.com/search?q=~a\")
+     :fallback-url \"https://google.com\"
+     :base-search-url \"https://google.com/search?q=~a\")
   (safe-search \"safe\" ((t   \"strict\")
                          (nil \"images\")))
   (object \"tbm\" ((:all      \"\")
@@ -373,8 +373,8 @@ request."
 
 (define-search-engine google
     (:shortcut "google"
-     :fallback-url "google.com"
-     :base-search-url "google.com/search?q=~a"
+     :fallback-url "https://google.com"
+     :base-search-url "https://google.com/search?q=~a"
      :completion-function (make-google-completion)
      :documentation "Google `nyxt:search-engine'.
 Does not support advanced results sorting as of now.
