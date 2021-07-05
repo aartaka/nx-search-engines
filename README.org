@@ -404,5 +404,19 @@ Syntax:
                [settings-string string])
 #+end_src
 
+* Changelog
+** 0.0.1
+First version, experimental.
+** 0.9.0
+Stable version targeting Nyxt 2-pre-release 6.
+- =define-search-engine= is full-featured.
+** 1.0.0
+Stable release targeting Nyxt 2.0.
+** 1.1.0
+- Remove =search-engines-mode= as close-to-meaningless and unstable.
+- =base-search-url= argument to =define-search-engine=, mainly to support newly added SearX (thanks @edgar-vincent!).
+- Startpage (thanks to @edgar-vincent again).
+- Yahoo!
+- HTML-only DuckDuckGo.
 * Future Plans
 - Add more engines (see comments in search-engines.lisp).
