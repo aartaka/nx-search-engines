@@ -47,11 +47,7 @@ in your init file, and
   ;; Define buffer search-engines slot to be a list of several
   ;; nx-search-engines-provided ones.
   (define-configuration (buffer web-buffer)
-    ((override-map (keymap:define-key %slot-default%
-                     ;; Bind your favorite key to `search-hint'.
-                     ;; You need to enable `search-engines-mode' for that.
-                     "C-c C-s" 'engines:search-hint))
-     (search-engines (list (engines:google :shortcut "gmaps"
+    ((search-engines (list (engines:google :shortcut "gmaps"
                                            :object :maps)
                            (engines:wordnet :shortcut "wn"
                                             :show-word-frequencies t)
@@ -406,21 +402,6 @@ Syntax:
                ;; STRING is a 160 character long hexadecimal number, which should
                ;; be the value of `settings-string'.
                [settings-string string])
-#+end_src
-* =search-engines-mode=
-This mode is enabling you to search the input field contents, links,
-and images with your search engine of choice. Once it's enabled, you
-can call =search-hint= command to search for a particular hint:
-- It it's a link or image, it's URL will be searched. In case of image
-  URL, an =image-search-url= of =search-engines-=mode= will be used.
-- If it's an input area (=<input>= or =<textarea>=), search the text
-  inside it.
-
-To set the engines for =search-hint=, customize =search-engines-mode=:
-#+begin_src lisp
-  (define-configuration engines:search-engines-mode
-    ((engines:search-engine (engines:duckduckgo))
-     (engines:image-search-engine (engines:duckduckgo-images))))
 #+end_src
 
 * Future Plans
