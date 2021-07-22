@@ -55,7 +55,7 @@ A more involved example with keywords:
                       :collect
                       `((equal ,arg-name ,(first value))
                         ,(second value))
-                      :into clauses
+                        :into clauses
                       :finally (return (append clauses (list `(t ,arg-name))))))))
     `(progn
        (serapeum:export-always (quote ,name))
@@ -638,11 +638,11 @@ REQUEST-ARGS is a list of args to pass to request function."
 (serapeum:export-always 'startpage-image-size)
 (declaim (ftype (function (integer) (or integer string)) startpage-image-size))
 (defun startpage-image-size (input)
-     (if (plusp input)
-         input
-         (progn (log:warn "The value specified for IMAGES-SIZE-EXACT-WIDTH or IMAGES-SIZE-EXACT-HEIGHT
+  (if (plusp input)
+      input
+      (progn (log:warn "The value specified for IMAGES-SIZE-EXACT-WIDTH or IMAGES-SIZE-EXACT-HEIGHT
  is not a positive integer. Defaulting to empty value")
-          "")))
+             "")))
 
 (declaim (ftype (function (string) string) startpage-settings-string))
 (defun startpage-settings-string (input)

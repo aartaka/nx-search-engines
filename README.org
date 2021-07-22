@@ -168,8 +168,8 @@ configuration (barely any). Search completion is inherited from usual
 DDG, so you can have both dynamically loaded suggestions and HTML-only
 search :D
 *** DuckDuckGo completion helper
-    =make-duckduckgo-completion= returns a search-ready completion
-    function (it's already included if you use =duckduckgo=). Syntax is:
+=make-duckduckgo-completion= returns a search-ready completion function
+(it's already included if you use =duckduckgo=). Syntax is:
 #+begin_src
 (make-duckduckgo-completion [:request-args list])
 #+end_src
