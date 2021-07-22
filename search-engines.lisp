@@ -357,6 +357,16 @@ the matching kebab-case keywords for this helper.")
 (define-derived-search-engine duckduckgo-html-only
     (duckduckgo :base-search-url "https://html.duckduckgo.com/html/?q=~a"))
 
+(define-search-engine frogfind
+    (:shortcut "frogfind"
+     :fallback-url (quri:uri "http://frogfind.com/")
+     :base-search-url "http://frogfind.com/?q=~a"
+     :documentation "A search engine targeting vintage computers.
+No completion, no HTTPS, no search customization, but simple and easy to parse search results.
+
+Don't forget to add ((match-host \"frogfind.com\")  :excluded (force-https-mode))
+to your auto-mode-rules.lisp file, because FrogFind is HTTP-only."))
+
 (defun make-google-completion (&key request-args)
   "Helper that generates Google search completion functions. The only
 thing that's left to pass to it is REQUEST-ARGS to slightly modify the

@@ -174,6 +174,16 @@ search :D
 (make-duckduckgo-completion [:request-args list])
 #+end_src
 
+** FrogFind
+FrogFind is much the same as HTML-only DuckDuckGo, but it goes even
+further in supporting retro tech: HTTP only, absolutely basic HTML, no
+configuration at all.
+#+begin_src
+(frogfind [:shortcut string]
+          [:fallback-url quri:uri]
+          [:base-search-url string])
+#+end_src
+
 ** Google
 Syntax for Google helper is:
 #+begin_src
