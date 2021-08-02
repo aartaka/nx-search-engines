@@ -184,6 +184,15 @@ configuration at all.
           [:base-search-url string])
 #+end_src
 
+** SearchMySite
+SearchMySite is a cool engine that indexes personal blogs. While this
+has a somewhat narrow scope, you could still find there's use to it.
+#+begin_src
+(searchmysite [:shortcut string]
+              [:fallback-url quri:uri]
+              [:base-search-url string])
+#+end_src
+
 ** Google
 Syntax for Google helper is:
 #+begin_src

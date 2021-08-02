@@ -367,6 +367,13 @@ No completion, no HTTPS, no search customization, but simple and easy to parse s
 Don't forget to add ((match-host \"frogfind.com\")  :excluded (force-https-mode))
 to your auto-mode-rules.lisp file, because FrogFind is HTTP-only."))
 
+(define-search-engine searchmysite
+    (:shortcut "searchmysite"
+     :fallback-url (quri:uri "https://searchmysite.net/")
+     :base-search-url "https://searchmysite.net/search/?q=~a"
+     :documentation
+     "Open source search engine and search as a service for personal and independent websites."))
+
 (defun make-google-completion (&key request-args)
   "Helper that generates Google search completion functions. The only
 thing that's left to pass to it is REQUEST-ARGS to slightly modify the
