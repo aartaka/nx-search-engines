@@ -885,20 +885,20 @@ after \"prfe=\" in the URL displayed in the \"Save without cookie\" section.")
 Has no completion, as GitHub doesn't seem to have one.
 Use advanced search with
 
-(github :type :advanced)
+(github :object :advanced)
 
 All the fancy github search params will be there for you.")
-  (type "type" ((:repositories "repositories")
-                (:code "code")
-                (:commits "commits")
-                (:issues "issues")
-                (:discussions "discussions")
-                (:packages "registrypackages")
-                (:marketplace "marketplace")
-                (:topics "topics")
-                (:wikis "wikis")
-                (:users "users")
-                (:advanced "advsearch")))
+  (object "type" ((:repositories "repositories")
+                  (:code "code")
+                  (:commits "commits")
+                  (:issues "issues")
+                  (:discussions "discussions")
+                  (:packages "registrypackages")
+                  (:marketplace "marketplace")
+                  (:topics "topics")
+                  (:wikis "wikis")
+                  (:users "users")
+                  (:advanced "advsearch")))
   (language "l" ((:default ""))))
 
 ;; TODO:

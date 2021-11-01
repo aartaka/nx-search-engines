@@ -428,15 +428,15 @@ Github is probably the biggest code storage and thus its search is one
 of the best code search engines (especially after Google Code Search
 was shut down). Not much toggles there, except language and type of
 search, but all the advanced search functions and keywords of Github
-are available if you use =(engines:github :type :advanced)= as a search
+are available if you use =(engines:github :object :advanced)= as a search
 engine.
 #+begin_src
 (github [:shortcut string]
         [:fallback-url quri:uri]
         [:base-search-url string]
-        [:type {:repositories | :code | :commits | :issues
-                | :discussions | :packages | :marketplace
-                | :topics | :wikis | :users | :advanced | string}]
+        [:object {:repositories | :code | :commits | :issues
+                  | :discussions | :packages | :marketplace
+                  | :topics | :wikis | :users | :advanced | string}]
         [:language string])
 #+end_src
 
