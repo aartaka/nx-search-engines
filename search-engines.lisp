@@ -877,6 +877,30 @@ after \"prfe=\" in the URL displayed in the \"Save without cookie\" section.")
                           (:month "m")))
   (settings-string "prfe" (:function #'startpage-settings-string)))
 
+(define-search-engine github
+    (:shortcut "github"
+     :fallback-url (quri:uri "https://github.com/")
+     :base-search-url "https://github.com/search?q=~a"
+     :documentation "GitHub search engine.
+Has no completion, as GitHub doesn't seem to have one.
+Use advanced search with
+
+(github :type :advanced)
+
+All the fancy github search params will be there for you.")
+  (type "type" ((:repositories "repositories")
+                (:code "code")
+                (:commits "commits")
+                (:issues "issues")
+                (:discussions "discussions")
+                (:packages "registrypackages")
+                (:marketplace "marketplace")
+                (:topics "topics")
+                (:wikis "wikis")
+                (:users "users")
+                (:advanced "advsearch")))
+  (language "l" ((:default ""))))
+
 ;; TODO:
 ;; - YouTube
 ;; - Amazon
