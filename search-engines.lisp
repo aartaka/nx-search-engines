@@ -107,8 +107,16 @@ request."
    :base-url "https://duckduckgo.com/ac/?q=~a"
    :processing-function
    #'(lambda (results)
-       (mapcar #'cdar
-               (json:decode-json-from-string results)))
+       (when results
+         (mapcar #'cdar
+                 (json:decode-json-from-string results))))
+   :request-function
+   (lambda (url &rest args)
+     (handler-case
+         (apply #'dex:get url args)
+       (usocket:ns-host-not-found-error ()
+         (echo-warning "There's no Internet connection to make DuckDuckGo completion")
+         nil)))
    :request-args request-args))
 
 (define-search-engine duckduckgo
@@ -578,7 +586,17 @@ for example '(proxy \"socks5://localhost:9050\") for proxying."
                                                            :template :template-talk
                                                            :help :help-talk
                                                            :category :category-talk))))
-   :processing-function (alexandria:compose #'second #'json:decode-json-from-string)
+   :processing-function
+   #'(lambda (results)
+       (when results
+         (second (json:decode-json-from-string results))))
+   :request-function
+   #'(lambda (url &rest args)
+       (handler-case
+           (apply #'dex:get url args)
+         (usocket:ns-host-not-found-error ()
+           (nyxt:echo-warning "There's no Internet connection to make Wikipedia completion")
+           nil)))
    :request-args request-args))
 
 (define-search-engine wikipedia
@@ -596,11 +614,19 @@ REQUEST-ARGS is a list of args to pass to request function."
                          (format nil "&nresults=~d" suggestion-limit))
    :processing-function
    #'(lambda (results)
-       (mapcar #'cdar
-               (alexandria:assoc-value
-                (json:decode-json-from-string
-                 (ppcre:regex-replace "YAHOO.*\\(" results ""))
-                :r)))
+       (when results
+         (mapcar #'cdar
+                 (alexandria:assoc-value
+                  (json:decode-json-from-string
+                   (ppcre:regex-replace "YAHOO.*\\(" results ""))
+                  :r))))
+   :request-function
+   #'(lambda (url &rest args)
+       (handler-case
+           (apply #'dex:get url args)
+         (usocket:ns-host-not-found-error ()
+           (nyxt:echo-warning "There's no Internet connection to make Yahoo completion")
+           nil)))
    :request-args request-args))
 
 (define-search-engine yahoo
@@ -666,8 +692,16 @@ REQUEST-ARGS is a list of args to pass to request function."
    :base-url "https://startpage.com/suggestions?q=~a"
    :processing-function
    #'(lambda (results)
-       (mapcar #'cdar
-               (cddadr (json:decode-json-from-string results))))
+       (when result
+         (mapcar #'cdar
+                 (cddadr (json:decode-json-from-string results)))))
+   :request-function
+   #'(lambda (url &rest args)
+       (handler-case
+           (apply #'dex:get url args)
+         (usocket:ns-host-not-found-error ()
+           (nyxt:echo-warning "There's no Internet connection to make Startpage completion")
+           nil)))
    :request-args request-args))
 
 (define-search-engine startpage
