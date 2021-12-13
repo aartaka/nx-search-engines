@@ -925,6 +925,8 @@ All the fancy github search params will be there for you.")
                       (nil "Not Flagged"))))
 
 (defun make-arch-aur-completion (&rest request-args)
+    "Helper that generates AUR search completion functions.
+REQUEST-ARGS is a list of args to pass to request function."
   (make-search-completion-function
    :base-url "https://aur.archlinux.org/rpc?type=suggest&arg=~a"
    :processing-function
@@ -988,6 +990,8 @@ All the fancy github search params will be there for you.")
                   (t "1"))))
 
 (defun make-pkgs-completion (&rest request-args)
+    "Helper that generates pkgs.org search completion functions.
+REQUEST-ARGS is a list of args to pass to request function."
   (make-search-completion-function
    :base-url "https://api.pkgs.org/autocomplete/~a"
    :processing-function
