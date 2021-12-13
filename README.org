@@ -439,7 +439,47 @@ engine.
                   | :topics | :wikis | :users | :advanced | string}]
         [:language string])
 #+end_src
-
+** Arch packages
+#+begin_src
+(arch [:shortcut string]
+      [:fallback-url quri:uri]
+      [:base-search-url string]
+      [:arch {:any | :x86-64}]
+      [:repository {:all | :community | :community-testing | :core | :extra}]
+      [:maintainer string]
+      [:flagged boolean])
+#+end_src
+*** AUR packages
+This one auto-completes your search, as AUR website has auto-completion that Nyxt can mimick.
+#+begin_src
+(arch [:shortcut string]
+      [:fallback-url quri:uri]
+      [:base-search-url string]
+      [:search-by {:name-and-description | :name | :package-base | :exact-name |
+                   :exact-package-base | :keywords | :maintainer | :co-maintainer |
+                    :maintainer-and-co-maintainer | :submitter}]
+      [:sort-order {:ascending | :descending}]
+      [:outdated boolean]
+      [:sort-by {:name | :votes | :popularity | :voted | :notify | :maintainer | :last-modified}]
+      [:per-page number])
+#+end_src
+** Debian
+#+begin_src
+(debian [:shortcut string]
+        [:fallback-url quri:uri]
+        [:base-search-url string]
+        [:search-on {:names | :all | :source-names}]
+        [:suite {:all | :experimental | :unstable | :testing | :stable | :oldstable}]
+        [:section {:all | :main | :contrib | :non-free}]
+        [:exact boolean])
+#+end_src
+** pkgs
+A search engine for [[https://pkgs.org][pkgs.org]]. Has auto-completion.
+#+begin_src
+(pkgs [:shortcut string]
+      [:fallback-url quri:uri]
+      [:base-search-url string])
+#+end_src
 * Changelog
 ** 0.0.1
 First version, experimental.

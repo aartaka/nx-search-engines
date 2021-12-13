@@ -907,6 +907,102 @@ All the fancy github search params will be there for you.")
                   (:advanced "advsearch")))
   (language "l" ((:default ""))))
 
+(define-search-engine arch
+    (:shortcut "arch"
+     :fallback-url (quri:uri "https://archlinux.org/packages/")
+     :base-search-url "https://archlinux.org/packages/?q=~a"
+     :documentation "Arch package search.")
+  (arch "arch" ((:any "")
+                (:x86-64 "x86_64")))
+  (repository "repo" ((:all "")
+                      (:community "Community")
+                      (:community-testing "Community-Testing")
+                      (:core "Core")
+                      (:extra "Extra")))
+  (maintainer "maintainer" ((:default "")))
+  (flagged "flagged" ((:all "")
+                      (t "Flagged")
+                      (nil "Not Flagged"))))
+
+(defun make-arch-aur-completion (&rest request-args)
+  (make-search-completion-function
+   :base-url "https://aur.archlinux.org/rpc?type=suggest&arg=~a"
+   :processing-function
+   #'(lambda (results)
+       (when results
+         (json:decode-json-from-string results)))
+   :request-args request-args))
+
+(define-search-engine arch-aur
+    (:shortcut "aur"
+     :fallback-url (quri:uri "https://aur.archlinux.org/")
+     :base-search-url "https://aur.archlinux.org/packages/?O=0&K=~a"
+     :completion-function (make-arch-aur-completion)
+     :documentation "Arch AUR package search.")
+  (search-by "SeB" ((:name-and-description "nd")
+                    (:name "n")
+                    (:package-base "b")
+                    (:exact-name "N")
+                    (:exact-package-base "B")
+                    (:keywords "k")
+                    (:maintainer "m")
+                    (:co-maintainer "c")
+                    (:maintainer-and-co-maintainer "M")
+                    (:submitter "s")))
+  (sort-order "SO" ((:ascending "a")
+                    (:descending "d")))
+  (outdated "outdated" ((:default "")
+                        (t "on")
+                        (nil "off")))
+  (sort-by "SB" ((:name "n")
+                 (:votes "v")
+                 (:popularity "p")
+                 (:voted "w")
+                 (:notify "o")
+                 (:maintainer "m")
+                 (:last-modified "l")))
+  (per-page "PP" ((:default ""))))
+
+(define-search-engine debian
+    (:shortcut "debian"
+     :fallback-url (quri:uri "https://www.debian.org/distrib/packages#search_packages")
+     :base-search-url "https://packages.debian.org/search?keywords=~a"
+     :documentation "Debian package search.")
+  (search-on "searchon" ((:default "")
+                         (:names "names")
+                         (:all "all")
+                         (:source-names "sourcenames")))
+  (suite "suite" ((:default "")
+                  (:all "all")
+                  (:experimental "experimental")
+                  (:unstable "unstable")
+                  (:testing "testing")
+                  (:stable "stable")
+                  (:oldstable "oldstable")))
+  (section "section" ((:default "")
+                      (:all "all")
+                      (:main "main")
+                      (:contrib "contrib")
+                      (:non-free "non")))
+  (exact "exact" ((nil "")
+                  (t "1"))))
+
+(defun make-pkgs-completion (&rest request-args)
+  (make-search-completion-function
+   :base-url "https://api.pkgs.org/autocomplete/~a"
+   :processing-function
+   #'(lambda (results)
+       (when results
+         (json:decode-json-from-string results)))
+   :request-args request-args))
+
+(define-search-engine pkgs
+    (:shortcut "pkgs"
+     :fallback-url (quri:uri "https://pkgs.org/")
+     :base-search-url "https://pkgs.org/search/?q=~a"
+     :completion-function (make-pkgs-completion)
+     :documentation "UNIX/GNU/Linux package search."))
+
 ;; TODO:
 ;; - YouTube
 ;; - Amazon
