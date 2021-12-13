@@ -671,7 +671,7 @@ REQUEST-ARGS is a list of args to pass to request function."
    :base-url "https://startpage.com/suggestions?q=~a"
    :processing-function
    #'(lambda (results)
-       (when result
+       (when results
          (mapcar #'cdar
                  (cddadr (json:decode-json-from-string results)))))
    :request-args request-args))
