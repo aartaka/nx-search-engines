@@ -12,6 +12,8 @@
                 #:new-url-query
                 #:default-search-engine
                 #:make-search-completion-function)
+  (:import-from #:serapeum
+                #:export-always)
   (:export #:make-duckduckgo-completion
            #:duckduckgo
            #:duckduckgo-images
