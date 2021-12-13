@@ -15,22 +15,4 @@
   (:import-from #:serapeum
                 #:->
                 #:export-always)
-  (:export #:make-duckduckgo-completion
-           #:duckduckgo
-           #:duckduckgo-images
-           #:make-google-completion
-           #:google
-           #:google-images
-           #:bing-date
-           #:bing
-           #:bing-images
-           #:bing-videos
-           #:bing-maps
-           #:bing-news
-           #:bing-shopping
-           #:wordnet
-           #:make-wikipedia-completion
-           #:wikipedia
-           #:make-yahoo-completion
-           #:yahoo)
   (:documentation "A collection of search engines for Nyxt browser."))

@@ -2,6 +2,7 @@
 
 (in-package #:nx-search-engines)
 
+(export-always 'define-search-engine)
 (defmacro define-search-engine (name (&key shortcut fallback-url base-search-url completion-function
                                         documentation)
                                 &body keywords)
@@ -92,6 +93,7 @@ A more involved example with keywords:
                                                         `(funcall ,(second values) ,arg-name)
                                                         (make-cond arg-name values)))))))))))))
 
+(export-always 'define-derived-search-engine)
 (defmacro define-derived-search-engine (name (parent-engine &rest arguments))
   ;; TODO: Use `mopu:function-arglist' to reproduce original arglist?
   `(progn
@@ -99,6 +101,7 @@ A more involved example with keywords:
      (defun ,name (&rest args)
        (apply (function ,parent-engine) ,@arguments args))))
 
+(export-always 'make-duckduckgo-completion)
 (defun make-duckduckgo-completion (&key request-args)
   "Helper that generates DuckDuckGo search completion functions. The only
 thing that's left to pass to it is REQUEST-ARGS to slightly modify the
@@ -375,6 +378,7 @@ to your auto-mode-rules.lisp file, because FrogFind is HTTP-only."))
      :documentation
      "Open source search engine and search as a service for personal and independent websites."))
 
+(export-always 'make-google-completion)
 (defun make-google-completion (&key request-args)
   "Helper that generates Google search completion functions. The only
 thing that's left to pass to it is REQUEST-ARGS to slightly modify the
@@ -538,6 +542,7 @@ This search engine, invokable with \"wn\", will show:
   (show-sense-keys           "o6" ((nil "") (t "1")))
   (show-sense-numbers        "o7" ((nil "") (t "1"))))
 
+(export-always 'make-wikipedia-completion)
 (-> make-wikipedia-completion (&key (:suggestion-limit fixnum)
                                     (:request-args list)
                                     (:namespace (member :general
@@ -591,6 +596,7 @@ for example '(proxy \"socks5://localhost:9050\") for proxying."
      :fallback-url (quri:uri "https://en.wikipedia.org/")
      :completion-function (make-wikipedia-completion)))
 
+(export-always 'make-yahoo-completion)
 (defun make-yahoo-completion (&key request-args (suggestion-limit 10))
   "Completion helper for Yahoo! search engine.
 SUGGESTION-LIMIT is how much suggestions you want to see.
@@ -924,6 +930,7 @@ All the fancy github search params will be there for you.")
                       (t "Flagged")
                       (nil "Not Flagged"))))
 
+(export-always 'make-arch-aur-completion)
 (defun make-arch-aur-completion (&rest request-args)
     "Helper that generates AUR search completion functions.
 REQUEST-ARGS is a list of args to pass to request function."
@@ -989,6 +996,7 @@ REQUEST-ARGS is a list of args to pass to request function."
   (exact "exact" ((nil "")
                   (t "1"))))
 
+(export-always 'make-pkgs-completion)
 (defun make-pkgs-completion (&rest request-args)
     "Helper that generates pkgs.org search completion functions.
 REQUEST-ARGS is a list of args to pass to request function."
