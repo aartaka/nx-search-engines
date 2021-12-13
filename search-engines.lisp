@@ -415,7 +415,7 @@ OBJECT -- One of :all :image, :video, :news, :shopping, :books,
     (google :object :image))
 
 (export-always 'bing-date)
-(declaim (ftype (function (local-time:timestamp local-time:timestamp) string) bing-date))
+(-> bing-date (local-time:timestamp local-time:timestamp) string)
 (defun bing-date (start-date end-date)
   "Helper function generating Bing-acceptable dates in the form \"ez5_START-DATE_END-DATE\".
 Use it for the value of :date argument to `bing'"
@@ -538,25 +538,25 @@ This search engine, invokable with \"wn\", will show:
   (show-sense-keys           "o6" ((nil "") (t "1")))
   (show-sense-numbers        "o7" ((nil "") (t "1"))))
 
-(declaim (ftype (function (&key (:suggestion-limit fixnum)
-                                (:request-args list)
-                                (:namespace (member :general
-                                                    :talk
-                                                    :user
-                                                    :user-talk
-                                                    :wikipedia
-                                                    :wikipedia-talk
-                                                    :file
-                                                    :file-talk
-                                                    :media-wiki
-                                                    :media-wiki-talk
-                                                    :template
-                                                    :template-talk
-                                                    :help
-                                                    :help-talk
-                                                    :category
-                                                    :category-talk))))
-                make-wikipedia-completion))
+(-> make-wikipedia-completion (&key (:suggestion-limit fixnum)
+                                    (:request-args list)
+                                    (:namespace (member :general
+                                                        :talk
+                                                        :user
+                                                        :user-talk
+                                                        :wikipedia
+                                                        :wikipedia-talk
+                                                        :file
+                                                        :file-talk
+                                                        :media-wiki
+                                                        :media-wiki-talk
+                                                        :template
+                                                        :template-talk
+                                                        :help
+                                                        :help-talk
+                                                        :category
+                                                        :category-talk)))
+    function)
 (defun make-wikipedia-completion (&key (suggestion-limit 10) (namespace :general) request-args)
   "Helper completion function for Wikipedia.
 SUGGESTION-LIMIT is how much suggestions you want to get.
@@ -648,7 +648,7 @@ REQUEST-ARGS is a list of args to pass to request function."
                             (:year "year"))))
 
 (export-always 'startpage-image-size)
-(declaim (ftype (function (integer) (or integer string)) startpage-image-size))
+(-> startpage-image-size (integer) (or integer string))
 (defun startpage-image-size (input)
   (if (plusp input)
       input
@@ -656,7 +656,7 @@ REQUEST-ARGS is a list of args to pass to request function."
  is not a positive integer. Defaulting to empty value")
              "")))
 
-(declaim (ftype (function (string) string) startpage-settings-string))
+(-> startpage-settings-string (string) string)
 (defun startpage-settings-string (input)
   (if (ppcre:scan "[0-9a-fA-F]{150,165}" input)
       input
