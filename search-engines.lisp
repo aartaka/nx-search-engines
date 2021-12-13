@@ -58,7 +58,7 @@ A more involved example with keywords:
                         :into clauses
                       :finally (return (append clauses (list `(t ,arg-name))))))))
     `(progn
-       (serapeum:export-always (quote ,name))
+       (export-always (quote ,name))
        (defun ,name (&key
                        (fallback-url ,fallback-url)
                        (shortcut ,shortcut)
@@ -95,7 +95,7 @@ A more involved example with keywords:
 (defmacro define-derived-search-engine (name (parent-engine &rest arguments))
   ;; TODO: Use `mopu:function-arglist' to reproduce original arglist?
   `(progn
-     (serapeum:export-always (quote ,name))
+     (export-always (quote ,name))
      (defun ,name (&rest args)
        (apply (function ,parent-engine) ,@arguments args))))
 
@@ -414,7 +414,7 @@ OBJECT -- One of :all :image, :video, :news, :shopping, :books,
 (define-derived-search-engine google-images
     (google :object :image))
 
-(serapeum:export-always 'bing-date)
+(export-always 'bing-date)
 (declaim (ftype (function (local-time:timestamp local-time:timestamp) string) bing-date))
 (defun bing-date (start-date end-date)
   "Helper function generating Bing-acceptable dates in the form \"ez5_START-DATE_END-DATE\".
@@ -647,7 +647,7 @@ REQUEST-ARGS is a list of args to pass to request function."
                             (:month "month")
                             (:year "year"))))
 
-(serapeum:export-always 'startpage-image-size)
+(export-always 'startpage-image-size)
 (declaim (ftype (function (integer) (or integer string)) startpage-image-size))
 (defun startpage-image-size (input)
   (if (plusp input)
