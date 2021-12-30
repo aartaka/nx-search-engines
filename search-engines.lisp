@@ -359,7 +359,8 @@ the matching kebab-case keywords for this helper.")
     (duckduckgo :object :images :object2 :images))
 
 (define-derived-search-engine duckduckgo-html-only
-    (duckduckgo :base-search-url "https://html.duckduckgo.com/html/?q=~a"))
+    (duckduckgo :base-search-url "https://html.duckduckgo.com/html/?q=~a"
+                :fallback-url (quri:uri "https://html.duckduckgo.com/html/")))
 
 (define-search-engine frogfind
     (:shortcut "frogfind"
