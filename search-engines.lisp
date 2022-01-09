@@ -419,6 +419,37 @@ OBJECT -- One of :all :image, :video, :news, :shopping, :books,
 (define-derived-search-engine google-images
     (google :object :image))
 
+(export-always 'make-google-scholar-completion)
+(defun make-google-scholar-completion (&key request-args)
+  "Helper that generates Google Scholar completion functions. The only
+thing that's left to pass to it is REQUEST-ARGS to slightly modify the
+request."
+  (make-search-completion-function
+   :base-url "https://scholar.google.com/scholar_complete?q=~a"
+   :processing-function
+   #'(lambda (results)
+       (mapcar (lambda (completion) (remove #\| completion))
+               (alexandria:assoc-value (json:decode-json-from-string results) :l)))
+   :request-args request-args))
+
+(define-search-engine google-scholar
+    (:shortcut "google-scholar"
+     :fallback-url "https://scholar.google.com"
+     :base-search-url "https://scholar.google.com/scholar?q=~a"
+     :completion-function (make-google-scholar-completion)
+     :documentation "Google Scholar `nyxt:search-engine'.
+Arguments:
+STARTING-TIME -- the year since which to search publications.
+ENDING-TIME -- the year until which the found publications should span.
+SORT-BY -- how to sort the results. Possible values are :RELEVANCE (default) and :DATE.
+SEARCH-TYPE -- :ANY for all the papers, :REVIEW to only list review papers.")
+  (starting-time "as_ylo" ((:any "")))
+  (ending-time "as_yhi" ((:any "")))
+  (sort-by "scisbd" ((:relevance "")
+                     (:date "1")))
+  (search-type "as_rr" ((:any "")
+                        (:review "1"))))
+
 (export-always 'bing-date)
 (-> bing-date (local-time:timestamp local-time:timestamp) string)
 (defun bing-date (start-date end-date)

@@ -214,6 +214,23 @@ Things left to do for Google:
 #+begin_src
     (make-google-completion [:request-args list])
 #+end_src
+*** Google Scholar
+Google Scholar is a science papers search engine. The syntax is:
+#+begin_src
+(google-scholar [:shortcut string]
+                [:fallback-url quri:uri]
+                [:base-search-url string]
+                [:starting-time year]
+                [:ending-time year]
+                [:sort-by {:relevance | :date}]
+                [:search-type {:any | :review}])
+#+end_src
+**** Google Scholar completion helper
+=make-google-scholar-completion= returns a search-ready completion function
+(it's already included if you use =google-scholar=). Syntax is:
+#+begin_src
+    (make-google-scholar-completion [:request-args list])
+#+end_src
 
 ** Bing
 Bing is /special/ -- it hosts separate types of searches on separate
