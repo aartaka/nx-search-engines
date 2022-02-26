@@ -474,7 +474,7 @@ This one auto-completes your search, as AUR website has auto-completion that Nyx
       [:base-search-url string]
       [:search-by {:name-and-description | :name | :package-base | :exact-name |
                    :exact-package-base | :keywords | :maintainer | :co-maintainer |
-                    :maintainer-and-co-maintainer | :submitter}]
+                   :maintainer-and-co-maintainer | :submitter}]
       [:sort-order {:ascending | :descending}]
       [:outdated boolean]
       [:sort-by {:name | :votes | :popularity | :voted | :notify | :maintainer | :last-modified}]

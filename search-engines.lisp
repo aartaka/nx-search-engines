@@ -943,7 +943,19 @@ All the fancy github search params will be there for you.")
                   (:wikis "wikis")
                   (:users "users")
                   (:advanced "advsearch")))
-  (language "l" ((:default ""))))
+  (language "l" ((:default "")))
+  ;; Issue-specific
+  (state state ((:any "")
+                (:open "open")
+                (:closed "closed")))
+  ;; Package-specific
+  (package-type "package_type" ((:any "")
+                                (:npm "npm")
+                                (:container "container")
+                                (:maven "maven")
+                                (:nuget "nuget")
+                                (:docker "docker")
+                                (:rubygems "rubygems"))))
 
 (define-search-engine arch
     (:shortcut "arch"
