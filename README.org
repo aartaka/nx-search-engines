@@ -454,7 +454,13 @@ engine.
         [:object {:repositories | :code | :commits | :issues
                   | :discussions | :packages | :marketplace
                   | :topics | :wikis | :users | :advanced | string}]
-        [:language string])
+        [:language string]
+        [:sort-by {:best-match | :stars | :forks | :updated-recently}]
+        [:sort-order {:descending | :ascending}]
+        ;; Only works for issue search
+        [:state {:any | :open | :closed}]
+        ;; Only works for package search
+        [:package-type {:any | :npm | :container | :maven | :nuget | :docker | :rubygems}])
 #+end_src
 ** Arch packages
 #+begin_src
