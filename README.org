@@ -455,7 +455,10 @@ engine.
                   | :discussions | :packages | :marketplace
                   | :topics | :wikis | :users | :advanced | string}]
         [:language string]
-        [:sort-by {:best-match | :stars | :forks | :updated-recently}]
+        [:sort-by {:best-match | :stars | :forks |
+                   :recently-updated | :recently-indexed | :recently-commited |
+                   :recently-authored | :recently-joined | :recently-created | :recently-updated |
+                   :most-commented | :most-downloads | :most-followers | :most-repositories}]
         [:sort-order {:descending | :ascending}]
         ;; Only works for issue search
         [:state {:any | :open | :closed}]
