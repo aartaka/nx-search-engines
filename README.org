@@ -506,6 +506,61 @@ A search engine for [[https://pkgs.org][pkgs.org]]. Has auto-completion.
       [:fallback-url quri:uri]
       [:base-search-url string])
 #+end_src
+** Peertube
+[[https://joinpeertube.org/][PeerTube]] search engine via its global search indexer [[https://sepiasearch.org/][Sepia Search]], which allows one to narrow down a search result by many filters, including by Peertube instance.
+
+#+begin_src
+(peertube [:shortcut string]
+          [:fallback-url quri:uri]
+          [:base-search-url string]
+          [:sort-by {:best | :newest | :oldest}]
+          [:is-live boolean]
+          [:published-date {:any | :today | :month | :week | :year}]
+          [:nsfw boolean]
+          [:duration {:any | :short | :medium | :long}]
+          [:category {:all | :music | :films | :vehicles | :art | :sports |
+                      :travels | :gaming | :people | :comedy |
+                      :entertainment | :news-and-politics | :how-to |
+                      :education | :activism | :science-and-technology |
+                      :animals | :kids | :food}]
+          [:licence {:all | :by | :by-sa | :by-nd | :by-nc | :by-nc-sa |
+                     :by-nc | :by-nc-sa | :by-nc-nd | :cc0}]
+          [:language {:all | :english | :francais | :japanese | :euskara |
+                      :catala | :czech | :esperanto | :bulgarian | :deutsch |
+                      :italiano | :nederlands | :espanol | :occitan | :gaelic |
+                      :chinese | :portugues | :svenska | :polski | :suomi |
+                      :russian}]
+          [:host string]
+          [:tags string])
+#+end_src
+** Sourcehut
+Project search index for [[https://sr.ht/][sourcehut]], the hacker's forge.
+
+#+begin_src
+(sourcehut [:shortcut string]
+           [:fallback-url quri:uri]
+           [:base-search-url string]
+           [:sort-by {:recent | :active}])
+#+end_src
+** Libgen
+Search engine for [[https://libgen.li/][Library Genesis]], an aggregator of textual content from public resources. Do note, that due how this engine supplies attribute filtering for fields, objects, or topics, it's not possible to filter per more than one of these at once unlike on the web interface. Also, it includes a Google mode that enables much more precise queries on the specified attributes through a Google-esque query syntax.
+
+#+begin_src
+(libgen [:shortcut string]
+        [:fallback-url quri:uri]
+        [:base-search-url string]
+        [:results {:default | :twenty-five | :fifty | :one-hundred}])
+        [:covers boolean]
+        [:chapters boolean]
+        [:google-mode boolean]
+        [:file-search {:all | :sorted | :unsorted}]
+        [:field {:title | :author | :series | :year | :publisher | :isbn}]
+        [:object {:files | :editions | :series | :authors | :publishers | :works}]
+        [:topic {:libgen | :comics | :fiction | :articles | :magazines |
+                 :fiction-rus | :standards}]
+        [:tab {:files | :editions | :series | :authors |
+               :publishers | :works}])
+#+end_src
 * Changelog
 ** 0.0.1
 First version, experimental.
