@@ -1077,8 +1077,8 @@ REQUEST-ARGS is a list of args to pass to request function."
 (define-search-engine peertube
     (:shortcut "pt"
      :fallback-url (quri:uri "search.joinpeertube.org")
-     :base-search-url "https:///search.joinpeertube.org/search?search=~a"
-     :documentation "Peertube `nx:search-engine' via its Sepia Search global search engine.")
+     :base-search-url "https://search.joinpeertube.org/search?search=~a"
+     :documentation "PeerTube `nyxt:search-engine' via its Sepia Search global search index.")
   (sort-by "sort" ((:best "-match")
                    (:newest "-publishedAt")
                    (:oldest "publishedAt")))
@@ -1158,11 +1158,12 @@ REQUEST-ARGS is a list of args to pass to request function."
     (:shortcut "lg"
      :fallback-url (quri:uri "https://libgen.li")
      :base-search-url "https://libgen.li/index.php?req=~a"
-     :documentation "Library Genesis `nyxt:search-engine'.")
-  (results "res" ((:default "")
-                  (:twenty-five "25")
-                  (:fifty "50")
-                  (:one-hundred "100")))
+     :documentation "Library Genesis `nyxt:search-engine'. Due to how this engine supplies
+attribute filtering for fields, objects, or topics, it's not possible to filter per more than
+one of these at once unlike on the web interface.")
+  (results "res" ((25 "25")
+                  (50 "50")
+                  (100 "100")))
   (covers "covers" ((nil "")
                     (t "on")))
   (chapters "showch" ((nil "")
@@ -1172,19 +1173,22 @@ REQUEST-ARGS is a list of args to pass to request function."
   (file-search "filesuns" ((:all "all")
                            (:sorted "sort")
                            (:unsorted "unsort")))
-  (field "columns%5B%5D" ((:title "t")
+  (field "columns%5B%5D" ((:all "")
+                          (:title "t")
                           (:author "a")
                           (:series "s")
                           (:year "y")
                           (:publisher "p")
                           (:isbn "i")))
-  (object "objects%5B%5D" ((:files "f")
+  (object "objects%5B%5D" ((:all "")
+                           (:files "f")
                            (:editions "e")
                            (:series "s")
                            (:authors "a")
                            (:publishers "p")
                            (:works "w")))
-  (topic "topics%5B%5D" ((:libgen "l")
+  (topic "topics%5B%5D" ((:all "")
+                         (:libgen "l")
                          (:comics "c")
                          (:fiction "f")
                          (:articles "a")

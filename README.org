@@ -506,8 +506,8 @@ A search engine for [[https://pkgs.org][pkgs.org]]. Has auto-completion.
       [:fallback-url quri:uri]
       [:base-search-url string])
 #+end_src
-** Peertube
-[[https://joinpeertube.org/][PeerTube]] search engine via its global search indexer [[https://sepiasearch.org/][Sepia Search]], which allows one to narrow down a search result by many filters, including by Peertube instance.
+** PeerTube
+[[https://joinpeertube.org/][PeerTube]] search engine via its global search indexer [[https://sepiasearch.org/][Sepia Search]], which allows one to narrow down a search result by many filters, including by instance.
 
 #+begin_src
 (peertube [:shortcut string]
@@ -543,13 +543,13 @@ Project search index for [[https://sr.ht/][sourcehut]], the hacker's forge.
            [:sort-by {:recent | :active}])
 #+end_src
 ** Libgen
-Search engine for [[https://libgen.li/][Library Genesis]], an aggregator of textual content from public resources. Do note, that due how this engine supplies attribute filtering for fields, objects, or topics, it's not possible to filter per more than one of these at once unlike on the web interface. Also, it includes a Google mode that enables much more precise queries on the specified attributes through a Google-esque query syntax.
+Search engine for [[https://libgen.li/][Library Genesis]], an aggregator of textual content from public resources. Do note, that due to how this engine supplies attribute filtering for fields, objects, or topics, it's not possible to filter per more than one of these at once unlike on the web interface. Also, it includes a Google mode that enables much more precise queries on the specified attributes through a Google-esque query syntax.
 
 #+begin_src
 (libgen [:shortcut string]
         [:fallback-url quri:uri]
         [:base-search-url string]
-        [:results {:default | :twenty-five | :fifty | :one-hundred}])
+        [:results {25 | 50 | 100}])
         [:covers boolean]
         [:chapters boolean]
         [:google-mode boolean]
