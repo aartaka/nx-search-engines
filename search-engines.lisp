@@ -1075,7 +1075,7 @@ REQUEST-ARGS is a list of args to pass to request function."
      :documentation "UNIX/GNU/Linux package search."))
 
 (define-search-engine peertube
-    (:shortcut "pt"
+    (:shortcut "peertube"
      :fallback-url (quri:uri "search.joinpeertube.org")
      :base-search-url "https://search.joinpeertube.org/search?search=~a"
      :documentation "PeerTube `nyxt:search-engine' via its Sepia Search global search index.")
@@ -1147,7 +1147,7 @@ REQUEST-ARGS is a list of args to pass to request function."
   (tags "tagsAllOf" ((:default ""))))
 
 (define-search-engine sourcehut
-    (:shortcut "sh"
+    (:shortcut "sourcehut"
      :fallback-url (quri:uri "https://sr.ht")
      :base-search-url "https://sr.ht/projects?search=~a"
      :documentation "Sourcehut project search `nyxt:search-engine'.")
@@ -1155,7 +1155,7 @@ REQUEST-ARGS is a list of args to pass to request function."
                    (:active "longest-active"))))
 
 (define-search-engine libgen
-    (:shortcut "lg"
+    (:shortcut "libgen"
      :fallback-url (quri:uri "https://libgen.li")
      :base-search-url "https://libgen.li/index.php?req=~a"
      :documentation "Library Genesis `nyxt:search-engine'. Due to how this engine supplies
