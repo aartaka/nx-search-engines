@@ -231,7 +231,8 @@ Google Scholar is a science papers search engine. The syntax is:
 #+begin_src
     (make-google-scholar-completion [:request-args list])
 #+end_src
-
+*** Whoogle
+[[https://github.com/benbusby/whoogle-search][whoogle-search]] search engine, a self-hosted, ad-free, privacy respecting meta search engine with results derived from Google.
 ** Bing
 Bing is /special/ -- it hosts separate types of searches on separate
 paths, so we need to make several engines with different search-urls:
@@ -560,6 +561,52 @@ Search engine for [[https://libgen.li/][Library Genesis]], an aggregator of text
                  :fiction-rus | :standards}]
         [:tab {:files | :editions | :series | :authors |
                :publishers | :works}])
+#+end_src
+** Reddit
+[[https://www.reddit.com/][Reddit]] search engine. Its NSFW search filter only works on alternative front ends.
+
+#+begin_src
+(reddit [:shortcut string]
+        [:fallback-url quri:uri]
+        [:base-search-url string]
+        [:sort-by {:relevance | :hot | :top | :new | :comments}]
+        [:only-from-subreddit boolean]
+        [:nsfw boolean]
+        [:date {:all | :year | :month | :week | :day | :hour}]
+        [:type-from {:link | :comments | :communities | :user}])
+#+end_src
+*** Teddit
+A Reddit-derived search engine for [[https://codeberg.org/teddit/teddit][Teddit]], an alternative Reddit front-end focused on privacy.
+** Lemmy
+Search engine for [[https://join-lemmy.org/][Lemmy]], a link aggregator for the Fediverse. Do note this search engine has a rather esoteric query parameter structure and needs for all of its parameters to be supplied in the search URL, otherwise it throws a server error.
+
+#+begin_src
+(lemmy [:shortcut string]
+       [:fallback-url quri:uri]
+       [:base-search-url string]
+       [:type-from {:all | :comments | :posts | :communities | :users | :url}]
+       [:sort-by {:top-all | :top-year | :top-month | :top-week |
+                  :top-day | :new}]
+       [:listing-type {:all | :local | :subscribed}]
+       [:community-id integer]
+       [:creator-id integer]
+       [:page integer])
+
+#+end_src
+
+** Invidious
+Search engine for [[https://invidious.io/][Invidious]], an open source alternative front-end to YouTube.
+
+#+begin_src
+(invidious [:shortcut string]
+           [:fallback-url quri:uri]
+           [:base-search-url string]
+           [:upload-date {:none | :hour | :today | :week | :month | :year }]
+           [:result-type {:all | :video | :channel | :playlist | :movie | :show }]
+           [:duration {:none | :short | :long | :medium}]
+           [:features {:none | :live | :4k | :hd | :subtitles | :cc | :vr-180 |
+                       :3d | :hdr | :location | :purchased}]
+           [:sort-by {:relevance | :rating | :date | :views}])
 #+end_src
 * Changelog
 ** 0.0.1
