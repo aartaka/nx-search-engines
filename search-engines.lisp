@@ -3,7 +3,8 @@
 (in-package #:nx-search-engines)
 
 (export-always 'define-search-engine)
-(defmacro define-search-engine (name (&key shortcut fallback-url base-search-url completion-function
+(defmacro define-search-engine (name (&key shortcut fallback-url base-search-url
+                                        force-supply-p manual-delims-p completion-function
                                         documentation)
                                 &body keywords)
   "Defines a new `nyxt:search-engine' called NAME and having FALLBACK-URL.
@@ -17,6 +18,13 @@ define-search-engine generates.
 
 BASE-SEARCH-URL is a control string with one placeholder (e.g.,
 \"example.com/?q=~a\").
+
+FORCE-SUPPLY-P specifies if all of the provided KEYWORDS are to be supplied
+by force to BASE-SEARCH-URL for those search engines that need this behavior.
+
+MANUAL-DELIMS-P indicates we'll manually pass the query parameters delimiters in
+the KEYWORDS URI-PARAM, useful if a search engine doesn't use a traditional
+search URL structure.
 
 Each keyword in KEYWORDS is a list like (KEYWORD URI-PARAM VALUES),
 where VALUES is either
@@ -65,6 +73,8 @@ A more involved example with keywords:
                        (shortcut ,shortcut)
                        (completion-function ,completion-function)
                        (base-search-url ,base-search-url)
+                       (manual-delims-p ,manual-delims-p)
+                       (force-supply-p ,force-supply-p)
                        ,@(mapcar #'(lambda (k)
                                      (list (first k)                 ; name
                                            (if (eq (first (third k)) :function)
@@ -86,8 +96,10 @@ A more involved example with keywords:
                                 ,@(loop :for (arg-name uri-parameter values)
                                           :in keywords
                                         :collect
-                                        `(when ,(supplied-p arg-name)
-                                           (format nil "&~a=~a"
+                                        `(when ,(or force-supply-p (supplied-p arg-name))
+                                           (format nil (if manual-delims-p
+                                                           "~a~a"
+                                                           "&~a=~a")
                                                    ,uri-parameter
                                                    ,(if (eq (first values) :function)
                                                         `(funcall ,(second values) ,arg-name)
@@ -479,6 +491,11 @@ SEARCH-TYPE -- :ANY for all the papers, :REVIEW to only list review papers.")
                      (:date "1")))
   (search-type "as_rr" ((:any "")
                         (:review "1"))))
+
+(define-derived-search-engine whoogle
+    (google :shortcut "whoogle"
+            :fallback-url (quri:uri "https://gowogle.voring.me")
+            :base-search-url "https://gowogle.voring.me/search?q=~a"))
 
 (export-always 'bing-date)
 (-> bing-date (local-time:timestamp local-time:timestamp) string)
@@ -1231,6 +1248,115 @@ one of these at once unlike on the web interface.")
                  (:authors "a")
                  (:publishers "p")
                  (:works "w"))))
+
+(define-search-engine reddit
+    (:shortcut "reddit"
+     :fallback-url (quri:uri "https://reddit.com")
+     :base-search-url "https://reddit.com/search/?q=~a"
+     :documentation "Reddit `nyxt:search-engine'. The NSFW filter is not available in its main
+interface, but it's useful in alternative front ends such as `nx-search-engines:teddit'.")
+  (sort-by "sort" ((:relevance "relevance")
+                   (:hot "hot")
+                   (:top "top")
+                   (:new "new")
+                   (:comments "comments")))
+  (only-from-subreddit "restrict_sr" ((nil "")
+                                      (t "on")))
+  (nsfw "nsfw" ((nil "")
+                (t "on")))
+  (date "t" ((:all "all")
+             (:year "year")
+             (:month "month")
+             (:week "week")
+             (:day "day")
+             (:hour "hour")))
+  (type-from "type" ((:link "link")
+                     (:comments "comment")
+                     (:communities "sr")
+                     (:user "user"))))
+
+(define-derived-search-engine teddit
+    (:shortcut "teddit"
+     :fallback-url (quri:uri "https://teddit.net")
+     :base-search-url "https://teddit.net/search/?q=~a"
+     :nsfw t))
+
+(define-search-engine lemmy
+    (:shortcut "lemmy"
+     :fallback-url (quri:uri "https://lemmy.ml")
+     :base-search-url "https://lemmy.ml/search/q/~a"
+     :documentation "Lemmy `nyxt:search-engine'. Lemmy is a decentralized link-aggregator
+for the Fediverse."
+     :manual-delims-p t
+     :force-supply-p t)
+  (type-from "/type/" ((:all "All")
+                       (:comments "Comments")
+                       (:posts "Posts")
+                       (:communities "Communities")
+                       (:users "Users")
+                       (:url "Url")))
+  (sort-by "/sort/" ((:top-all "TopAll")
+                     (:top-year "TopYear")
+                     (:top-month "TopMonth")
+                     (:top-week "TopWeek")
+                     (:top-day "TopDay")
+                     (:new "New")))
+  (listing-type "/listing_type/" ((:all "All")
+                                  (:local "Local")
+                                  (:subscribed "Subscribed")))
+  (community-id "/community_id/" ((:default 0)))
+  (creator-id "/creator_id/" ((:default 0)))
+  (page "/page/" ((:default 1))))
+
+(export-always 'make-invidious-completion)
+(defun make-invidious-completion (&key request-args)
+  "Helper that generates Invidious search completion suggestions."
+  (make-search-completion-function
+   :base-url "https://invidious.namazso.eu/api/v1/search/suggestions?q=~a"
+   :processing-function
+   #'(lambda (result)
+       (when result
+         (alexandria:assoc-value (json:decode-json-from-string result) :suggestions)))
+   :request-args request-args))
+
+(define-search-engine invidious
+    (:shortcut "invidious"
+     :fallback-url (quri:uri "https://invidious.snopyta.org")
+     :base-search-url "https://invidious.snopyta.org/search?q=~a"
+     :completion-function (make-invidious-completion)
+     :documentation "`nyxt:search-engine' for Invidious, an alternative YouTube front-end.")
+  (upload-date "date" ((:none "none")
+                       (:hour "hour")
+                       (:today "today")
+                       (:week "week")
+                       (:month "month")
+                       (:year "year")))
+  (result-type "type" ((:all "all")
+                       (:video "video")
+                       (:channel "channel")
+                       (:playlist "playlist")
+                       (:movie "movie")
+                       (:show "show")))
+  (duration "duration" ((:none "none")
+                        (:short "short")
+                        (:long "long")
+                        (:medium "medium")))
+  (features "features" ((:none "none")
+                        (:live "live")
+                        (:4k "four_k")
+                        (:hd "hd")
+                        (:subtitles "subtitles")
+                        (:cc "c_commons")
+                        (:360-deg "three_sixty")
+                        (:vr-180 "vr180")
+                        (:3d "three_d")
+                        (:hdr "hdr")
+                        (:location "location")
+                        (:purchased "purchased")))
+  (sort-by "sort" ((:relevance "relevance")
+                   (:rating "rating")
+                   (:date "date")
+                   (:views "views"))))
 
 ;; TODO:
 ;; - YouTube
