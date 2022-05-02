@@ -563,7 +563,7 @@ Search engine for [[https://libgen.li/][Library Genesis]], an aggregator of text
                :publishers | :works}])
 #+end_src
 ** Reddit
-[[https://www.reddit.com/][Reddit]] search engine. Its NSFW search filter only works on alternative front ends.
+[[https://www.reddit.com/][Reddit]] search engine. Its NSFW search filter only works when logged in.
 
 #+begin_src
 (reddit [:shortcut string]
@@ -578,7 +578,7 @@ Search engine for [[https://libgen.li/][Library Genesis]], an aggregator of text
 *** Teddit
 A Reddit-derived search engine for [[https://codeberg.org/teddit/teddit][Teddit]], an alternative Reddit front-end focused on privacy.
 ** Lemmy
-Search engine for [[https://join-lemmy.org/][Lemmy]], a link aggregator for the Fediverse. Do note this search engine has a rather esoteric query parameter structure and needs for all of its parameters to be supplied in the search URL, otherwise it throws a server error.
+Search engine for [[https://join-lemmy.org/][Lemmy]], a link aggregator for the Fediverse.
 
 #+begin_src
 (lemmy [:shortcut string]
@@ -591,9 +591,7 @@ Search engine for [[https://join-lemmy.org/][Lemmy]], a link aggregator for the 
        [:community-id integer]
        [:creator-id integer]
        [:page integer])
-
 #+end_src
-
 ** Invidious
 Search engine for [[https://invidious.io/][Invidious]], an open source alternative front-end to YouTube.
 
@@ -601,6 +599,7 @@ Search engine for [[https://invidious.io/][Invidious]], an open source alternati
 (invidious [:shortcut string]
            [:fallback-url quri:uri]
            [:base-search-url string]
+           [:completion-function function]
            [:upload-date {:none | :hour | :today | :week | :month | :year }]
            [:result-type {:all | :video | :channel | :playlist | :movie | :show }]
            [:duration {:none | :short | :long | :medium}]
@@ -608,6 +607,63 @@ Search engine for [[https://invidious.io/][Invidious]], an open source alternati
                        :3d | :hdr | :location | :purchased}]
            [:sort-by {:relevance | :rating | :date | :views}])
 #+end_src
+*** Invidious completion helper
+    =make-invidious-completion= returns a search-ready completion function
+    (it's already included if you use =invidious=). Syntax is:
+
+#+begin_src
+(make-invidious-completion [:instance string]
+                           [:request-args list])
+#+end_src
+** Discourse
+Search engine for [[https://www.discourse.org/][Discourse]] instances, where you can use its advanced search syntax for most of the search filters.
+
+#+begin_src
+(discourse [:shortcut string]
+           [:fallback-url quri:uri]
+           [:base-search-url string]
+           [:search-type {:default | :categories | :users}])
+#+end_src
+** Meetup
+Search engine for [[https://www.meetup.com/][Meetup]], a social platform to engage in online communities and events. Its =:suggested= search filter is only available when you're logged in and the =:location= filter takes the form of =country_code--city_name=, such as =gb--London=.
+
+#+begin_src
+(meetup [:shortcut string]
+        [:fallback-url quri:uri]
+        [:base-search-url string]
+        [:distance {:any | integer}]
+        [:sort-by {:default | :relevance | :date}]
+        [:date {:any | :soon | :today | :tomorrow | :this-week |
+                :this-weekend | :next-week}]
+        [:start-date string]
+        [:end-date string]
+        [:event-type {:default | :in-person | :online | :indoor | :outdoor}]
+        [:category {:default | :new-groups | :art-culture | :career-business |
+                    :community-environment | :dancing | :games | :health-wellbeing |
+                    :hobbies-passions | :identity-language | :movement-politics |
+                    :music | :parents-family | :pets-animal | :religion-spirituality |
+                    :science-education | :social-activities | :sports-fitness |
+                    :support-coaching | :technology | :travel-outdoor | :writing}]
+        [:source {:events | :groups}]
+        [:suggested boolean]
+        [:location string])
+#+end_src
+** Gitea
+[[https://gitea.io/en-us/][Gitea]] search engine, a self-hosted Git service.
+
+#+begin_src
+(gitea [:shortcut string]
+       [:fallback-url quri:uri]
+       [:base-search-url string]
+       [:unfiltered boolean]
+       [:sort-by {:recently-updated | :newest | :oldest | :ascending | :descending |
+                  :least-updated | :most-stars | :fewest-stars | :most-forks |
+                  :fewest-forks}])
+#+end_src
+*** Gitea users (=gitea-users=)
+A derived search engine for user search in a given Gitea instance.
+*** Gitea organizations (=gitea-organizations=)
+A derived search engine for organization search in a given Gitea instance.
 * Changelog
 ** 0.0.1
 First version, experimental.
