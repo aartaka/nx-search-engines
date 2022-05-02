@@ -1361,6 +1361,103 @@ for the Fediverse."
                    (:date "date")
                    (:views "views"))))
 
+(define-search-engine discourse
+    (:shortcut "discourse"
+     :fallback-url (quri:uri "https://discourse.atlas.engineer")
+     :base-search-url "https://discourse.atlas.engineer/search?q=~a"
+     :documentation "`nyxt:search-engine' for Discourse-based instances. You can leverage this engine's
+advanced search filters for more precise searches.")
+  (search-type "search_type" ((:default "topics/posts")
+                              (:categories "categories_tags")
+                              (:users "users"))))
+
+(define-search-engine meetup
+    (:shortcut "meetup"
+     :fallback-url (quri:uri "https://www.meetup.com")
+     :base-search-url "https://www.meetup.com/find/?op=search&keywords=~a"
+     :documentation "Meetup `nyxt:search-engine', a service for online communities. Its `:suggested'
+search filter is only available when you're logged in and the `:location' filter takes the form
+of `<country_code>--<city_name>', such as `gb--London'.")
+  (distance "distance" ((:any "")
+                        (2 "twoMiles")
+                        (5 "fiveMiles")
+                        (10 "tenMiles")
+                        (25 "twentyFiveMiles")
+                        (50 "fiftyMiles")
+                        (100 "hundredMiles")))
+  (sort-by "sortField" ((:default "default")
+                        (:relevance "RELEVANCE")
+                        (:date "DATETIME")))
+  (date "dateRange" ((:any "")
+                     (:soon "startingSoon")
+                     (:today "today")
+                     (:tomorrow "tomorrow")
+                     (:this-week "this-week")
+                     (:this-weekend "this-weekend")
+                     (:next-week "next-week")))
+  (start-date "customStartDate" ((:default "")))
+  (end-date "customEndDate" ((:default "")))
+  (event-type "eventType" ((:default "")
+                           (:in-person "inPerson")
+                           (:online "online")
+                           (:indoor "indoor")
+                           (:outdoor "outdoor")))
+  (category "categoryId" ((:default "")
+                          (:new-groups "-999")
+                          (:art-culture "521")
+                          (:career-business "405")
+                          (:community-environment "604")
+                          (:dancing "612")
+                          (:games "535")
+                          (:health-wellbeing "511")
+                          (:hobbies-passions "571")
+                          (:identity-language "622")
+                          (:movement-politics "642")
+                          (:music "395")
+                          (:parents-family "673")
+                          (:pets-animals "701")
+                          (:religion-spirituality "593")
+                          (:science-education "436")
+                          (:social-activities "652")
+                          (:sports-fitness "482")
+                          (:support-coaching "449")
+                          (:technology "546")
+                          (:travel-outdoor "684")
+                          (:writing "467")))
+  (source "source" ((:events "EVENTS")
+                    (:groups "GROUPS")))
+  (suggested "suggested" ((nil "")
+                          (t "TRUE")))
+  (location "location" ((:default ""))))
+
+(define-search-engine gitea
+    (:shortcut "gitea"
+     :fallback-url (quri:uri "https://codeberg.org/explore/repos")
+     :base-search-url "https://codeberg.org/explore/repos?q=~a"
+     :documentation "`nyxt:search-engine' for Gitea, a self-hosted Git forge.")
+  (unfiltered "no_filter" ((t "1")
+                           (nil "")))
+  (sort-by "sort" ((:recently-update "recentupdate")
+                   (:newest "newest")
+                   (:oldest "oldest")
+                   (:ascending "alphabetically")
+                   (:descending "reversealphabetically")
+                   (:least-updated "leastupdate")
+                   (:most-stars "moststars")
+                   (:fewest-stars "feweststars")
+                   (:most-forks "mostforks")
+                   (:fewest-forks "fewest forks"))))
+
+(define-derived-search-engine gitea-users
+    (gitea :base-search-url "https://codeberg.org/explore/users?q=~a"
+           :fallback-url (quri:uri "https://codeberg.org/explore/users"))
+    "`gitea' derived search engine for a Gitea's instance users.")
+
+(define-derived-search-engine gitea-organizations
+    (gitea :base-search-url "https://codeberg.org/explore/organizations?q=~a"
+           :fallback-url (quri:uri "https://codeberg.org/explore/organizations"))
+    "`gitea' derived search engine for a Gitea's instance organizations.")
+
 ;; TODO:
 ;; - YouTube
 ;; - Amazon
