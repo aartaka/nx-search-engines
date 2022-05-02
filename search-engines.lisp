@@ -1309,10 +1309,10 @@ for the Fediverse."
   (page "/page/" ((:default 1))))
 
 (export-always 'make-invidious-completion)
-(defun make-invidious-completion (&key request-args)
-  "Helper that generates Invidious search completion suggestions."
+(defun make-invidious-completion (&key (instance "invidious.namazso.eu") request-args)
+  "Helper that generates Invidious search completion suggestions with INSTANCE."
   (make-search-completion-function
-   :base-url "https://invidious.namazso.eu/api/v1/search/suggestions?q=~a"
+   :base-url (format nil "https://~a/api/v1/search/suggestions?q=~~a" instance)
    :processing-function
    #'(lambda (result)
        (when result
