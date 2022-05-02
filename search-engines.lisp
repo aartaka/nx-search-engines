@@ -106,12 +106,13 @@ A more involved example with keywords:
                                                         (make-cond arg-name values)))))))))))))
 
 (export-always 'define-derived-search-engine)
-(defmacro define-derived-search-engine (name (parent-engine &rest arguments))
+(defmacro define-derived-search-engine (name (parent-engine &rest arguments) &optional documentation)
   ;; TODO: Use `mopu:function-arglist' to reproduce original arglist?
   `(progn
      (export-always (quote ,name))
      (defun ,name (&rest args)
-       (apply (function ,parent-engine) ,@arguments args))))
+       ,documentation
+       (apply (function ,parent-engine) (append args ',arguments)))))
 
 (export-always 'make-brave-completion)
 (defun make-brave-completion (&key request-args)
@@ -495,7 +496,9 @@ SEARCH-TYPE -- :ANY for all the papers, :REVIEW to only list review papers.")
 (define-derived-search-engine whoogle
     (google :shortcut "whoogle"
             :fallback-url (quri:uri "https://gowogle.voring.me")
-            :base-search-url "https://gowogle.voring.me/search?q=~a"))
+            :base-search-url "https://gowogle.voring.me/search?q=~a")
+    "`nyxt:search-engine' for Whoogle, a self-hosted, ad-free,
+privacy-respecting metasearch engine which takes results from Google.")
 
 (export-always 'bing-date)
 (-> bing-date (local-time:timestamp local-time:timestamp) string)
@@ -1253,8 +1256,7 @@ one of these at once unlike on the web interface.")
     (:shortcut "reddit"
      :fallback-url (quri:uri "https://reddit.com")
      :base-search-url "https://reddit.com/search/?q=~a"
-     :documentation "Reddit `nyxt:search-engine'. The NSFW filter is not available in its main
-interface, but it's useful in alternative front ends such as `nx-search-engines:teddit'.")
+     :documentation "Reddit `nyxt:search-engine'. Its `:nsfw' filter is only available when logged in.")
   (sort-by "sort" ((:relevance "relevance")
                    (:hot "hot")
                    (:top "top")
@@ -1276,10 +1278,11 @@ interface, but it's useful in alternative front ends such as `nx-search-engines:
                      (:user "user"))))
 
 (define-derived-search-engine teddit
-    (:shortcut "teddit"
-     :fallback-url (quri:uri "https://teddit.net")
-     :base-search-url "https://teddit.net/search/?q=~a"
-     :nsfw t))
+    (reddit :shortcut "teddit"
+            :fallback-url (quri:uri "https://teddit.net")
+            :base-search-url "https://teddit.net/search/?q=~a"
+            :nsfw t)
+    "Teddit `nyxt:search-engine', a privacy-friendly Reddit front-end.")
 
 (define-search-engine lemmy
     (:shortcut "lemmy"
