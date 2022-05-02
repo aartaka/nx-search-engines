@@ -101,6 +101,36 @@ A more involved example with keywords:
      (defun ,name (&rest args)
        (apply (function ,parent-engine) ,@arguments args))))
 
+(export-always 'make-brave-completion)
+(defun make-brave-completion (&key request-args)
+  "Helper that generates Brave search completion functions. The only
+thing that's left to pass to it is REQUEST-ARGS to slightly modify the
+request."
+  (make-search-completion-function
+   ;; TODO: Maybe set rich=true and process the JSON for 3.0+ search suggestions format?
+   :base-url "https://search.brave.com/api/suggest?q=~a&rich=false&source=web"
+   :processing-function
+   #'(lambda (results)
+       (when results
+         (second (json:decode-json-from-string results))))
+   :request-args request-args))
+
+(define-search-engine brave
+    (:shortcut "brave"
+     :fallback-url (quri:uri "https://search.brave.com/")
+     :base-search-url "https://search.brave.com/search?q=~a"
+     :completion-function (make-brave-completion)
+     :documentation "Brave Search is built on top of a completely independent index, and doesn’t track users, their searches, or their clicks.")
+  (timeframe "tf" ((:any "")
+                   (:day "pd")
+                   (:past-day "pd")
+                   (:week "pw")
+                   (:past-week "pw")
+                   (:month "pm")
+                   (:past-month "pm")
+                   (:year "py")
+                   (:past-year "py"))))
+
 (export-always 'make-duckduckgo-completion)
 (defun make-duckduckgo-completion (&key request-args)
   "Helper that generates DuckDuckGo search completion functions. The only
