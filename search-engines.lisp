@@ -828,12 +828,69 @@ SEARCH-TYPE -- :ANY for all the papers, :REVIEW to only list review papers.")
   (search-type "as_rr" ((:any "")
                         (:review "1"))))
 
-(define-derived-search-engine whoogle
-    (google :shortcut "whoogle"
-            :fallback-url (quri:uri "https://gowogle.voring.me")
-            :base-search-url "https://gowogle.voring.me/search?q=~a")
-    "`nyxt:search-engine' for Whoogle, a self-hosted, ad-free,
-privacy-respecting metasearch engine which takes results from Google.")
+(define-search-engine whoogle
+    (:shortcut "whoogle"
+     :fallback-url (quri:uri "https://gowogle.voring.me")
+     :base-search-url "https://gowogle.voring.me/search?q=~a"
+     :completion-function (make-google-completion)
+     :documentation "`nyxt:search-engine' for Whoogle, a self-hosted, ad-free,
+privacy-respecting metasearch engine which takes results from Google. Most Whoogle instances
+disable user configuration settings, so setting the URL parameters is the only way to customize them.
+Most of `google' engine's parameters are supported, and some have a Whoogle counterpart:
+- lr -> lang_search
+- hl -> lang_interface
+- gl -> country
+- newwindow -> new_tab" )
+  (object "tbm" ((:all "")
+                 (:image "isch")
+                 (:video "vid")
+                 (:news "nws")
+                 (:shopping "shop")
+                 (:books "bks")
+                 (:finance "fin")))
+  (extra-filters "tbs" ((:sort-by-relevance "")
+                        (:sort-by-date "sbd:1")
+                        (:archived "ar:1")
+                        (:show-duplicates "nsd:1")
+                        (:verbatim "li:1")))
+  ;; Results starting value (10 per page)
+  (results-start "start" ((:default "")))
+  (near-city "near" ((:default "")))
+  ;; Exclude returned results from auto-corrected queries
+  (exclude-autocorrect "nfpr" ((nil "")
+                               (t "1")))
+  (lang-results "lang_search" (:function #'compute-edit-google-lang))
+  (lang-ui "lang_interface" (:function #'compute-edit-google-lang))
+  (country "country" (:function #'compute-google-country))
+  (theme "theme" ((:system "system")
+                  (:dark "dark")
+                  (:light "light")))
+  ;; Whether to use alternative front-ends
+  (alternatives "alts" ((nil "")
+                        (t "1")))
+  (new-tab "new_tab" ((nil "")
+                      (t "1")))
+  ;; Add a "View Image" button in the Images tab
+  (view-image "view_image" ((nil "")
+                            (t "1")))
+  ;; Comma-separated list of blocked sites
+  (blocked-sites "block" ((:default "")))
+  (safe-search "safe" ((t "strict")
+                       (nil "images")))
+  (no-javascript "nojs" ((nil "")
+                         (t "1")))
+  (anonymous-view "anon_view" ((nil "")
+                               (t "1")))
+  (cookies-disabled "cookies_disabled" ((nil "")
+                                        (t "1")))
+  (date-results "as_qdr" ((:default "")
+                          (:past-hour "h")
+                          (:past-day "d")
+                          (:past-week "w")
+                          (:past-month "m")
+                          (:past-year "y")))
+  ;; Search chips in Images tab
+  (chips "chips" ((:default ""))))
 
 (export-always 'bing-date)
 (-> bing-date (local-time:timestamp local-time:timestamp) string)
