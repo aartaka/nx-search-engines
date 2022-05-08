@@ -703,15 +703,19 @@ request."
     (:zulu "zu")))
 
 (defun compute-google-lang (code)
+  "Returns the corresponding language value from CODE."
   (car (alexandria:assoc-value *google-languages* code :test #'equal)))
 
 (defun compute-edit-google-lang (code)
+  "Returns the corresponding language value from CODE and tweaks it."
   (concatenate 'string "lang_" (compute-google-lang code)))
 
 (defun compute-google-country (code)
+  "Returns the corresponding country value to CODE."
   (car (alexandria:assoc-value *google-countries* code :test #'equal)))
 
 (defun compute-edit-google-country (code)
+  "Returns the corresponding country value to CODE and tweaks it."
   (concatenate 'string "country" (compute-google-country code)))
 
 (define-search-engine google
