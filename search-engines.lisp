@@ -681,7 +681,7 @@ request."
     (:zambia "ZM")
     (:zimbabwe "ZW")))
 
-(defparameter *google-languages*
+(defvar *google-languages*
   '((:default "")
     (:english "en")
     (:afrikaans "af")

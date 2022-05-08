@@ -229,8 +229,30 @@ Syntax for Google helper is:
 (google [:shortcut string]
         [:fallback-url quri:uri]
         [:base-search-url string]
+        [:completion-function function]
         [:safe-search boolean]
-        [:object {:all | :image | :video | :news | :shopping | :books | :finance}])
+        [:object {:all | :image | :video | :news | :shopping | :books | :finance}]
+        [:extra-filters {:sort-by-relevance | :sort-by-date | :archived |
+                         :show-duplicates | :verbatim}]
+        [:results-start integer]
+        [:results-number integer]
+        [:near-city string]
+        [:personalized-search boolean]
+        [:filetype string]
+        [:filetype-rule {:include | :exclude}]
+        [:site string]
+        [:site-rule {:include | :exclude}]
+        [:exclude-terms string]
+        [:access-rights {:all | :cc0 | :by | :by-sa | :by-nc | :by-nd}]
+        [:new-window boolean]
+        [:filter boolean]
+        [:lang-results language-keyword]
+        [:lang-ui language-keyword]
+        [:country-results country-keyword]
+        [:country-ui country-keyword]
+        [:coordinates string]
+        [:date-results {:default | :past-hour | :past-day | :past-week |
+                        :past-month | :past-year}])
 #+end_src
 
 Things left to do for Google:
@@ -263,6 +285,37 @@ Google Scholar is a science papers search engine. The syntax is:
 #+end_src
 *** Whoogle
 [[https://github.com/benbusby/whoogle-search][whoogle-search]] search engine, a self-hosted, ad-free, privacy respecting meta search engine with results derived from Google.
+
+#+begin_src
+(whoogle [:shortcut string]
+         [:fallback-url quri:uri]
+         [:base-search-url string]
+         [:completion-function function]
+         [:object {:all | :image | :video | :news | :shopping |
+                   :books | :finance}]
+         [:extra-filters {:sort-by-relevance | :sort-by-date | :archived |
+                          :show-duplicates | :verbatim}]
+         [:results-start integer]
+         [:near-city string]
+         [:results-number integer]
+         [:personalized-search boolean]
+         [:exclude-autocorrect boolean]
+         [:lang-results boolean]
+         [:lang-ui boolean]
+         [:country boolean]
+         [:theme {:system | :dark | :light}]
+         [:alternatives boolean]
+         [:new-tab boolean]
+         [:view-image boolean]
+         [:blocked-sites string]
+         [:safe-search boolean]
+         [:no-javascript boolean]
+         [:anonymous-view boolean]
+         [:cookies-disabled boolean]
+         [:date-results {:default | :past-hour | :past-day | :past-week |
+                         :past-month | :past-year}]
+         [:chips string])
+#+end_src
 ** Bing
 Bing is /special/ -- it hosts separate types of searches on separate
 paths, so we need to make several engines with different search-urls:
@@ -694,6 +747,18 @@ Search engine for [[https://www.meetup.com/][Meetup]], a social platform to enga
 A derived search engine for user search in a given Gitea instance.
 *** Gitea organizations (=gitea-organizations=)
 A derived search engine for organization search in a given Gitea instance.
+** Hacker News
+#+begin_src
+(hacker-news [:shortcut string]
+             [:fallback-url quri:uri]
+             [:base-search-url string]
+             [:date-range {:all | :past-24-hours | :past-week | :past-month |
+                           :past-year | :custom}]
+             [:date-start string]
+             [:date-end string]
+             [:sort-by {:popularity | :date}]
+             [:search-type {:story | :all | :comments}])
+#+end_src
 * Changelog
 ** 0.0.1
 First version, experimental.
