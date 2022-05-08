@@ -725,7 +725,27 @@ Arguments:
 SAFE-SEARCH -- Whether results will be filtered. Boolean. t to enable,
 nil to disable.
 OBJECT -- One of :all :image, :video, :news, :shopping, :books,
-:finance.")
+:finance.
+EXTRA-FILTERS -- Additional search filters.
+RESULTS-START -- Displays the search results starting from the given position.
+RESULTS-NUMBER -- Number of results to display on a single page.
+NEAR-CITY -- Display results near a provided city.
+PERSONALIZED-SEARCH -- Whether to show personalized results.
+FILETYPE -- Narrow down results to a given file type.
+FILETYPE-RULE -- Whether to include or exclude the provided FILETYPE from the results.
+SITE -- Narrow down results to a given site.
+SITE-RULE - Whether to include or exclude the provided SITE from the results.
+EXCLUDE-TERMS -- Removes unwanted whitespace-separated words from the search results.
+ACCESS-RIGHTS -- Show results with given license.
+NEW-WINDOW -- Open links in a new tab.
+FILTER -- Removes the omitted results or similar results filter and allows all
+results to be shown.
+LANG-RESULTS -- Search results language.
+LANG-UI -- Interface language.
+COUNTRY-RESULTS -- Use the given country for the search results.
+COUNTRY-UI -- Use the given country for the search interface.
+COORDINATES -- Search for results near the given coordinates.
+DATE-RESULTS -- Filter results by a specified date range.")
   (safe-search "safe" ((t   "strict")
                        (nil "images")))
   (object "tbm" ((:all      "")
@@ -734,7 +754,45 @@ OBJECT -- One of :all :image, :video, :news, :shopping, :books,
                  (:news     "nws")
                  (:shopping "shop")
                  (:books    "bks")
-                 (:finance  "fin"))))
+                 (:finance  "fin")))
+  (extra-filters "tbs" ((:sort-by-relevance "")
+                        (:sort-by-date "sbd:1")
+                        (:archived "ar:1")
+                        (:show-duplicates "nsd:1")
+                        (:verbatim "li:1")))
+  (results-start "start" ((:default 0)))
+  (results-number "num" ((:default 10)))
+  (near-city "near" ((:default "")))
+  (personalized-search "pws" ((t "")
+                              (nil "0")))
+  (filetype "as_filetype" ((:default "")))
+  (filetype-rule "as_ft" ((:include "i")
+                          (:exclude "e")))
+  (site "as_sitesearch" ((:default "")))
+  (site-rule "as_dt" ((:include "i")
+                      (:exclude "e")))
+  (exclude-terms "as_eq" ((:default "")))
+  (access-rights "as_rights" ((:all "")
+                              (:cc0 "cc_publicdomain")
+                              (:by "cc_attribute")
+                              (:by-sa "cc_sharealike")
+                              (:by-nc "cc_noncommercial")
+                              (:by-nd "cc_nonderived")))
+  (new-window "newwindow" ((nil "")
+                           (t "1")))
+  (filter "filter" ((t "")
+                    (nil "0")))
+  (lang-results "lr" (:function #'compute-edit-google-lang))
+  (lang-ui "hl" (:function #'compute-google-lang))
+  (country-results "cr"  (:function #'compute-edit-google-country))
+  (country-ui "gl" (:function #'compute-google-country))
+  (coordinates "gll" ((:default "")))
+  (date-results "as_qdr" ((:default "")
+                          (:past-hour "h")
+                          (:past-day "d")
+                          (:past-week "w")
+                          (:past-month "m")
+                          (:past-year "y"))))
 
 (define-derived-search-engine google-images
     (google :object :image))
