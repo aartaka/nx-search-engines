@@ -1449,14 +1449,35 @@ of `<country_code>--<city_name>', such as `gb--London'.")
                    (:fewest-forks "fewest forks"))))
 
 (define-derived-search-engine gitea-users
-    (gitea :base-search-url "https://codeberg.org/explore/users?q=~a"
+    (gitea :shortcut "gitea-users"
+           :base-search-url "https://codeberg.org/explore/users?q=~a"
            :fallback-url (quri:uri "https://codeberg.org/explore/users"))
     "`gitea' derived search engine for a Gitea's instance users.")
 
 (define-derived-search-engine gitea-organizations
-    (gitea :base-search-url "https://codeberg.org/explore/organizations?q=~a"
+    (gitea :shortcut "gitea-organizations"
+           :base-search-url "https://codeberg.org/explore/organizations?q=~a"
            :fallback-url (quri:uri "https://codeberg.org/explore/organizations"))
     "`gitea' derived search engine for a Gitea's instance organizations.")
+
+(define-search-engine hacker-news
+    (:shortcut "hacker-news"
+     :fallback-url (quri:uri "https://hn.algolia.com")
+     :base-search-url "https://hn.algolia.com/?q=~a"
+     :documentation "`nyxt:search-engine' for Hacker News via Algolia Search.")
+  (date-range "dateRange" ((:all "all")
+                           (:past-24-hours "last24h")
+                           (:past-week "pastWeek")
+                           (:past-month "pastMonth")
+                           (:past-year "pastYear")
+                           (:custom "custom")))
+  (date-start "dateStart" ((:default "")))
+  (date-end "dateEnd" ((:default "")))
+  (sort-by "sort" ((:popularity "byPopularity")
+                   (:date "byDate")))
+  (search-type "type" ((:story "story")
+                       (:all "all")
+                       (:comments "comment"))))
 
 ;; TODO:
 ;; - YouTube
