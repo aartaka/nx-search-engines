@@ -711,11 +711,11 @@ request."
   (concatenate 'string "lang_" (compute-google-lang code)))
 
 (defun compute-google-country (code)
-  "Returns the corresponding country value to CODE."
+  "Returns the corresponding country value from CODE."
   (car (alexandria:assoc-value *google-countries* code :test #'equal)))
 
 (defun compute-edit-google-country (code)
-  "Returns the corresponding country value to CODE and tweaks it."
+  "Returns the corresponding country value from CODE and tweaks it."
   (concatenate 'string "country" (compute-google-country code)))
 
 (define-search-engine google
@@ -1862,7 +1862,7 @@ of `<country_code>--<city_name>', such as `gb--London'.")
      :base-search-url "https://hn.algolia.com/?q=~a"
      :documentation "`nyxt:search-engine' for Hacker News via Algolia Search.")
   (date-range "dateRange" ((:all "all")
-                           (:past-24-hours "last24h")
+                           (:past-day "last24h")
                            (:past-week "pastWeek")
                            (:past-month "pastMonth")
                            (:past-year "pastYear")
@@ -1873,7 +1873,7 @@ of `<country_code>--<city_name>', such as `gb--London'.")
                    (:date "byDate")))
   (search-type "type" ((:story "story")
                        (:all "all")
-                       (:comments "comment"))))
+                       (:comment "comment"))))
 
 ;; TODO:
 ;; - YouTube
