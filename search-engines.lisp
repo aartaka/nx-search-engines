@@ -874,7 +874,7 @@ Most of `google' engine's parameters are supported, and some have a Whoogle coun
 - lr -> lang_search
 - hl -> lang_interface
 - gl -> country
-- newwindow -> new_tab" )
+- newwindow -> new_tab")
   (object "tbm" ((:all "")
                  (:image "isch")
                  (:video "vid")
