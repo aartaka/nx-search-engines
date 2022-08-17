@@ -83,6 +83,7 @@ A more involved example with keywords:
                                            (supplied-p (first k))))  ; supplied-p
                                  keywords))
          ,documentation
+         (declaim (ignorable force-supply-p manual-delims-p))
          (make-instance
           'search-engine
           :shortcut shortcut
