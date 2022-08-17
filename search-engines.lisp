@@ -82,8 +82,9 @@ A more involved example with keywords:
                                                (first (first (third k)))) ; default value
                                            (supplied-p (first k))))  ; supplied-p
                                  keywords))
-         ,documentation
-         (declaim (ignorable force-supply-p manual-delims-p))
+         (declare (ignorable force-supply-p manual-delims-p
+                             ,@(mapcar #'first keywords)
+                             ,@(mapcar (alexandria:compose #'supplied-p #'first) keywords)))
          (make-instance
           'search-engine
           :shortcut shortcut
@@ -104,7 +105,9 @@ A more involved example with keywords:
                                                    ,uri-parameter
                                                    ,(if (eq (first values) :function)
                                                         `(funcall ,(second values) ,arg-name)
-                                                        (make-cond arg-name values)))))))))))))
+                                                        (make-cond arg-name values))))))))))
+       ,@(when documentation
+           `((setf (documentation (quote ,name) 'function) ,documentation))))))
 
 (export-always 'define-derived-search-engine)
 (defmacro define-derived-search-engine (name (parent-engine &rest arguments) &optional documentation)
