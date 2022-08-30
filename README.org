@@ -10,9 +10,10 @@ Terminal theme, instant answers turned off, and autocomplete
 suggestions turned off with just a simple call to:
 
 #+begin_src lisp
-    (engines:duckduckgo :theme :terminal
-                        :instant-answers nil
-                        :autocomplete nil)
+  (engines:duckduckgo :theme :terminal
+                      :shortcut "duck"
+                      :instant-answers nil
+                      :autocomplete nil)
 #+end_src
 
 This will return your new fancy DuckDuckGo engine that you can append
@@ -23,9 +24,12 @@ to the =search-engines= in buffer configuration.
     ((search-engines (append %slot-default%
                              (list (engines:duckduckgo
                                     :theme :terminal
+                                    :shortcut "duck" ;; Shortcut for set-url prompt.
                                     :instant-answers nil
                                     :autocomplete nil))))))
 #+end_src
+
+After that, typing "duck hello there" will search for "hello there" in your shiny DuckDuckGo :)
 
 * Geting Started
 First, you need to clone this repository to where Nyxt can find it:
@@ -65,10 +69,13 @@ in your init file, and
                                                :install-reminders nil
                                                :install-duckduckgo nil)))))
 #+end_src
+
 in search-engines.lisp (you need to create this file in the same
 directory where your init.lisp is). This will give you four search
 engines: WordNet, Google (maps and basic search) and DuckDuckGo. The
-last engine in the list is the default one, so your next search will
+last engine in the list is the default one. When you start Nyxt next
+time and invoke ~set-url~ (C-l), your search like "g ostrich" will get
+you to the Google search for ostrich, while a "kangaroo" search will
 end up in a cozy terminal-themed DuckDuckGo :)
 
 * Contributing engines
