@@ -1909,6 +1909,17 @@ of `<country_code>--<city_name>', such as `gb--London'.")
                        (:all "all")
                        (:comment "comment"))))
 
+(define-search-engine lobsters
+    (:shortcut "lobsters"
+     :fallback-url (quri:uri "https://lobste.rs")
+     :base-search-url "https://lobste.rs/search?q=~a"
+     :documentation "`nyxt:search-engine' for the computing-focused link-aggregator Lobsters.")
+  (search-type "what" ((:default "stories")
+                       (:comments "comments")))
+  (order-by "order" ((:default "newest")
+                     (:relevance "relevance")
+                     (:points "points"))))
+
 ;; TODO:
 ;; - YouTube
 ;; - Amazon
