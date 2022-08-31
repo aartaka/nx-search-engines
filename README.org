@@ -770,6 +770,15 @@ A derived search engine for organization search in a given Gitea instance.
              [:sort-by {:popularity | :date}]
              [:search-type {:story | :all | :comments}])
 #+end_src
+** Lobsters
+Search syntax for Lobsters, a computing-focused link aggregator:
+#+begin_src
+(lobsters [:shortcut string]
+          [:fallback-url quri:uri]
+          [:base-search-url string]
+          [:search-type {:default | :comments}]
+          [:order-by {:default | :relevance | :points}])
+#+end_src
 * Changelog
 ** 0.0.1
 First version, experimental.
