@@ -771,7 +771,7 @@ A derived search engine for organization search in a given Gitea instance.
              [:search-type {:story | :all | :comments}])
 #+end_src
 ** Lobsters
-Search syntax for Lobsters, a computing-focused link aggregator:
+Search engine for Lobsters, a computing-focused link aggregator. Its query syntax can be found in [[https://github.com/lobsters/lobsters/blob/master/app/controllers/search_controller.rb][this source file]].
 #+begin_src
 (lobsters [:shortcut string]
           [:fallback-url quri:uri]
