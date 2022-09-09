@@ -116,7 +116,7 @@ A more involved example with keywords:
      (export-always (quote ,name))
      (defun ,name (&rest args)
        ,documentation
-       (apply (function ,parent-engine) (append args ',arguments)))))
+       (apply (function ,parent-engine) (append args (list ,@arguments))))))
 
 (export-always 'make-brave-completion)
 (defun make-brave-completion (&key request-args)
