@@ -452,7 +452,7 @@ namespace-keyword := {:general | :talk | :user | :user-talk | :wikipedia | :wiki
 #+begin_src
 (scihub [:shortcut string]
         [:fallback-url quri:uri]
-        [:base-search-url string] ; customize the instance there)
+        [:base-search-url string])
 #+end_src
 ** SearX
    Syntax:
