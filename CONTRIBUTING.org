@@ -1,0 +1,12 @@
+If you didn't find the engine you like in the README, then you can contribute it! I'm absolutely open to any PR, given that it:
+- Is properly documented.
+  - If you add an engine, and completion function, make sure to add documentation for those (yes, completion function too!) to README.
+- Is tested and has no obvious code mistakes.
+  - I will obviously test it myself, but not testing it when you write it wastes both your and my time :)
+- Is restricted in scope.
+  - Don't try to add all the engines that you use. It's easier to review a PR with just one engine, than dragging through the review of ten engines that grow in the process.
+    - If you want to emphasize that the PR is work in progress, use Draft Pull Requests of GitHub—I'll try to not review those until you mark them as ready :)
+- Sticks to CL coding conventions, [[https://github.com/atlas-engineer/nyxt/blob/master/documents/README.org#programming-conventions][and, preferably, Nyxt-specific ones too]].
+  - It's not much of a problem if, e.g., the indentation is off, I can fix it after merging. But still, it's preferable that you make a self-contained set of changes that are styled reasonably :)
+
+The file to put engines in (and look for reference in) is search-engines.lisp. Look at the code there, get familiar with =define-search-egnine= and =define-derived-search-engine=, and hack up a cool new search engine!
