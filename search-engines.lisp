@@ -1143,6 +1143,12 @@ REQUEST-ARGS is a list of args to pass to request function."
                (:past-week "d")
                (:past-month "m"))))
 
+(define-search-engine scihub
+    (:shortcut "scihub"
+     :fallback-url (quri:uri "https://sci-hub.hkvisa.net")
+     :base-search-url "https://sci-hub.hkvisa.net/~a"
+     :documentation "Sci-Hub `nyxt:search-engine' for research papers"))
+
 (define-search-engine searx
     (:shortcut "searx"
      :fallback-url (quri:uri "https://searx.bar")
