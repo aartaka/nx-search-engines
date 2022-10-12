@@ -447,6 +447,13 @@ namespace-keyword := {:general | :talk | :user | :user-talk | :wikipedia | :wiki
 (make-yahoo-completion [:suggestion-limit integer]
                        [:request-args list])
 #+end_src
+** Sci-Hub
+   Syntax:
+#+begin_src
+(scihub [:shortcut string]
+        [:fallback-url quri:uri]
+        [:base-search-url string] ; customize the instance there)
+#+end_src
 ** SearX
    Syntax:
 #+begin_src
