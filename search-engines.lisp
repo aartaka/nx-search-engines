@@ -754,7 +754,7 @@ request."
 
 (define-search-engine google
     (:shortcut "google"
-     :fallback-url "https://google.com"
+     :fallback-url (quri:uri "https://google.com")
      :base-search-url "https://google.com/search?q=~a"
      :completion-function (make-google-completion)
      :documentation "Google `nyxt:search-engine'.
@@ -850,7 +850,7 @@ request."
 
 (define-search-engine google-scholar
     (:shortcut "google-scholar"
-     :fallback-url "https://scholar.google.com"
+     :fallback-url (quri:uri "https://scholar.google.com")
      :base-search-url "https://scholar.google.com/scholar?q=~a"
      :completion-function (make-google-scholar-completion)
      :documentation "Google Scholar `nyxt:search-engine'.
