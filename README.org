@@ -442,15 +442,25 @@ namespace-keyword := {:general | :talk | :user | :user-talk | :wikipedia | :wiki
 #+end_src
 ** SearX
    Syntax:
-#+begin_src
-(searx [:shortcut string]
-       [:fallback-url quri:uri]
-       [:base-search-url string] ; customize the instance there
-       [:completion-function function]
-       [:categories {:general | :images | :files | :map | :it |
-                     :news | :science | :social-media | :videos}]
-       [:language string] ; like en-US
-       [:time-range {:day | :week | :month | :year}])
+#+begin_src lisp
+  (searx [:shortcut string]
+         [:fallback-url quri:uri]
+         [:base-search-url string] ; customize the instance there
+         [:completion-function function]
+         [:categories {:general | :images | :files | :map | :it |
+                       :news | :science | :social-media | :videos}]
+         [:language string] ; like en-US
+         [:time-range {:day | :week | :month | :year}]
+         [:interface-language string]
+         [:theme {:simple}]
+         [:style {:default | :auto | :light | :dark}]
+         [:safe-search {:strict | :moderate | :none}]
+         [:center-alignment boolean]
+         [:new-tab boolean]
+         [:infinite-scroll boolean]
+         [:request-method {:get | :post}]
+         [:image-proxy boolean]
+         [:query-title boolean])
 #+end_src
 ** Startpage
 All the settings which are accessible from the search page can be configured.
